@@ -1,141 +1,233 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ThemeToggle } from '../components/ThemeToggle';
-import { MobileNavigation } from './MobileNavigation';
+import { SettingsPanel } from './settings-panel';
+import { MapGrid } from './gameboy/MapGrid';
+import { ErrorBoundary } from './gameboy/ErrorBoundary';
+import { PokemonHeading, PokemonText } from './text';
+import { Header } from './Header';
 
 interface HomeClientProps {
   className?: string;
 }
 
 export function HomeClient({ className = '' }: HomeClientProps) {
-  return (
-    <main className={`min-h-screen bg-background ${className}`}>
-      {/* Navigation */}
-      <nav className="border-b border-border">
-        <div className="container px-4 py-4 mx-auto">
-          <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-bold">Portfolio</h1>
+  const [currentView, setCurrentView] = useState<'classic' | 'gameboy'>('gameboy');
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
-            <div className="flex items-center gap-6">
-              {/* Desktop Navigation Links */}
-              <div className="hidden md:flex gap-6">
-                <Link href="/" className="transition-colors hover:text-primary">
-                  Home
+  // Handle GameBoy errors
+  const handleGameBoyError = (error: Error, errorInfo: React.ErrorInfo) => {
+    console.error('GameBoy interface error:', error, errorInfo);
+
+    if (typeof window !== 'undefined' && window.gtag) {
+      window.gtag('event', 'exception', {
+        description: `GameBoy Error: ${error.message}`,
+        fatal: false,
+      });
+    }
+  };
+
+  // Listen for custom events to switch views (from error boundary)
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const handleSwitchToClassic = () => {
+        setCurrentView('classic');
+      };
+
+      window.addEventListener('switchToClassicView', handleSwitchToClassic);
+
+      return () => {
+        window.removeEventListener('switchToClassicView', handleSwitchToClassic);
+      };
+    }
+  }, []);
+
+  return (
+    <main
+      className={`min-h-screen ${className}`}
+      style={{
+        backgroundColor: 'var(--color-background)',
+        color: 'var(--color-ink)'
+      }}
+    >
+      {/* Header Navigation */}
+      <Header
+        currentView={currentView}
+        setCurrentView={setCurrentView}
+        isSettingsOpen={isSettingsOpen}
+        setIsSettingsOpen={setIsSettingsOpen}
+      />
+
+      {/* Main Content - GameBoy or Classic View */}
+      {currentView === 'gameboy' ? (
+        <section className="container px-4 py-8 mx-auto">
+          <ErrorBoundary onError={handleGameBoyError}>
+            <MapGrid className="w-full" />
+          </ErrorBoundary>
+        </section>
+      ) : (
+        <>
+          {/* Hero Section */}
+          <section className="container px-4 py-20 mx-auto">
+            <div className="max-w-4xl">
+              <PokemonHeading>
+                Hi, I&apos;m <span style={{ color: 'var(--color-primary)' }}>Khanh Nguyen</span>
+              </PokemonHeading>
+              <PokemonText className="mb-6">
+                Full-stack developer specializing in modern web applications with React, Next.js,
+                Vue.js, and scalable backend systems.
+              </PokemonText>
+              <PokemonText className="mb-6">
+                <div className="flex flex-col gap-2 sm:flex-row sm:gap-4">
+                  <span>📍 Ho Chi Minh City, Vietnam</span>
+                  <span>📧 nguyenckhanh71@gmail.com</span>
+                  <span>📱 (+84)868 750 030</span>
+                </div>
+              </PokemonText>
+              <div className="flex flex-col gap-4 sm:flex-row">
+                <a
+                  href="mailto:nguyenckhanh71@gmail.com"
+                  className="pokemon-button px-6 py-3 text-center"
+                  style={{ backgroundColor: 'var(--color-primary)', color: 'white' }}
+                >
+                  Get in Touch
+                </a>
+                <Link
+                  href="/project"
+                  className="pokemon-button px-6 py-3 text-center hover:scale-105 transition-transform"
+                >
+                  View Projects
                 </Link>
-                <Link href="/project" className="transition-colors hover:text-primary">
-                  Projects
-                </Link>
-                <Link href="/job" className="transition-colors hover:text-primary">
-                  Career
-                </Link>
-                <Link href="/contact" className="transition-colors hover:text-primary">
-                  Contact
+                <Link
+                  href="/job"
+                  className="pokemon-button px-6 py-3 text-center hover:scale-105 transition-transform"
+                >
+                  View Experience
                 </Link>
               </div>
-
-              {/* Mobile Navigation */}
-              <MobileNavigation />
-
-              {/* Theme Toggle */}
-              <ThemeToggle />
             </div>
-          </div>
-        </div>
-      </nav>
+          </section>
 
-      {/* Hero Section */}
-      <section className="container px-4 py-20 mx-auto">
-        <div className="max-w-4xl">
-          <h2 className="mb-6 text-3xl font-bold sm:text-4xl md:text-5xl">
-            Hi, I&apos;m <span className="text-primary">Khanh Nguyen</span>
-          </h2>
-          <p className="mb-4 text-xl text-muted-foreground">
-            Full-stack developer specializing in modern web applications with React, Next.js,
-            Vue.js, and scalable backend systems.
-          </p>
-          <div className="mb-6 text-center text-lg text-muted-foreground sm:text-left">
-            <div className="flex flex-col gap-1 sm:flex-row sm:gap-4">
-              <span>📍 Ho Chi Minh City, Vietnam</span>
-              <span>📧 nguyenckhanh71@gmail.com</span>
-              <span>📱 (+84)868 750 030</span>
+          {/* Education Section */}
+          <section className="container px-4 py-16 mx-auto">
+            <PokemonHeading className="text-center mb-8">Education</PokemonHeading>
+            <div className="pokemon-card p-6 max-w-4xl mx-auto">
+              <div className="relative z-10">
+                <h4 className="mb-2 text-xl font-bold" style={{ color: 'var(--color-primary)' }}>
+                  University of Science, VNUHCM (HCMUS)
+                </h4>
+                <PokemonText className="mb-2">Bachelor of Information Technology</PokemonText>
+                <PokemonText className="mb-2">GPA: 9.17/10 • Expected 2025</PokemonText>
+                <div className="flex flex-wrap gap-2 mb-4">
+                  <span
+                    className="px-3 py-1 text-sm font-pixel uppercase tracking-wider border-2 rounded"
+                    style={{
+                      borderColor: 'var(--color-secondary)',
+                      backgroundColor:
+                        'color-mix(in srgb, var(--color-secondary) 20%, transparent)',
+                      color: 'var(--color-secondary)',
+                    }}
+                  >
+                    Software Architecture
+                  </span>
+                  <span
+                    className="px-3 py-1 text-sm font-pixel uppercase tracking-wider border-2 rounded"
+                    style={{
+                      borderColor: 'var(--color-secondary)',
+                      backgroundColor:
+                        'color-mix(in srgb, var(--color-secondary) 20%, transparent)',
+                      color: 'var(--color-secondary)',
+                    }}
+                  >
+                    Software Testing
+                  </span>
+                  <span
+                    className="px-3 py-1 text-sm font-pixel uppercase tracking-wider border-2 rounded"
+                    style={{
+                      borderColor: 'var(--color-secondary)',
+                      backgroundColor:
+                        'color-mix(in srgb, var(--color-secondary) 20%, transparent)',
+                      color: 'var(--color-secondary)',
+                    }}
+                  >
+                    Algorithms
+                  </span>
+                  <span
+                    className="px-3 py-1 text-sm font-pixel uppercase tracking-wider border-2 rounded"
+                    style={{
+                      borderColor: 'var(--color-secondary)',
+                      backgroundColor:
+                        'color-mix(in srgb, var(--color-secondary) 20%, transparent)',
+                      color: 'var(--color-secondary)',
+                    }}
+                  >
+                    Java
+                  </span>
+                  <span
+                    className="px-3 py-1 text-sm font-pixel uppercase tracking-wider border-2 rounded"
+                    style={{
+                      borderColor: 'var(--color-secondary)',
+                      backgroundColor:
+                        'color-mix(in srgb, var(--color-secondary) 20%, transparent)',
+                      color: 'var(--color-secondary)',
+                    }}
+                  >
+                    IELTS 6.5
+                  </span>
+                </div>
+                <PokemonText>HCMC, Vietnam</PokemonText>
+              </div>
             </div>
-          </div>
-          <div className="flex flex-col gap-4 sm:flex-row">
-            <a
-              href="mailto:nguyenckhanh71@gmail.com"
-              className="px-6 py-3 transition-opacity rounded-md bg-primary hover:opacity-90 text-primary-foreground"
-            >
-              Get in Touch
-            </a>
-            <Link
-              href="/project"
-              className="px-6 py-3 transition-colors border rounded-md hover:bg-accent border-border"
-            >
-              View Projects
-            </Link>
-            <Link
-              href="/job"
-              className="px-6 py-3 transition-colors border rounded-md hover:bg-accent border-border"
-            >
-              View Experience
-            </Link>
-          </div>
-        </div>
-      </section>
+          </section>
 
-      {/* Education Section */}
-      <section className="container px-4 py-16 mx-auto">
-        <h3 className="mb-8 text-3xl font-bold">Education</h3>
-        <div className="p-6 border rounded-lg border-border">
-          <h4 className="mb-2 text-xl font-semibold text-primary">
-            University of Science, VNUHCM (HCMUS)
-          </h4>
-          <p className="mb-2 text-lg text-foreground">Bachelor of Information Technology</p>
-          <p className="mb-2 text-muted-foreground">GPA: 9.17/10 • Expected 2025</p>
-          <div className="flex flex-wrap gap-2 mb-4">
-            <span className="px-2 py-1 text-sm bg-secondary text-secondary-foreground rounded">
-              Software Architecture
-            </span>
-            <span className="px-2 py-1 text-sm bg-secondary text-secondary-foreground rounded">
-              Software Testing
-            </span>
-            <span className="px-2 py-1 text-sm bg-secondary text-secondary-foreground rounded">
-              Algorithms
-            </span>
-            <span className="px-2 py-1 text-sm bg-secondary text-secondary-foreground rounded">
-              Java
-            </span>
-            <span className="px-2 py-1 text-sm bg-secondary text-secondary-foreground rounded">
-              IELTS 6.5
-            </span>
-          </div>
-          <p className="text-muted-foreground">HCMC, Vietnam</p>
-        </div>
-      </section>
+          {/* Skills Section */}
+          <section className="container px-4 py-16 mx-auto">
+            <PokemonHeading className="text-center mb-8">Technical Skills</PokemonHeading>
+            <div className="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-4">
+              <div className="pokemon-card p-4 sm:p-6 hover:gba-shadow-lg transition-all duration-300">
+                <h4
+                  className="mb-2 text-lg sm:text-xl font-bold font-pixel uppercase"
+                  style={{ color: 'var(--color-primary)' }}
+                >
+                  Frontend
+                </h4>
+                <PokemonText>React, Next.js, Vue.js, TailwindCSS</PokemonText>
+              </div>
+              <div className="pokemon-card p-4 sm:p-6 hover:gba-shadow-lg transition-all duration-300">
+                <h4
+                  className="mb-2 text-lg sm:text-xl font-bold font-pixel uppercase"
+                  style={{ color: 'var(--color-primary)' }}
+                >
+                  Backend
+                </h4>
+                <PokemonText>NestJS, FastAPI, Golang, Python, Java</PokemonText>
+              </div>
+              <div className="pokemon-card p-4 sm:p-6 hover:gba-shadow-lg transition-all duration-300">
+                <h4
+                  className="mb-2 text-lg sm:text-xl font-bold font-pixel uppercase"
+                  style={{ color: 'var(--color-primary)' }}
+                >
+                  Cloud & DevOps
+                </h4>
+                <PokemonText>Docker, CI/CD, GitHub Actions, GitLab</PokemonText>
+              </div>
+              <div className="pokemon-card p-4 sm:p-6 hover:gba-shadow-lg transition-all duration-300">
+                <h4
+                  className="mb-2 text-lg sm:text-xl font-bold font-pixel uppercase"
+                  style={{ color: 'var(--color-primary)' }}
+                >
+                  Developer Tools
+                </h4>
+                <PokemonText>Git, GitHub, GitLab, Webpack, Postman</PokemonText>
+              </div>
+            </div>
+          </section>
+        </>
+      )}
 
-      {/* Skills Section */}
-      <section className="container px-4 py-16 mx-auto">
-        <h3 className="mb-8 text-3xl font-bold">Technical Skills</h3>
-        <div className="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-4">
-          <div className="p-4 sm:p-6 border rounded-lg border-border hover:shadow-md transition-shadow duration-300">
-            <h4 className="mb-2 text-lg sm:text-xl font-semibold">Frontend</h4>
-            <p className="text-sm sm:text-base text-muted-foreground">React, Next.js, Vue.js, TailwindCSS</p>
-          </div>
-          <div className="p-4 sm:p-6 border rounded-lg border-border hover:shadow-md transition-shadow duration-300">
-            <h4 className="mb-2 text-lg sm:text-xl font-semibold">Backend</h4>
-            <p className="text-sm sm:text-base text-muted-foreground">NestJS, FastAPI, Golang, Python, Java</p>
-          </div>
-          <div className="p-4 sm:p-6 border rounded-lg border-border hover:shadow-md transition-shadow duration-300">
-            <h4 className="mb-2 text-lg sm:text-xl font-semibold">Cloud & DevOps</h4>
-            <p className="text-sm sm:text-base text-muted-foreground">Docker, CI/CD, GitHub Actions, GitLab</p>
-          </div>
-          <div className="p-4 sm:p-6 border rounded-lg border-border hover:shadow-md transition-shadow duration-300">
-            <h4 className="mb-2 text-lg sm:text-xl font-semibold">Developer Tools</h4>
-            <p className="text-sm sm:text-base text-muted-foreground">Git, GitHub, GitLab, Webpack, Postman</p>
-          </div>
-        </div>
-      </section>
+      {/* Settings Panel */}
+      <SettingsPanel isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} />
     </main>
   );
 }

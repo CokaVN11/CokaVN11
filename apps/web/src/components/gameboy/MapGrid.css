@@ -1,0 +1,395 @@
+/* GameBoy Map Grid Styles */
+/* Enhanced with Pokemon FireRed/LeafGreen theme system */
+
+.gameboy-map-grid {
+  font-family: 'VT323', 'Courier New', monospace;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+  background: var(--color-background);
+  color: var(--color-ink);
+  border: 4px solid var(--color-ink);
+  border-radius: 8px;
+  padding: 16px;
+  outline: none;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  position: relative;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+/* Game Header */
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding: 8px 0;
+  border-bottom: 2px solid var(--color-ink);
+}
+
+.game-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--color-ink);
+  margin: 0;
+  text-shadow: 2px 2px 0 var(--color-secondary);
+  letter-spacing: 0.05em;
+}
+
+.palette-selector {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.palette-label {
+  font-size: 14px;
+  color: var(--color-ink);
+  margin-right: 4px;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+}
+
+.palette-btn {
+  /* Base Pokemon button styles are handled by pokemon-button class */
+  font-size: 12px;
+  padding: 6px 12px;
+  min-width: 80px;
+}
+
+/* Map Container */
+.map-container {
+  background: var(--color-ink);
+  border: 2px solid var(--color-ink);
+  border-radius: 4px;
+  padding: 4px;
+  margin-bottom: 16px;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.map-grid {
+  display: grid;
+  grid-template-columns: repeat(16, 32px);
+  grid-template-rows: repeat(16, 32px);
+  gap: 1px;
+  background: var(--color-ink);
+  justify-content: center;
+}
+
+/* Individual Tiles */
+.tile {
+  background: var(--color-background);
+  border: 1px solid var(--color-ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  width: 32px;
+  height: 32px;
+  box-sizing: border-box;
+  position: relative;
+  transition: all 0.15s ease;
+  cursor: pointer;
+}
+
+.tile:hover {
+  background: var(--color-secondary);
+  transform: scale(1.05);
+  z-index: 1;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Character Tile */
+.tile.character {
+  background: var(--color-primary) !important;
+  animation: characterPulse 2s infinite;
+  z-index: 10;
+  box-shadow: 0 0 12px var(--color-primary);
+}
+
+@keyframes characterPulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(0.95);
+  }
+}
+
+.character-sprite {
+  font-size: 20px;
+  filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.3));
+}
+
+/* Node Tiles */
+.tile.node {
+  background: var(--color-secondary);
+  opacity: 0.7;
+  position: relative;
+}
+
+.tile.node.discovered {
+  opacity: 0.9;
+  background: var(--color-primary);
+}
+
+.tile.node.visited {
+  opacity: 1;
+  background: var(--color-primary);
+  animation: nodeVisited 1s infinite;
+}
+
+@keyframes nodeVisited {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
+}
+
+.node-sprite {
+  font-size: 14px;
+  filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.4));
+}
+
+.node-sprite.visited {
+  color: #4caf50;
+  text-shadow: 0 0 4px #4caf50;
+}
+
+/* Tile Types */
+.tile[data-tile-type='grass'] {
+  background: var(--color-background);
+}
+
+.tile[data-tile-type='path'] {
+  background: var(--color-secondary);
+}
+
+.tile[data-tile-type='water'] {
+  background: #4a90e2;
+  opacity: 0.8;
+}
+
+.tile[data-tile-type='tree'] {
+  background: #228b22;
+  opacity: 0.9;
+}
+
+.tile[data-tile-type='mountain'] {
+  background: #8b7355;
+  opacity: 0.9;
+}
+
+.tile-decoration {
+  font-size: 12px;
+  opacity: 0.7;
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+}
+
+/* Game HUD */
+.game-hud {
+  background: var(--color-secondary);
+  border: 2px solid var(--color-ink);
+  border-radius: 4px;
+  padding: 12px;
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.stats {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stat {
+  font-size: 12px;
+  color: var(--color-ink);
+  font-weight: bold;
+}
+
+.controls-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-align: right;
+}
+
+.control-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+}
+
+.control-label {
+  color: var(--color-ink);
+  font-weight: bold;
+  min-width: 60px;
+}
+
+.control-keys {
+  background: var(--color-background);
+  padding: 2px 6px;
+  border-radius: 2px;
+  font-family: 'VT323', monospace;
+  font-weight: bold;
+  border: 1px solid var(--color-ink);
+}
+
+/* Instructions */
+.instructions {
+  text-align: center;
+  font-size: 12px;
+  color: var(--color-ink);
+  background: var(--color-secondary);
+  border: 1px solid var(--color-ink);
+  border-radius: 4px;
+  padding: 8px;
+  margin-top: 8px;
+}
+
+.instructions p {
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+  .gameboy-map-grid {
+    padding: 12px;
+    margin: 8px;
+  }
+
+  .game-header {
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+  }
+
+  .game-title {
+    font-size: 16px;
+  }
+
+  .palette-selector {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .map-grid {
+    grid-template-columns: repeat(16, 20px);
+    grid-template-rows: repeat(16, 20px);
+    gap: 1px;
+  }
+
+  .tile {
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+  }
+
+  .character-sprite {
+    font-size: 14px;
+  }
+
+  .node-sprite {
+    font-size: 10px;
+  }
+
+  .game-hud {
+    flex-direction: column;
+    text-align: center;
+    gap: 8px;
+  }
+
+  .controls-info {
+    text-align: center;
+  }
+
+  .control-group {
+    justify-content: center;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .tile,
+  .tile:hover,
+  .character-sprite,
+  .node-sprite,
+  .palette-btn {
+    animation: none;
+    transition: none;
+  }
+}
+
+/* Focus styles for keyboard navigation */
+.gameboy-map-grid:focus {
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.2),
+    0 0 0 3px var(--color-primary);
+}
+
+.tile:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 1px;
+  z-index: 20;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .gameboy-map-grid {
+    border-width: 3px;
+  }
+
+  .tile {
+    border-width: 2px;
+  }
+
+  .character-sprite,
+  .node-sprite {
+    filter: contrast(1.5) drop-shadow(2px 2px 0 currentColor);
+  }
+}
+
+/* Mobile responsive Pokemon styling */
+@media (max-width: 640px) {
+  .gameboy-map-grid {
+    padding: 12px;
+    margin: 8px;
+  }
+
+  .game-header {
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+  }
+
+  .game-title {
+    font-size: 20px;
+  }
+
+  .palette-selector {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .palette-btn {
+    font-size: 10px;
+    padding: 4px 8px;
+    min-width: 70px;
+  }
+}

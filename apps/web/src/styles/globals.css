@@ -2,51 +2,229 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Pokemon FireRed Theme Colors */
+:root {
+  --fire-ink: #ffccbc;
+  --fire-primary: #ff6b4a;
+  --fire-secondary: #ffb74d;
+  --fire-background: #1a0f08;
+  --fire-cta: #ffd54f;
+
+  --leaf-ink: #183d2b;
+  --leaf-primary: #4caf50;
+  --leaf-secondary: #8bc34a;
+  --leaf-background: #e7f5d9;
+  --leaf-cta: #fdd835;
+}
+
+/* Pokemon Theme Implementation */
+[data-theme='fire'] {
+  --color-ink: var(--fire-ink);
+  --color-primary: var(--fire-primary);
+  --color-secondary: var(--fire-secondary);
+  --color-background: var(--fire-background);
+  --color-cta: var(--fire-cta);
+}
+
+[data-theme='leaf'] {
+  --color-ink: var(--leaf-ink);
+  --color-primary: var(--leaf-primary);
+  --color-secondary: var(--leaf-secondary);
+  --color-background: var(--leaf-background);
+  --color-cta: var(--leaf-cta);
+}
+
+/* GBA-style shadow effects */
+.gba-shadow {
+  box-shadow: 0 2px 0 0 color-mix(in srgb, var(--color-ink) 50%, #000 20%);
+}
+
+.gba-shadow-sm {
+  box-shadow: 0 1px 0 0 color-mix(in srgb, var(--color-ink) 40%, #000 15%);
+}
+
+.gba-shadow-lg {
+  box-shadow: 0 4px 0 0 color-mix(in srgb, var(--color-ink) 60%, #000 25%);
+}
+
+/* Theme transitions - disabled by default for instant switching */
+* {
+  transition: none !important;
+}
+
+[data-theme] * {
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease !important;
+}
+
+/* Pokemon-style gradient backgrounds */
+.pokemon-gradient-fire {
+  background: linear-gradient(
+    135deg,
+    var(--fire-background) 0%,
+    color-mix(in srgb, var(--fire-background) 85%, #ff9e00 15%) 100%
+  );
+}
+
+.pokemon-gradient-leaf {
+  background: linear-gradient(
+    135deg,
+    var(--leaf-background) 0%,
+    color-mix(in srgb, var(--leaf-background) 85%, #8bc34a 15%) 100%
+  );
+}
+
+/* Pokemon card styling */
+.pokemon-card {
+  background: linear-gradient(
+    145deg,
+    var(--color-background) 0%,
+    color-mix(in srgb, var(--color-background) 90%, #000000 10%) 100%
+  );
+  border: 2px solid var(--color-ink);
+  border-radius: 8px;
+  position: relative;
+}
+
+.pokemon-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+  border-radius: 8px 8px 0 0;
+}
+
+/* Pixel font styling */
+.font-pixel {
+  font-family: 'VT323', monospace;
+  letter-spacing: 0.05em;
+}
+
+/* Pokemon button styling */
+.pokemon-button {
+  background: linear-gradient(
+    180deg,
+    var(--color-background) 0%,
+    color-mix(in srgb, var(--color-cta) 80%, var(--color-background) 20%) 100%
+  );
+  border: 2px solid var(--color-ink);
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+  position: relative;
+  transition: all 0.15s ease;
+}
+
+.pokemon-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 0 0 color-mix(in srgb, var(--color-ink) 55%, #000 22%);
+}
+
+.pokemon-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 0 0 color-mix(in srgb, var(--color-ink) 45%, #000 18%);
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --foreground: 0 0% 3.9%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
 
     --radius: 0.5rem;
+
+    --card: 0 0% 100%;
+
+    --card-foreground: 0 0% 3.9%;
+
+    --popover: 0 0% 100%;
+
+    --popover-foreground: 0 0% 3.9%;
+
+    --destructive: 0 84.2% 60.2%;
+
+    --destructive-foreground: 0 0% 98%;
+
+    --chart-1: 12 76% 61%;
+
+    --chart-2: 173 58% 39%;
+
+    --chart-3: 197 37% 24%;
+
+    --chart-4: 43 74% 66%;
+
+    --chart-5: 27 87% 67%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
   }
 }
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    background-color: var(--color-background, var(--background));
+    color: var(--color-ink, var(--foreground));
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease;
+  }
+}
+
+
 
 @layer base {
   * {

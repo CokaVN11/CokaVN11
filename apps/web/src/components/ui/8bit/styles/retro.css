@@ -1,0 +1,135 @@
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+
+/* Pokemon 8bit Theme Integration */
+:root {
+  /* Default 8bit theme colors (fallback) */
+  --retro-bg: #ffffff;
+  --retro-text: #000000;
+  --retro-border: #000000;
+  --retro-shadow: rgba(0, 0, 0, 0.2);
+  --retro-shadow-light: rgba(0, 0, 0, 0.1);
+  --retro-border-accent: #666666;
+}
+
+/* FireRed Dark Theme - High Contrast Dark Mode */
+[data-theme='fire'] {
+  --retro-bg: var(--fire-background);
+  --retro-text: var(--fire-ink);
+  --retro-border: var(--fire-primary);
+  --retro-shadow: color-mix(in srgb, var(--fire-ink) 40%, #000);
+  --retro-shadow-light: color-mix(in srgb, var(--fire-ink) 20%, #000);
+  --retro-border-accent: var(--fire-secondary);
+}
+
+/* LeafGreen Light Theme - High Contrast Light Mode */
+[data-theme='leaf'] {
+  --retro-bg: var(--leaf-background);
+  --retro-text: var(--leaf-ink);
+  --retro-border: var(--leaf-primary);
+  --retro-shadow: color-mix(in srgb, var(--leaf-ink) 30%, #000);
+  --retro-shadow-light: color-mix(in srgb, var(--leaf-ink) 15%, #000);
+  --retro-border-accent: var(--leaf-secondary);
+}
+
+/* Enhanced Retro Styling for Pokemon Theme */
+.retro {
+  font-family:
+    "Press Start 2P",
+    system-ui,
+    -apple-system,
+    sans-serif;
+  line-height: 1.5;
+  letter-spacing: 0.5px;
+
+  /* Pokemon-themed text styling */
+  color: var(--retro-text);
+  text-shadow:
+    2px 2px 0px var(--retro-shadow-light),
+    0 0 10px var(--retro-shadow-light);
+
+  /* Enhanced pixel font appearance */
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+  font-smooth: never;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Retro-specific helper classes for 8bit components */
+.retro-button {
+  background: var(--retro-bg) !important;
+  color: var(--retro-text) !important;
+  border-color: var(--retro-border) !important;
+  box-shadow:
+    0 4px 0 0 var(--retro-shadow),
+    inset 0 -1px 0 0 var(--retro-shadow-light);
+}
+
+.retro-button:hover {
+  background: var(--color-secondary) !important;
+  transform: translateY(-1px);
+  box-shadow:
+    0 6px 0 0 var(--retro-shadow),
+    inset 0 -1px 0 0 var(--retro-shadow-light);
+}
+
+.retro-button:active {
+  transform: translateY(1px);
+  box-shadow:
+    0 2px 0 0 var(--retro-shadow),
+    inset 0 1px 0 0 var(--retro-shadow-light);
+}
+
+.retro-nav {
+  background: var(--retro-bg) !important;
+  color: var(--retro-text) !important;
+  border-color: var(--retro-border) !important;
+  box-shadow: 0 4px 0 0 var(--retro-shadow);
+}
+
+.retro-nav:hover {
+  background: var(--color-secondary) !important;
+  transform: translateY(-1px);
+}
+
+.retro-border {
+  border-color: var(--retro-border) !important;
+}
+
+.retro-border-accent {
+  border-color: var(--retro-border-accent) !important;
+}
+
+/* Enhanced focus states for accessibility */
+.retro:focus-visible {
+  outline: 2px solid var(--retro-border-accent);
+  outline-offset: 2px;
+}
+
+/* High contrast mode support for pixel fonts */
+@media (prefers-contrast: high) {
+  .retro {
+    text-shadow:
+      3px 3px 0px var(--retro-shadow),
+      0 0 15px var(--retro-shadow-light);
+    letter-spacing: 0.8px;
+  }
+
+  .retro-button {
+    border-width: 3px !important;
+    font-weight: 900;
+  }
+
+  .retro-nav {
+    border-width: 3px !important;
+  }
+}
+
+/* Mobile responsive pixel font optimization */
+@media (max-width: 768px) {
+  .retro {
+    letter-spacing: 0.3px;
+    font-size: 0.9em;
+  }
+}

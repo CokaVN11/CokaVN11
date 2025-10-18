@@ -1,8 +1,11 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import { VT323 } from 'next/font/google';
+import { Providers } from './providers';
 import '../styles/globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
+const vt323 = VT323({ subsets: ['latin'], weight: '400' });
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://portfolio.coka.id.vn'),
@@ -41,8 +44,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={inter.className} suppressHydrationWarning>
-        {children}
+      <body className={`${inter.className} ${vt323.className}`} suppressHydrationWarning>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
