@@ -54,8 +54,8 @@ const projects = [
     id: 3,
     title: 'Portfolio Website',
     description:
-      'Modern portfolio website with serverless contact form and Infrastructure as Code deployment.',
-    tags: ['Next.js', 'Lambda', 'Terraform', 'CI/CD'],
+      'Modern portfolio website with Vercel serverless functions and Redis-based contact form storage.',
+    tags: ['Next.js', 'Vercel', 'Redis KV', 'Edge Functions'],
     contribution: 'Solo Project',
   },
 ];

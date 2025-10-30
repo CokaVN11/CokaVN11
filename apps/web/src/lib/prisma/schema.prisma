@@ -1,0 +1,21 @@
+// prisma/schema.prisma
+datasource db {
+  provider = "mongodb"
+  url      = env("MONGODB_URI")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output = "./generated"
+}
+
+model ContactMessage {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  email     String
+  message   String
+  timestamp DateTime @default(now())
+  ip        String?
+
+  @@map("contact_messages")
+}

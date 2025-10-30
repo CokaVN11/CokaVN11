@@ -1,0 +1,52 @@
+# Terraform Variables Configuration
+# Copy this file to terraform.tfvars and fill in your values
+
+# Project Configuration
+project_name = "folio-site"
+environment  = "production"
+
+# Team Configuration (leave empty for personal account)
+team_name = ""
+
+# Domain Configuration
+domain_name = "portfolio.coka.id.vn"
+manage_dns  = false  # Set to true to manage DNS via Route53
+
+# GitHub Repository
+github_owner = "coka"
+github_repo  = "folio-site"
+
+# Vercel Region (for edge functions)
+serverless_function_region = "sin1"  # Singapore region
+
+# Build Configuration (usually defaults are fine)
+framework       = "nextjs"
+build_command   = "cd apps/web && pnpm build"
+output_directory = ".next"
+install_command = "pnpm install"
+dev_command     = "cd apps/web && pnpm dev"
+root_directory  = "/"
+
+# Vercel API Token (set via VERCEL_API_TOKEN environment variable)
+# vercel_api_token = "your_vercel_api_token_here"
+
+# Collaborators (optional)
+collaborators = [
+  # {
+  #   username = "github-username"
+  #   role     = "member"  # admin, member, viewer
+  # }
+]
+
+# Custom Environment Variables (optional)
+custom_environment_variables = [
+  # {
+  #   key       = "CUSTOM_VAR"
+  #   value     = "custom_value"
+  #   target    = ["production", "preview"]
+  #   sensitive = false
+  # }
+]
+
+# Domain Verification (if needed for domain ownership)
+vercel_verification_code = ""
