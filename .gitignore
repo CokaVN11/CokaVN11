@@ -50,3 +50,4 @@ coverage/
 .turbo/
 .cache/
 .parcel-cache/
+infra/*/.terraform
