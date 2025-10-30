@@ -51,3 +51,4 @@ coverage/
 .cache/
 .parcel-cache/
 infra/*/.terraform
+**/generated

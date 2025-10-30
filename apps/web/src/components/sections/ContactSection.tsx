@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Controller } from 'react-hook-form';
 import { toast } from 'sonner';
-import { ContactPayloadSchema } from '@services/schemas/contact';
+import { ContactPayloadSchema } from '@/schemas/contact';
 import { MailIcon, PhoneIcon, MapPinIcon } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
@@ -35,12 +35,8 @@ export function ContactSection() {
     setContactStatus('submitting');
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-      if (!apiUrl) {
-        throw new Error('API URL not configured');
-      }
-
-      const response = await fetch(`${apiUrl}/contact`, {
+      // Use local API route instead of external AWS API
+      const response = await fetch('/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
