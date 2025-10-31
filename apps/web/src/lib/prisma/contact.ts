@@ -12,10 +12,7 @@ import type { ContactPayload } from '@/schemas/contact';
  * @param ip - The IP address of the sender (optional)
  * @returns The saved contact message with database-generated fields
  */
-export async function saveContactMessage(
-  data: ContactPayload,
-  ip?: string
-) {
+export async function saveContactMessage(data: ContactPayload, ip?: string) {
   try {
     const message = await prisma.contactMessage.create({
       data: {

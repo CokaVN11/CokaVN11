@@ -1,5 +1,6 @@
 import { ContactPayloadSchema, type ContactMessage } from '@/schemas/contact';
 import { saveContactMessage, getContactMessages } from '@/lib/prisma/contact';
+import { sendContactNotificationEmail } from '@/lib/email';
 import { NextRequest, NextResponse } from 'next/server';
 
 /**
@@ -88,6 +89,16 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     // Save contact message to database
     const savedMessage = await saveContactMessage(validationResult.data, ip);
 
+    // Send email notification
+    try {
+      await sendContactNotificationEmail(validationResult.data);
+      console.log('Email notification sent successfully');
+    } catch (emailError) {
+      console.error('Failed to send email notification:', emailError);
+      // Don't fail the entire request if email fails, just log it
+      // The contact message was already saved successfully
+    }
+
     // Return success response
     return corsResponse(
       201,
@@ -137,7 +148,9 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     // Parse query parameters
     const limit = searchParams.get('limit') ? parseInt(searchParams.get('limit')!, 10) : undefined;
-    const offset = searchParams.get('offset') ? parseInt(searchParams.get('offset')!, 10) : undefined;
+    const offset = searchParams.get('offset')
+      ? parseInt(searchParams.get('offset')!, 10)
+      : undefined;
 
     // Validate query parameters
     if (limit && (isNaN(limit) || limit < 1 || limit > 100)) {
