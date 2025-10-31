@@ -46,7 +46,7 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
               })}`}
               tags={project.tags}
               image={project.cover}
-              isPriority={index === 0} // First project card gets priority
+              isPriority={true} // First project card gets priority
             />
           ))}
         </div>

@@ -81,7 +81,8 @@ export const ResumeCard = ({
                 alt={altText}
                 width={48}
                 height={48}
-                className="bg-muted dark:bg-muted/50 rounded-full size-12 object-contain"
+                quality={75}
+                className="bg-muted dark:bg-muted/50 rounded-full size-auto object-contain"
                 onError={() => setImageError(true)}
                 sizes="(max-width: 768px) 48px, 64px"
                 priority={false}

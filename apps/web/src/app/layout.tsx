@@ -6,6 +6,8 @@ import '@/styles/globals.css';
 import { cn } from '@/lib/utils';
 import { Toaster } from '@/components/ui/sonner';
 import { generateMetadata as generateSEOMetadata } from '@/lib/seo-utils';
+import { Analytics } from "@vercel/analytics/next"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const inter = Inter({
   subsets: ['latin'],
@@ -39,6 +41,8 @@ export default function RootLayout({
           </ThemeProvider>
         </TooltipProvider>
         <Toaster />
+        <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );

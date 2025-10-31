@@ -58,6 +58,7 @@ export function ProjectCard({
             alt={title}
             width={400}
             height={240}
+            quality={75}
             className="rounded-t-lg w-full h-40 object-cover object-top overflow-hidden"
             priority={isPriority}
             loading={isPriority ? 'eager' : 'lazy'}
