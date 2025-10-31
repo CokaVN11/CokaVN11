@@ -57,7 +57,7 @@ function transformEntryToProject(entry: Entry): ProjectData {
     technologies: metadata.tech || [],
     contribution: metadata.role || 'Project Contributor',
     featured: metadata.featured || false,
-    href: `/project/${slug}`,
+    href: `/projects/${slug}`,
     startDate: metadata.startDate || '',
     endDate: metadata.endDate || '',
     tags: metadata.tags || [],
