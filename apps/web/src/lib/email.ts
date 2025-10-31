@@ -6,9 +6,18 @@ Handles email composition and delivery via Resend API
 import { Resend } from 'resend';
 import type { ContactPayload } from '@/schemas/contact';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
 const RECIPIENT_EMAIL = process.env.RECIPIENT_EMAIL;
 const FROM_EMAIL = process.env.FROM_EMAIL;
+
+// Initialize Resend client only when API key is available
+function getResendClient() {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    console.warn('RESEND_API_KEY not configured - email notifications disabled');
+    return null;
+  }
+  return new Resend(apiKey);
+}
 
 interface EmailTemplate {
   subject: string;
@@ -74,8 +83,17 @@ export function createContactEmail(data: ContactPayload): EmailTemplate {
 }
 
 export async function sendContactNotificationEmail(data: ContactPayload): Promise<void> {
+  // Check if email configuration is available
   if (!RECIPIENT_EMAIL || !FROM_EMAIL) {
-    throw new Error('Email environment variables not configured');
+    console.warn('Email environment variables not configured - skipping email notification');
+    return;
+  }
+
+  // Get Resend client (returns null if API key not configured)
+  const resend = getResendClient();
+  if (!resend) {
+    console.warn('Resend not available - skipping email notification');
+    return;
   }
 
   const email = createContactEmail(data);
@@ -97,6 +115,7 @@ export async function sendContactNotificationEmail(data: ContactPayload): Promis
     console.log('Email sent successfully:', result.id);
   } catch (error) {
     console.error('Error sending contact notification email:', error);
-    throw error;
+    // Don't throw the error - let the API continue even if email fails
+    // The contact message is still saved to the database
   }
 }
