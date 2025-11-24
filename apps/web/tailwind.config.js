@@ -49,6 +49,18 @@ export default {
           4: 'hsl(var(--chart-4))',
           5: 'hsl(var(--chart-5))',
         },
+        graduation: {
+          bg: '#FDF9F2',
+          text: '#2F2F2F',
+          primary: '#0B6FBF',
+          accent: '#FFE1A8',
+          muted: '#F3F4F6',
+          card: '#FFFFFF',
+        },
+      },
+      fontFamily: {
+        display: ['Playfair Display', 'serif'],
+        body: ['Inter', 'sans-serif'],
       },
       borderRadius: {
         lg: 'var(--radius)',
