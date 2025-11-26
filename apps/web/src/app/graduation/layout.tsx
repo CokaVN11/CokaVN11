@@ -1,53 +1,40 @@
-// ABOUTME: Layout for graduation invitation page with metadata and font loading
-// ABOUTME: Sets up proper SEO, accessibility, and loads display fonts
+// ABOUTME: Layout for dark agency-style graduation invitation
+// ABOUTME: Sets metadata and loads Oswald + Manrope fonts
 
-import { Metadata } from 'next';
-import { Playfair_Display, Inter } from 'next/font/google';
+import type { Metadata } from 'next';
+import { Oswald, Manrope } from 'next/font/google';
 
-const playfairDisplay = Playfair_Display({
+const oswald = Oswald({
   subsets: ['latin', 'vietnamese'],
+  weight: ['400', '500', '600', '700'],
   display: 'swap',
   variable: '--font-display',
 });
 
-const inter = Inter({
-  subsets: ['latin', 'vietnamese'],
+const manrope = Manrope({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
   display: 'swap',
   variable: '--font-body',
 });
 
 export const metadata: Metadata = {
-  title: 'Lễ Tốt Nghiệp - Nguyễn Công Khanh | Graduation Day 2025',
-  description:
-    'Tham gia cùng tôi trong buổi lễ trao bằng tốt nghiệp ngành Công nghệ Thông tin tại Trường Đại học Khoa học Tự nhiên TP.HCM vào ngày 06/12/2025.',
-  keywords: [
-    'graduation',
-    'tốt nghiệp',
-    'VNUHCM',
-    'University of Science',
-    'Information Technology',
-    'Nguyễn Công Khanh',
-  ],
-  authors: [{ name: 'Nguyễn Công Khanh' }],
+  title: 'Nguyễn Công Khanh - Graduation Ceremony',
+  description: 'Join us in celebrating Khanh\'s graduation from the University of Science - VNUHCM. June 12, 2025 at 10:00 AM.',
   openGraph: {
-    title: 'Lễ Tốt Nghiệp - Nguyễn Công Khanh',
-    description: 'Mời bạn tham dự buổi lễ trao bằng tốt nghiệp ngày 06/12/2025',
+    title: 'Nguyễn Công Khanh - Graduation Ceremony',
+    description: 'Join us in celebrating this milestone achievement',
     type: 'website',
-    locale: 'vi_VN',
-  },
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 5, // Allow zoom for accessibility
   },
 };
 
-export default function GraduationLayout({ children }: { children: React.ReactNode }) {
+export default function GraduationSingleLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <div
-      className={`${playfairDisplay.variable} ${inter.variable} font-body`}
-      lang="vi"
-    >
+    <div className={`${oswald.variable} ${manrope.variable}`}>
       {children}
     </div>
   );

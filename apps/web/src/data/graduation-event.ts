@@ -4,6 +4,7 @@
 export interface GraduationEventConfig {
   graduate: {
     fullName: string;
+    firstName: string;
     degree: string;
     school: string;
   };
@@ -39,6 +40,7 @@ export interface GraduationEventConfig {
 export const eventConfig: GraduationEventConfig = {
   graduate: {
     fullName: 'Nguyễn Công Khanh',
+    firstName: 'Khanh',
     degree: 'Bachelor of Information Technology',
     school: 'University of Science – VNUHCM – Hồ Chí Minh',
   },
