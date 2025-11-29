@@ -26,10 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={cn(inter.variable, 'font-sans antialiased max-w-screen-lg mx-auto')}
-        suppressHydrationWarning
-      >
+      <body className={cn(inter.variable, 'font-sans antialiased')} suppressHydrationWarning>
         <TooltipProvider>
           <ThemeProvider
             attribute="class"
