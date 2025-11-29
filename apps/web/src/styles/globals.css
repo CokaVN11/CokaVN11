@@ -80,6 +80,28 @@
   }
 }
 
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateY(-50vh) translateX(20px);
+    opacity: 0.8;
+  }
+  70% {
+    transform: translateY(-70vh) translateX(10px);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(-100vh) translateX(-10px);
+    opacity: 0;
+  }
+}
+
 @keyframes marquee-vertical {
   from {
     transform: translateY(0);
@@ -96,6 +118,12 @@
 
   .animate-marquee-vertical {
     animation: marquee-vertical var(--duration) linear infinite;
+  }
+
+  .animate-float-up {
+    animation: floatUp var(--duration, 12s) ease-in-out infinite;
+    animation-delay: var(--delay, 0s);
+    will-change: transform, opacity;
   }
 
   /* Custom dark mode prose fixes */

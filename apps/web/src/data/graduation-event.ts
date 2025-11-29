@@ -48,7 +48,7 @@ export const eventConfig: GraduationEventConfig = {
     title: 'Graduation Day',
     dateISO: '2025-12-06',
     startTime: '10:00',
-    endTime: null,
+    endTime: '12:00',
     timezone: 'Asia/Ho_Chi_Minh',
   },
   venue: {

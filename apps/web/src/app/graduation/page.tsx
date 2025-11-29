@@ -1,5 +1,5 @@
-// ABOUTME: Awwwards-style dark agency graduation invitation with WebGL hero
-// ABOUTME: Custom cursor, loading screen, split layout (58%/42%), marquee footer
+// ABOUTME: Awwwards-style graduation invitation with aurora gradient hero
+// ABOUTME: Custom cursor, loading screen, split layout (35%/65%), i18n support
 
 'use client';
 
@@ -12,12 +12,15 @@ import { InfoGrid } from './components/InfoGrid';
 import { CTASection } from './components/CTASection';
 import { ParkingNote } from './components/ParkingNote';
 import { MarqueeFooter } from './components/MarqueeFooter';
+import { FloatingChickens } from './components/FloatingChickens';
 import { useReducedMotion } from './hooks/useReducedMotion';
+import { useLocale } from './hooks/useLocale';
 
 export default function GraduationPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [isRevealed, setIsRevealed] = useState(false);
   const shouldReduceMotion = useReducedMotion();
+  const { t } = useLocale();
 
   // Handle loading complete
   const handleLoadingComplete = useCallback(() => {
@@ -38,23 +41,21 @@ export default function GraduationPage() {
       <CustomCursor enabled={!isLoading} />
 
       {/* Loading screen */}
-      {!shouldReduceMotion && (
-        <LoadingScreen onComplete={handleLoadingComplete} />
-      )}
+      {!shouldReduceMotion && <LoadingScreen onComplete={handleLoadingComplete} />}
+
+      {/* Floating chickens celebration */}
+      {showContent && <FloatingChickens />}
 
       {/* Skip to main content for accessibility */}
       <a
         href="#main-content"
         className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[9999] focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:text-black"
       >
-        Skip to main content
+        {t.skipToMainContent}
       </a>
 
       {/* Background grid pattern */}
-      <div
-        className="pointer-events-none absolute inset-0 z-0 grid-lines-bg"
-        aria-hidden="true"
-      />
+      <div className="pointer-events-none absolute inset-0 z-0 grid-lines-bg" aria-hidden="true" />
 
       {/* Main content */}
       <main
@@ -65,23 +66,42 @@ export default function GraduationPage() {
           transition: 'opacity 0.3s ease',
         }}
       >
-        {/* Left Panel: Hero Canvas (58% desktop, 45vh mobile) */}
+        {/* Left Panel: Hero Canvas (35% desktop, hidden on mobile) */}
         <section
-          className="relative h-[45vh] flex-shrink-0 md:h-full md:w-[58%]"
-          aria-label="Hero visual"
+          className="hidden md:relative md:block md:h-full md:w-[35%]"
+          aria-label={t.heroVisual}
         >
-          <HeroCanvas
-            imageUrl="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1200&h=800&fit=crop&q=80"
-          />
+          <HeroCanvas />
           <FloatingName isRevealed={triggerReveal} />
         </section>
 
-        {/* Right Panel: Info Content (42% desktop, remaining height mobile) */}
+        {/* Right Panel: Info Content (65% desktop, full screen mobile) */}
         <section
-          className="flex flex-1 flex-col justify-center overflow-y-auto bg-grad-single-bg-dark-alt px-6 py-8 scrollbar-grad-single md:w-[42%] md:px-12 md:py-12 lg:px-16"
-          aria-label="Event information"
+          className="relative flex h-full w-full flex-col justify-center overflow-y-auto bg-grad-single-bg-dark-alt px-6 py-8 scrollbar-grad-single md:h-auto md:w-[65%] md:px-12 md:py-12 lg:px-16"
+          aria-label={t.eventInformation}
         >
-          <div className="flex max-w-lg flex-col gap-8">
+          {/* Aurora gradient - enhanced for mobile (no hero to bleed from) */}
+          <div
+            className="pointer-events-none absolute inset-0 z-0 md:hidden"
+            style={{
+              background: `
+                radial-gradient(ellipse at top left, rgba(115, 38, 166, 0.12) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom right, rgba(217, 64, 140, 0.08) 0%, transparent 50%)
+              `,
+            }}
+            aria-hidden="true"
+          />
+          {/* Aurora gradient bleed from hero canvas (desktop only) */}
+          <div
+            className="pointer-events-none absolute inset-0 z-0 hidden md:block"
+            style={{
+              background:
+                'linear-gradient(90deg, rgba(115, 38, 166, 0.08) 0%, rgba(217, 64, 140, 0.04) 20%, transparent 50%)',
+            }}
+            aria-hidden="true"
+          />
+
+          <div className="relative z-[1] flex w-full flex-col gap-8">
             {/* Info Grid */}
             <InfoGrid isRevealed={triggerReveal} />
 
@@ -89,18 +109,9 @@ export default function GraduationPage() {
             <CTASection isRevealed={triggerReveal} />
 
             {/* Parking Note */}
-            <div
-              className="reveal-parking"
-              style={{
-                opacity: shouldReduceMotion || isRevealed ? 1 : 0,
-                transform: shouldReduceMotion || isRevealed ? 'none' : 'translateY(20px)',
-                transition: 'opacity 0.7s ease, transform 0.7s ease',
-                transitionDelay: '0.8s',
-              }}
-            >
-              <ParkingNote />
-            </div>
+            <ParkingNote isRevealed={triggerReveal} />
           </div>
+          {/* End content wrapper */}
         </section>
       </main>
 

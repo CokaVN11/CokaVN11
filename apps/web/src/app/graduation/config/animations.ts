@@ -122,9 +122,9 @@ export const SCROLL_CONFIG = {
 
   /** Standard scrub value for scroll-linked animations */
   scrub: {
-    tight: true,      // Immediate response (immersive-g style)
-    smooth: 1,        // Slight lag for smoother feel
-    slow: 2,          // More pronounced lag
+    tight: true, // Immediate response (immersive-g style)
+    smooth: 1, // Slight lag for smoother feel
+    slow: 2, // More pronounced lag
   },
 
   /** Markers for development (disable in production) */
@@ -399,4 +399,22 @@ export const CANVAS_CONFIG = {
 
   /** Ambient noise amplitude */
   noiseAmplitude: 0.05,
+} as const;
+
+/**
+ * Aurora gradient shader configuration
+ * For procedural flowing gradient effect (Sunset Warm palette)
+ */
+export const AURORA_CONFIG = {
+  /** Mouse influence radius (0-1 normalized) */
+  mouseRadius: 0.35,
+
+  /** Distortion intensity for mouse interaction */
+  distortionStrength: 0.12,
+
+  /** Speed of the flowing aurora animation */
+  flowSpeed: 0.15,
+
+  /** Scale of the noise patterns (higher = smaller patterns) */
+  noiseScale: 2.0,
 } as const;

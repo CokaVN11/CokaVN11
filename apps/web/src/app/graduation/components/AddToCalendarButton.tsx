@@ -1,10 +1,11 @@
 // ABOUTME: Add-to-calendar button with dropdown for Google Calendar, ICS, and Outlook
-// ABOUTME: Premium gradient design with buttery 60fps micro-interactions
+// ABOUTME: Minimal ghost style with aurora glow, i18n support and 60fps micro-interactions
 
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Calendar, Download, Globe } from 'lucide-react';
 import {
   DURATION,
   DURATION_60FPS,
@@ -14,6 +15,7 @@ import {
   EASING_60FPS,
 } from '../config/animations';
 import { useReducedMotion } from '../hooks/useReducedMotion';
+import { useLocale } from '../hooks/useLocale';
 import { format } from 'date-fns';
 
 interface AddToCalendarButtonProps {
@@ -24,6 +26,7 @@ export function AddToCalendarButton({ eventConfig }: AddToCalendarButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const shouldReduceMotion = useReducedMotion();
+  const { t, interpolate } = useLocale();
 
   const { event, venue, graduate } = eventConfig;
 
@@ -44,6 +47,12 @@ export function AddToCalendarButton({ eventConfig }: AddToCalendarButtonProps) {
     };
   }, [isOpen]);
 
+  // Generate translated event title and description
+  const eventTitle = `${graduate.fullName} - ${t.graduationCeremony}`;
+  const eventDescription = interpolate(t.joinUsCelebrating, {
+    name: graduate.firstName,
+  });
+
   // Generate calendar links
   const generateGoogleCalendarLink = () => {
     const eventDate = new Date(event.dateISO);
@@ -52,10 +61,10 @@ export function AddToCalendarButton({ eventConfig }: AddToCalendarButtonProps) {
 
     const params = new URLSearchParams({
       action: 'TEMPLATE',
-      text: `${graduate.fullName} - Graduation Ceremony`,
+      text: eventTitle,
       dates: `${startDateTime}/${endDateTime}`,
       location: venue.addressLine,
-      details: `Join us in celebrating ${graduate.firstName}'s graduation!`,
+      details: eventDescription,
     });
 
     return `https://calendar.google.com/calendar/render?${params.toString()}`;
@@ -69,9 +78,9 @@ export function AddToCalendarButton({ eventConfig }: AddToCalendarButtonProps) {
 VERSION:2.0
 BEGIN:VEVENT
 DTSTART:${startDateTime}
-SUMMARY:${graduate.fullName} - Graduation Ceremony
+SUMMARY:${eventTitle}
 LOCATION:${venue.addressLine}
-DESCRIPTION:Join us in celebrating ${graduate.firstName}'s graduation!
+DESCRIPTION:${eventDescription}
 END:VEVENT
 END:VCALENDAR`;
   };
@@ -88,25 +97,32 @@ END:VCALENDAR`;
     setIsOpen(false);
   };
 
-  const calendarOptions = [
+  const calendarOptions: Array<{
+    icon: React.ReactNode;
+    label: string;
+    action: () => void;
+  }> = [
     {
-      icon: '📅',
-      label: 'Google Calendar',
+      icon: <Calendar className="w-5 h-5" />,
+      label: t.googleCalendar,
       action: () => {
         window.open(generateGoogleCalendarLink(), '_blank');
         setIsOpen(false);
       },
     },
     {
-      icon: '📥',
-      label: 'Download ICS',
+      icon: <Download className="w-5 h-5" />,
+      label: t.downloadICS,
       action: handleDownloadICS,
     },
     {
-      icon: '🌐',
-      label: 'Outlook Web',
+      icon: <Globe className="w-5 h-5" />,
+      label: t.outlookWeb,
       action: () => {
-        window.open(generateGoogleCalendarLink().replace('google.com', 'outlook.live.com'), '_blank');
+        window.open(
+          generateGoogleCalendarLink().replace('google.com', 'outlook.live.com'),
+          '_blank'
+        );
         setIsOpen(false);
       },
     },
@@ -115,7 +131,7 @@ END:VCALENDAR`;
   return (
     <div className="relative" ref={dropdownRef}>
       <motion.button
-        className="flex items-center justify-center gap-2 w-full max-w-[320px] md:w-[200px] md:max-w-none h-12 md:h-14 rounded-28 bg-gradient-blue shadow-button-blue border-none cursor-pointer font-body text-base font-semibold tracking-[0.02em] text-white transition-shadow duration-300 ease-[cubic-bezier(0.445,0.05,0.55,0.95)] hover:shadow-button-blue-hover active:shadow-button-blue-active focus-visible:outline focus-visible:outline-3 focus-visible:outline-grad-single-blue-primary focus-visible:outline-offset-2"
+        className="flex items-center px-4 justify-center gap-2 w-full max-w-[320px] md:w-[200px] md:max-w-none h-12 md:h-14 rounded-28 bg-transparent border border-white/10 cursor-pointer font-body text-base font-medium text-white/80 transition-all duration-500 hover:border-white/20 hover:bg-white/[0.03] hover:shadow-[0_0_60px_-15px_rgba(217,64,140,0.25)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-white/50 focus-visible:outline-offset-2"
         onClick={() => setIsOpen(!isOpen)}
         // 60fps button press with lift
         whileHover={
@@ -136,10 +152,10 @@ END:VCALENDAR`;
         }
         transition={{ duration: DURATION_60FPS.micro, ease: EASING_60FPS.easeOutEmphasized as any }}
       >
-        <span className="text-xl">📅</span>
-        <span className="flex-1">Add to Calendar</span>
+        <Calendar className="w-5 h-5" />
+        <span className="flex-1">{t.addToCalendar}</span>
         <motion.span
-          className="text-xs inline-block"
+          className="inline-block text-xs"
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{ duration: DURATION.fast }}
         >
@@ -155,12 +171,14 @@ END:VCALENDAR`;
             initial={{ opacity: 0, scale: 0.95, y: -8 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: -8 }}
-            transition={shouldReduceMotion ? { duration: DURATION_60FPS.short } : SPRING_60FPS.dropdownExpand}
+            transition={
+              shouldReduceMotion ? { duration: DURATION_60FPS.short } : SPRING_60FPS.dropdownExpand
+            }
           >
             {calendarOptions.map((option, index) => (
               <motion.button
                 key={option.label}
-                className="flex items-center gap-3 w-full p-3 rounded-xl bg-transparent border-none font-body text-sm font-medium text-grad-single-text text-left cursor-pointer transition-all duration-150 ease-in-out hover:bg-grad-single-glass-10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-grad-single-blue-primary focus-visible:-outline-offset-2"
+                className="flex items-center gap-3 w-full p-3 rounded-xl bg-transparent border-none font-body text-sm font-medium text-white/80 text-left cursor-pointer transition-all duration-300 hover:bg-white/[0.05] hover:shadow-[0_0_40px_-10px_rgba(217,64,140,0.15)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-white/50 focus-visible:-outline-offset-2"
                 onClick={option.action}
                 // 60fps staggered menu items with micro hover
                 initial={{ opacity: 0, x: -8 }}
@@ -185,7 +203,7 @@ END:VCALENDAR`;
                       }
                 }
               >
-                <span className="text-xl flex-shrink-0">{option.icon}</span>
+                <span className="flex-shrink-0 text-white/70">{option.icon}</span>
                 <span className="flex-1">{option.label}</span>
               </motion.button>
             ))}

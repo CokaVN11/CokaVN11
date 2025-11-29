@@ -1,60 +1,62 @@
-// ABOUTME: WebGL canvas component with liquid distortion shader effect
-// ABOUTME: Uses React Three Fiber for 3D rendering with custom shader material
+// ABOUTME: WebGL canvas with procedural aurora gradient shader effect
+// ABOUTME: Sunset warm colors (orange/pink/purple) with mouse-reactive distortion
 
 'use client';
 
-import { useRef, useMemo, useState, useEffect, Suspense } from 'react';
+import { useRef, useMemo, useState } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import { useHeroCanvas } from '../hooks/useHeroCanvas';
 import { useReducedMotion } from '../hooks/useReducedMotion';
-import { vertexShader, fragmentShader } from '../shaders/liquidDistortion';
-import { CANVAS_CONFIG } from '../config/animations';
+import { vertexShader, fragmentShader, defaultUniforms } from '../shaders/auroraGradient';
+import { AURORA_CONFIG } from '../config/animations';
 
-interface DistortionPlaneProps {
-  texture: THREE.Texture;
+interface AuroraPlaneProps {
   mousePosition: { x: number; y: number };
 }
 
 /**
- * Inner plane mesh with custom shader material
+ * Inner plane mesh with aurora gradient shader
  */
-function DistortionPlane({ texture, mousePosition }: DistortionPlaneProps) {
+function AuroraPlane({ mousePosition }: AuroraPlaneProps) {
   const meshRef = useRef<THREE.Mesh>(null);
   const materialRef = useRef<THREE.ShaderMaterial>(null);
   const { viewport } = useThree();
   const shouldReduceMotion = useReducedMotion();
 
-  // Create uniforms
+  // Create uniforms with aurora config
   const uniforms = useMemo(
     () => ({
-      uTexture: { value: texture },
       uMouse: { value: new THREE.Vector2(0.5, 0.5) },
       uTime: { value: 0 },
-      uDistortionStrength: { value: shouldReduceMotion ? 0 : CANVAS_CONFIG.distortionStrength },
-      uNoiseAmplitude: { value: shouldReduceMotion ? 0 : CANVAS_CONFIG.noiseAmplitude },
-      uNoiseSpeed: { value: CANVAS_CONFIG.noiseSpeed },
-      uMouseRadius: { value: CANVAS_CONFIG.mouseRadius },
+      uDistortionStrength: {
+        value: shouldReduceMotion ? 0 : AURORA_CONFIG.distortionStrength,
+      },
+      uMouseRadius: { value: AURORA_CONFIG.mouseRadius },
+      uFlowSpeed: {
+        value: shouldReduceMotion ? 0.02 : AURORA_CONFIG.flowSpeed,
+      },
+      uNoiseScale: { value: AURORA_CONFIG.noiseScale },
     }),
-    [texture, shouldReduceMotion]
+    [shouldReduceMotion]
   );
 
   // Animation loop
   useFrame((state) => {
     if (!materialRef.current) return;
 
-    // Update time
+    // Update time for flowing animation
     materialRef.current.uniforms.uTime.value = state.clock.elapsedTime;
 
     // Smoothly interpolate mouse position
     const currentMouse = materialRef.current.uniforms.uMouse.value;
-    currentMouse.x += (mousePosition.x - currentMouse.x) * 0.1;
-    currentMouse.y += (mousePosition.y - currentMouse.y) * 0.1;
+    currentMouse.x += (mousePosition.x - currentMouse.x) * 0.08;
+    currentMouse.y += (mousePosition.y - currentMouse.y) * 0.08;
   });
 
   return (
     <mesh ref={meshRef} scale={[viewport.width, viewport.height, 1]}>
-      <planeGeometry args={[1, 1, 32, 32]} />
+      <planeGeometry args={[1, 1, 64, 64]} />
       <shaderMaterial
         ref={materialRef}
         vertexShader={vertexShader}
@@ -65,109 +67,39 @@ function DistortionPlane({ texture, mousePosition }: DistortionPlaneProps) {
   );
 }
 
-/**
- * Fallback placeholder while loading
- */
-function PlaceholderPlane() {
-  const { viewport } = useThree();
-
-  return (
-    <mesh scale={[viewport.width, viewport.height, 1]}>
-      <planeGeometry args={[1, 1]} />
-      <meshBasicMaterial color="#1a1a1a" />
-    </mesh>
-  );
-}
-
-/**
- * Scene component that handles texture loading inside Canvas
- */
-function Scene({ imageUrl, mousePosition }: { imageUrl: string; mousePosition: { x: number; y: number } }) {
-  const [texture, setTexture] = useState<THREE.Texture | null>(null);
-  const [error, setError] = useState(false);
-
-  useEffect(() => {
-    const loader = new THREE.TextureLoader();
-    loader.crossOrigin = 'anonymous';
-
-    loader.load(
-      imageUrl,
-      (loadedTexture) => {
-        loadedTexture.minFilter = THREE.LinearFilter;
-        loadedTexture.magFilter = THREE.LinearFilter;
-        setTexture(loadedTexture);
-      },
-      undefined,
-      () => {
-        console.warn('Failed to load texture, using fallback');
-        setError(true);
-      }
-    );
-
-    return () => {
-      if (texture) {
-        texture.dispose();
-      }
-    };
-  }, [imageUrl]);
-
-  if (error) {
-    return <PlaceholderPlane />;
-  }
-
-  if (!texture) {
-    return <PlaceholderPlane />;
-  }
-
-  return <DistortionPlane texture={texture} mousePosition={mousePosition} />;
-}
-
 interface HeroCanvasProps {
-  /** Hero image URL */
-  imageUrl?: string;
   /** Additional CSS classes */
   className?: string;
 }
 
 /**
- * Hero canvas with liquid distortion effect
+ * Hero canvas with aurora gradient effect
  *
- * - Full container coverage
- * - Mouse-reactive distortion
- * - Ambient noise movement
- * - Falls back to static image for reduced motion or errors
+ * - Procedural flowing gradient (no external image)
+ * - Sunset warm color palette (orange/pink/purple)
+ * - Mouse-reactive liquid distortion
+ * - Falls back to CSS gradient for reduced motion or WebGL errors
  */
-export function HeroCanvas({
-  imageUrl = 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1200&h=800&fit=crop&q=80',
-  className = '',
-}: HeroCanvasProps) {
+export function HeroCanvas({ className = '' }: HeroCanvasProps) {
   const { mousePosition, containerRef } = useHeroCanvas();
   const shouldReduceMotion = useReducedMotion();
   const [hasWebGLError, setHasWebGLError] = useState(false);
 
-  // For reduced motion or WebGL errors, show static image
+  // CSS gradient fallback for reduced motion or WebGL errors
   if (shouldReduceMotion || hasWebGLError) {
     return (
       <div
         ref={containerRef}
         className={`relative h-full w-full overflow-hidden ${className}`}
-      >
-        <img
-          src={imageUrl}
-          alt=""
-          className="h-full w-full object-cover"
-          loading="eager"
-          crossOrigin="anonymous"
-        />
-      </div>
+        style={{
+          background: 'linear-gradient(135deg, #261440 0%, #7326A6 35%, #D9408C 65%, #F25926 100%)',
+        }}
+      />
     );
   }
 
   return (
-    <div
-      ref={containerRef}
-      className={`relative h-full w-full overflow-hidden ${className}`}
-    >
+    <div ref={containerRef} className={`relative h-full w-full overflow-hidden ${className}`}>
       <Canvas
         camera={{ position: [0, 0, 5], fov: 50 }}
         gl={{
@@ -176,28 +108,25 @@ export function HeroCanvas({
           powerPreference: 'high-performance',
         }}
         dpr={[1, 2]}
-        style={{ background: '#0a0a0a' }}
+        style={{ background: '#261440' }}
         onCreated={({ gl }) => {
-          // Check WebGL support
           if (!gl.capabilities.isWebGL2) {
-            console.warn('WebGL2 not supported, falling back to static image');
+            console.warn('WebGL2 not supported, falling back to CSS gradient');
           }
         }}
         onError={() => {
           setHasWebGLError(true);
         }}
       >
-        <Suspense fallback={<PlaceholderPlane />}>
-          <Scene imageUrl={imageUrl} mousePosition={mousePosition} />
-        </Suspense>
+        <AuroraPlane mousePosition={mousePosition} />
       </Canvas>
 
-      {/* Gradient overlay for text contrast */}
+      {/* Subtle gradient overlay for depth */}
       <div
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            'linear-gradient(to right, rgba(10, 10, 10, 0.3) 0%, transparent 50%)',
+            'radial-gradient(ellipse at 30% 50%, transparent 0%, rgba(38, 20, 64, 0.3) 100%)',
         }}
       />
     </div>

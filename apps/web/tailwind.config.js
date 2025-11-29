@@ -54,7 +54,7 @@ export default {
           'bg-dark': '#0a0a0a',
           'bg-dark-alt': '#0f0f0f',
           'bg-dropdown': '#1a1a1a',
-          'text': '#f0f0f0',
+          text: '#f0f0f0',
           'text-muted-50': 'rgba(240, 240, 240, 0.5)',
           'text-muted-60': 'rgba(240, 240, 240, 0.6)',
           'blue-primary': '#0B6FBF',
@@ -85,21 +85,21 @@ export default {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
-        '28': '28px', // Pill button
+        28: '28px', // Pill button
       },
       spacing: {
-        '58': '58%',
-        '42': '42%',
+        58: '58%',
+        42: '42%',
       },
       flexBasis: {
-        '58': '58%',
-        '42': '42%',
+        58: '58%',
+        42: '42%',
       },
       boxShadow: {
         'button-blue': '0 4px 12px rgba(11, 111, 191, 0.25)',
         'button-blue-hover': '0 6px 20px rgba(11, 111, 191, 0.35)',
         'button-blue-active': '0 2px 8px rgba(11, 111, 191, 0.2)',
-        'dropdown': '0 8px 24px rgba(0, 0, 0, 0.5)',
+        dropdown: '0 8px 24px rgba(0, 0, 0, 0.5)',
       },
       backgroundImage: {
         'gradient-blue': 'linear-gradient(135deg, #0B6FBF 0%, #7EC8E3 100%)',

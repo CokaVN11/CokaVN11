@@ -31,14 +31,8 @@ interface UseLoadingCounterReturn {
  * @param options - Configuration options
  * @returns Counter state and controls
  */
-export function useLoadingCounter(
-  options: UseLoadingCounterOptions = {}
-): UseLoadingCounterReturn {
-  const {
-    duration = LOADER_CONFIG.counterDuration,
-    onComplete,
-    startDelay = 0,
-  } = options;
+export function useLoadingCounter(options: UseLoadingCounterOptions = {}): UseLoadingCounterReturn {
+  const { duration = LOADER_CONFIG.counterDuration, onComplete, startDelay = 0 } = options;
 
   const [count, setCount] = useState(0);
   const [isComplete, setIsComplete] = useState(false);

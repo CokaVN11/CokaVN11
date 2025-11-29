@@ -1,5 +1,5 @@
 // ABOUTME: Marquee footer with infinite scrolling text
-// ABOUTME: Fixed to bottom with high contrast white bg / black text
+// ABOUTME: Fixed to bottom with i18n support and high contrast design
 
 'use client';
 
@@ -7,6 +7,7 @@ import { useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { Marquee } from '@/components/ui/marquee';
 import { useReducedMotion } from '../hooks/useReducedMotion';
+import { useLocale } from '../hooks/useLocale';
 import { REVEAL_STAGGER } from '../config/animations';
 import { eventConfig } from '@/data/graduation-event';
 
@@ -28,6 +29,7 @@ interface MarqueeFooterProps {
 export function MarqueeFooter({ isRevealed = false, className = '' }: MarqueeFooterProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const shouldReduceMotion = useReducedMotion();
+  const { t, interpolate } = useLocale();
 
   const { graduate } = eventConfig;
 
@@ -51,9 +53,9 @@ export function MarqueeFooter({ isRevealed = false, className = '' }: MarqueeFoo
     );
   }, [isRevealed, shouldReduceMotion]);
 
-  // Marquee items
+  // Marquee items with i18n
   const marqueeItems = [
-    `Class of ${graduationYear}`,
+    interpolate(t.classOf, { year: graduationYear }),
     '•',
     graduate.degree,
     '•',
@@ -69,10 +71,7 @@ export function MarqueeFooter({ isRevealed = false, className = '' }: MarqueeFoo
       className={`fixed bottom-0 left-0 right-0 z-50 bg-white ${className}`}
       style={{ opacity: shouldReduceMotion ? 1 : 0 }}
     >
-      <Marquee
-        className="py-3 [--duration:30s] [--gap:2rem]"
-        pauseOnHover
-      >
+      <Marquee className="py-3 [--duration:30s] [--gap:2rem]" pauseOnHover>
         {marqueeItems.map((item, index) => (
           <span
             key={index}

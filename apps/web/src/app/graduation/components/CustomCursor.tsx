@@ -21,14 +21,9 @@ interface CustomCursorProps {
  */
 export function CustomCursor({ enabled = true }: CustomCursorProps) {
   const shouldReduceMotion = useReducedMotion();
-  const {
-    mousePos,
-    ringPos,
-    isHovering,
-    isClicking,
-    isVisible,
-    isTouchDevice,
-  } = useCustomCursor(enabled && !shouldReduceMotion);
+  const { mousePos, ringPos, isHovering, isClicking, isVisible, isTouchDevice } = useCustomCursor(
+    enabled && !shouldReduceMotion
+  );
 
   // Don't render on touch devices or if disabled
   if (isTouchDevice || !enabled) {

@@ -1,5 +1,5 @@
 // ABOUTME: Full-screen loading overlay with animated counter
-// ABOUTME: Slides up to reveal content when loading completes
+// ABOUTME: Slides up to reveal content with i18n support
 
 'use client';
 
@@ -7,6 +7,7 @@ import { useState, useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { useLoadingCounter } from '../hooks/useLoadingCounter';
 import { useReducedMotion } from '../hooks/useReducedMotion';
+import { useLocale } from '../hooks/useLocale';
 import { LOADER_CONFIG } from '../config/animations';
 
 interface LoadingScreenProps {
@@ -22,11 +23,9 @@ interface LoadingScreenProps {
  * - Slides up to reveal content when complete
  * - Respects reduced motion preferences
  */
-export function LoadingScreen({
-  onComplete,
-  minDisplayTime = 500,
-}: LoadingScreenProps) {
+export function LoadingScreen({ onComplete, minDisplayTime = 500 }: LoadingScreenProps) {
   const shouldReduceMotion = useReducedMotion();
+  const { t } = useLocale();
   const [isExiting, setIsExiting] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
   const overlayRef = useRef<HTMLDivElement>(null);
@@ -95,7 +94,7 @@ export function LoadingScreen({
       aria-valuenow={count}
       aria-valuemin={0}
       aria-valuemax={100}
-      aria-label="Loading graduation invitation"
+      aria-label={t.loadingGraduationInvitation}
     >
       {/* Counter display */}
       <div className="relative flex items-baseline">
@@ -112,7 +111,7 @@ export function LoadingScreen({
 
       {/* Loading text */}
       <p className="absolute bottom-12 left-1/2 -translate-x-1/2 font-body text-sm uppercase tracking-[0.3em] text-white/40">
-        Loading
+        {t.loading}
       </p>
     </div>
   );
