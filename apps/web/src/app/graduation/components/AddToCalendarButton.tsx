@@ -1,11 +1,11 @@
-// ABOUTME: Add-to-calendar button with dropdown for Google Calendar, ICS, and Outlook
+// ABOUTME: Add-to-calendar button with dropdown for Google Calendar and ICS download
 // ABOUTME: Minimal ghost style with aurora glow, i18n support and 60fps micro-interactions
 
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Calendar, Download, Globe } from 'lucide-react';
+import { Calendar, Download } from 'lucide-react';
 import {
   DURATION,
   DURATION_60FPS,
@@ -115,22 +115,12 @@ END:VCALENDAR`;
       label: t.downloadICS,
       action: handleDownloadICS,
     },
-    {
-      icon: <Globe className="w-5 h-5" />,
-      label: t.outlookWeb,
-      action: () => {
-        window.open(
-          generateGoogleCalendarLink().replace('google.com', 'outlook.live.com'),
-          '_blank'
-        );
-        setIsOpen(false);
-      },
-    },
   ];
 
   return (
     <div className="relative" ref={dropdownRef}>
       <motion.button
+        data-cursor-magnetic
         className="flex items-center px-4 justify-center gap-2 w-full max-w-[320px] md:w-[200px] md:max-w-none h-12 md:h-14 rounded-28 bg-transparent border border-white/10 cursor-pointer font-body text-base font-medium text-white/80 transition-all duration-500 hover:border-white/20 hover:bg-white/[0.03] hover:shadow-[0_0_60px_-15px_rgba(217,64,140,0.25)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-white/50 focus-visible:outline-offset-2"
         onClick={() => setIsOpen(!isOpen)}
         // 60fps button press with lift

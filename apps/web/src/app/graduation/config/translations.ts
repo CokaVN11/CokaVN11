@@ -27,7 +27,6 @@ export interface Translations {
   // Calendar options
   googleCalendar: string;
   downloadICS: string;
-  outlookWeb: string;
 
   // Calendar event content
   graduationCeremony: string;
@@ -82,7 +81,6 @@ export const translations: Record<Locale, Translations> = {
     // Calendar options
     googleCalendar: 'Google Calendar',
     downloadICS: 'Download ICS',
-    outlookWeb: 'Outlook Web',
 
     // Calendar event content
     graduationCeremony: 'Graduation Ceremony',
@@ -136,7 +134,6 @@ export const translations: Record<Locale, Translations> = {
     // Calendar options
     googleCalendar: 'Google Calendar',
     downloadICS: 'Tải file ICS',
-    outlookWeb: 'Outlook Web',
 
     // Calendar event content
     graduationCeremony: 'Lễ Tốt Nghiệp',

@@ -65,19 +65,18 @@ export function FloatingChickens() {
   }
 
   return (
-    <div
-      className="pointer-events-none fixed inset-0 z-10 overflow-hidden"
-      aria-hidden="true"
-    >
+    <div className="pointer-events-none fixed inset-0 z-10 overflow-hidden" aria-hidden="true">
       {chickens.map((chicken) => (
         <div
           key={chicken.id}
           className="absolute bottom-0 animate-float-up"
-          style={{
-            left: `${chicken.left}%`,
-            '--duration': `${chicken.duration}s`,
-            '--delay': `${chicken.delay}s`,
-          } as React.CSSProperties}
+          style={
+            {
+              left: `${chicken.left}%`,
+              '--duration': `${chicken.duration}s`,
+              '--delay': `${chicken.delay}s`,
+            } as React.CSSProperties
+          }
         >
           <Image
             src="/chicken_love.png"
@@ -86,6 +85,7 @@ export function FloatingChickens() {
             height={chicken.size}
             className="select-none"
             style={{ transform: `rotate(${chicken.rotation}deg)` }}
+            loading="lazy"
             priority={false}
           />
         </div>

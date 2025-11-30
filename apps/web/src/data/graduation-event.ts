@@ -1,5 +1,5 @@
 // ABOUTME: Configuration file for the graduation invitation page
-// ABOUTME: Contains all event details, venue info, and RSVP settings
+// ABOUTME: Contains all event details and venue information
 
 export interface GraduationEventConfig {
   graduate: {
@@ -21,20 +21,6 @@ export interface GraduationEventConfig {
     mapsQuery: string;
     parkingNote: string;
   };
-  rsvp: {
-    provider: 'formspree';
-    formspreeId: string;
-    deadlineISO: string | null;
-  };
-  contacts: Array<{
-    label: string;
-    href: string;
-    icon: string;
-  }>;
-  gallery: Array<{
-    src: string;
-    alt: string;
-  }>;
 }
 
 export const eventConfig: GraduationEventConfig = {
@@ -57,17 +43,4 @@ export const eventConfig: GraduationEventConfig = {
     mapsQuery: '227 Nguyễn Văn Cừ Phường Chợ Quán TP Hồ Chí Minh',
     parkingNote: 'Nên gửi xe ngoài trường hoặc đi Grab cho tiện nhé!',
   },
-  rsvp: {
-    provider: 'formspree',
-    formspreeId: process.env.NEXT_PUBLIC_FORMSPREE_ID || '',
-    deadlineISO: null,
-  },
-  contacts: [
-    // Add contact links later
-    // { label: 'Zalo', href: 'https://zalo.me/xxxx', icon: 'zalo' }
-  ],
-  gallery: [
-    // Add polaroid images later
-    // { src: '/images/p1.webp', alt: 'Campus' }
-  ],
 };

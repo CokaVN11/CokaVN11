@@ -32,6 +32,14 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'vi_VN',
     alternateLocale: 'en_US',
+    images: [
+      {
+        url: '/og-graduation.jpg',
+        width: 1456,
+        height: 816,
+        alt: 'Lễ Tốt Nghiệp - Nguyễn Công Khanh',
+      },
+    ],
   },
   alternates: {
     languages: {

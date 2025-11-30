@@ -133,8 +133,7 @@ function InfoGridInner({ isRevealed = false, className = '' }: InfoGridProps) {
           {/* Quote Line 1: "Thân mời [Guest Name]," - opacity only to fix Highlighter position */}
           <AnimatedItem index={0} className="flex flex-col items-center" useOpacityOnly>
             <span className="text-2xl font-medium font-display text-white/90 md:text-3xl">
-              {t.invitationQuoteLine1.replace('{guestName}', '').trim()}
-              {' '}
+              {t.invitationQuoteLine1.replace('{guestName}', '').trim()}{' '}
               <Highlighter action="highlight" color="#FF9800">
                 {guestName}
               </Highlighter>
@@ -184,6 +183,7 @@ function InfoGridInner({ isRevealed = false, className = '' }: InfoGridProps) {
         {/* Location Column (clickable) */}
         <AnimatedItem index={getIndex(2)} className="flex items-center justify-center">
           <button
+            data-cursor-magnetic
             onClick={handleLocationClick}
             onKeyDown={handleKeyDown}
             className="group flex flex-col items-center gap-1 rounded-lg border border-white/10 p-2 transition-all duration-500 animate-pulse hover:animate-none hover:border-[#D9408C]/30 hover:bg-white/[0.03] hover:shadow-[0_0_60px_-15px_rgba(217,64,140,0.25)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/50 md:gap-2 md:p-3"

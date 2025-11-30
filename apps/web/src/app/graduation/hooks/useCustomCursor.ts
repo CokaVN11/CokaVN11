@@ -1,5 +1,5 @@
-// ABOUTME: Custom hook for tracking mouse position with smooth lerping
-// ABOUTME: Handles hover states for interactive elements and respects reduced motion
+// ABOUTME: Custom hook for tracking mouse position with smooth lerping and magnetic effect
+// ABOUTME: Handles hover states, magnetic snapping, and respects reduced motion
 
 'use client';
 
@@ -9,6 +9,13 @@ import { CURSOR_CONFIG } from '../config/animations';
 interface CursorPosition {
   x: number;
   y: number;
+}
+
+interface MagnetTarget {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
 }
 
 interface CursorState {
@@ -24,10 +31,25 @@ interface CursorState {
   isVisible: boolean;
   /** Whether device supports touch (hide cursor) */
   isTouchDevice: boolean;
+  /** Whether cursor is magnetically attracted to an element */
+  isMagnetic: boolean;
 }
 
+/** Magnetic effect configuration */
+const MAGNETIC_CONFIG = {
+  /** Distance threshold to activate magnetic effect (pixels) */
+  radius: 100,
+  /** Strength of magnetic pull (0-1, higher = stronger pull) */
+  strength: 0.35,
+};
+
 /**
- * Custom cursor hook with smooth lerping and hover detection
+ * Custom cursor hook with smooth lerping, hover detection, and magnetic effect
+ *
+ * Features:
+ * - Smooth lerp-based ring following
+ * - Pauses RAF when cursor leaves viewport (performance)
+ * - Magnetic effect for elements with [data-cursor-magnetic]
  *
  * @param enabled - Whether cursor tracking is enabled
  * @returns CursorState with positions and interaction states
@@ -39,10 +61,18 @@ export function useCustomCursor(enabled: boolean = true): CursorState {
   const [isClicking, setIsClicking] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [isTouchDevice, setIsTouchDevice] = useState(false);
+  const [isMagnetic, setIsMagnetic] = useState(false);
 
   const rafRef = useRef<number | null>(null);
   const targetPosRef = useRef<CursorPosition>({ x: 0, y: 0 });
   const currentPosRef = useRef<CursorPosition>({ x: 0, y: 0 });
+  const isVisibleRef = useRef(false);
+  const magnetTargetRef = useRef<MagnetTarget | null>(null);
+
+  // Keep isVisibleRef in sync with isVisible state
+  useEffect(() => {
+    isVisibleRef.current = isVisible;
+  }, [isVisible]);
 
   // Detect touch device
   useEffect(() => {
@@ -57,14 +87,34 @@ export function useCustomCursor(enabled: boolean = true): CursorState {
     return start + (end - start) * factor;
   }, []);
 
-  // RAF loop for smooth ring following
+  // RAF loop for smooth ring following (pauses when not visible)
   useEffect(() => {
     if (!enabled || isTouchDevice) return;
 
     const animate = () => {
+      // Skip calculations when cursor is not visible (performance optimization)
+      if (!isVisibleRef.current) {
+        rafRef.current = requestAnimationFrame(animate);
+        return;
+      }
+
+      // Calculate target position with magnetic effect
+      let targetX = targetPosRef.current.x;
+      let targetY = targetPosRef.current.y;
+
+      if (magnetTargetRef.current) {
+        const magnet = magnetTargetRef.current;
+        const magnetCenterX = magnet.x + magnet.width / 2;
+        const magnetCenterY = magnet.y + magnet.height / 2;
+
+        // Blend toward magnet center
+        targetX = lerp(targetX, magnetCenterX, MAGNETIC_CONFIG.strength);
+        targetY = lerp(targetY, magnetCenterY, MAGNETIC_CONFIG.strength);
+      }
+
       currentPosRef.current = {
-        x: lerp(currentPosRef.current.x, targetPosRef.current.x, CURSOR_CONFIG.ringSmoothing),
-        y: lerp(currentPosRef.current.y, targetPosRef.current.y, CURSOR_CONFIG.ringSmoothing),
+        x: lerp(currentPosRef.current.x, targetX, CURSOR_CONFIG.ringSmoothing),
+        y: lerp(currentPosRef.current.y, targetY, CURSOR_CONFIG.ringSmoothing),
       };
 
       setRingPos({ ...currentPosRef.current });
@@ -80,7 +130,7 @@ export function useCustomCursor(enabled: boolean = true): CursorState {
     };
   }, [enabled, isTouchDevice, lerp]);
 
-  // Mouse move handler
+  // Mouse move handler with magnetic detection
   useEffect(() => {
     if (!enabled || isTouchDevice) return;
 
@@ -89,10 +139,41 @@ export function useCustomCursor(enabled: boolean = true): CursorState {
       targetPosRef.current = newPos;
       setMousePos(newPos);
       setIsVisible(true);
+
+      // Check for magnetic elements
+      const target = e.target as HTMLElement;
+      const magneticEl = target.closest('[data-cursor-magnetic]') as HTMLElement | null;
+
+      if (magneticEl) {
+        const rect = magneticEl.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        const distance = Math.sqrt(
+          Math.pow(e.clientX - centerX, 2) + Math.pow(e.clientY - centerY, 2)
+        );
+
+        if (distance < MAGNETIC_CONFIG.radius) {
+          magnetTargetRef.current = {
+            x: rect.left,
+            y: rect.top,
+            width: rect.width,
+            height: rect.height,
+          };
+          setIsMagnetic(true);
+        } else {
+          magnetTargetRef.current = null;
+          setIsMagnetic(false);
+        }
+      } else {
+        magnetTargetRef.current = null;
+        setIsMagnetic(false);
+      }
     };
 
     const handleMouseLeave = () => {
       setIsVisible(false);
+      magnetTargetRef.current = null;
+      setIsMagnetic(false);
     };
 
     const handleMouseEnter = () => {
@@ -138,7 +219,9 @@ export function useCustomCursor(enabled: boolean = true): CursorState {
         target.closest('a') !== null ||
         target.closest('button') !== null ||
         target.hasAttribute('data-cursor-hover') ||
-        target.closest('[data-cursor-hover]') !== null;
+        target.closest('[data-cursor-hover]') !== null ||
+        target.hasAttribute('data-cursor-magnetic') ||
+        target.closest('[data-cursor-magnetic]') !== null;
 
       setIsHovering(isInteractive);
     };
@@ -157,5 +240,6 @@ export function useCustomCursor(enabled: boolean = true): CursorState {
     isClicking,
     isVisible,
     isTouchDevice,
+    isMagnetic,
   };
 }
