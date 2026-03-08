@@ -1,0 +1,58 @@
+schema: spec-driven
+
+context: |
+  Project: Portfolio OS — a personal portfolio presented as a retro arcade machine.
+  The visitor is the player. The portfolio is the game.
+
+  Package manager: pnpm only — never npm or yarn
+  Commits: conventional commits (feat, fix, chore, etc.), never --no-verify
+
+  ## Screen Flow
+  INSERT COIN → PLAY MODE (Breakout game) → CV LIST MODE
+
+  ## Design Rules (non-negotiable)
+  - All UI text is UPPERCASE — arcade displays don't do lowercase
+  - Font: Press Start 2P exclusively — no other fonts on arcade screens
+  - Background: #000000 pure black (dark) / #F5F0E8 warm cream (light)
+  - Primary accent: #FF8C00 orange (dark) / #C4580A amber (light)
+  - Score/unlock color: #39FF14 neon green (dark) / #1A7A00 (light)
+  - Theme toggled via data-theme attribute on <html>
+  - Outer chrome (top bar + footer) never changes between screens — only content swaps
+  - Never invent design tokens — always reference docs/design-system.md
+
+  ## Design Tokens
+  Typography scale: --text-hero (28px), --text-name (20px), --text-heading (14px),
+  --text-body (11px), --text-ui (9px), --text-label (8px), --text-micro (7px)
+  Spacing base: 8px — tokens --space-1 through --space-5 (8px–40px)
+
+  ## Screens
+  - INSERT COIN: attract/intro screen, "PRESS ANY KEY" CTA, blinking cursor
+  - PLAY MODE: Breakout game, break bricks to unlock CV sections
+  - CV LIST MODE: read unlocked section content, return to game via ←
+
+  ## Keyboard Shortcuts (global)
+  [B] Blog, [E] Events, [G] GitHub, [C] Console overlay, [T] Theme toggle
+  [←][→] Navigate sections, [ESC] Return to previous screen
+
+  ## Constraints
+  - No shadcn components without checking src/components/ui/ first
+  - No test frameworks without asking
+  - No changes to infra/ without confirming (Terraform → production AWS)
+
+rules:
+  proposal:
+    - Keep proposals under 400 words
+    - Always include a "Non-goals" section
+    - Reference the relevant screen spec (docs/screens/*.md) if UI is involved
+    - State which design tokens are used, not raw hex values
+
+  tasks:
+    - Break tasks into chunks of max 2 hours
+    - Each task must reference the file(s) it touches
+    - UI tasks must cite the relevant docs/design-system.md token(s)
+    - Never include a task that runs npm or yarn
+
+  spec:
+    - All component specs must list keyboard interactions explicitly
+    - Specs for game elements must include animation timing from docs/animations.md
+    - Color values must use CSS variable names, not raw hex
