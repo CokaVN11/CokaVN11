@@ -28,10 +28,12 @@ Greenfield portfolio. All previous code was wiped. The design docs (`docs/design
 **Why**: Tokens must be readable at runtime by the Canvas 2D API via `getComputedStyle(document.documentElement)`. Framework theming systems (Tailwind theme, CSS-in-JS) can't do this.
 **Alternative**: Framework theme extension with CSS vars — adds unnecessary indirection; tokens must be in plain CSS custom properties regardless.
 
-### Decision 3: Game physics in a plain mutable object, HUD driven by DOM updates
-**Chosen**: A plain `let physics: GamePhysics | null = null` object holds ball/paddle/bricks (mutated directly each frame, never triggers a UI update). HUD values (score, lives, stage, status) push into DOM via `textContent` assignment, framework state, signals, or whatever the chosen stack provides.
-**Why**: The game loop runs at 60fps via `requestAnimationFrame`. Triggering reactive updates every frame tanks performance. Physics must be mutable without going through any reactive layer.
-**Alternative**: Pure canvas with no DOM HUD — rejected because it makes lives/score harder to style with the design system.
+### Decision 3: Game physics in a plain mutable object, HUD in Zustand (stack: Astro + React + Zustand)
+**Chosen**: A plain `let physics: GamePhysics | null = null` object holds ball/paddle/bricks — mutated directly each frame, never touches Zustand or React. HUD values (`score`, `highScore`, `lives`, `stage`, `speed`, `status`, `justUnlocked`) live in Zustand (`gameStore`). The game loop calls `useGameStore.getState().addScore(points)` (imperative, no hook) only on game events (brick hit, life lost, stage clear) — not per frame.
+**Why**: The game loop runs at 60fps via `requestAnimationFrame`. Triggering reactive updates every frame tanks performance. Physics must be mutable without going through any reactive layer. HUD events are rare (event-driven, not frame-driven) so Zustand is fine.
+**`status` ownership**: `status` lives only in Zustand. The game loop subscribes via `useGameStore.subscribe(s => s.status, status => { ... })` to start/stop `rAF`.
+**Alternative (Phaser)**: Rejected. Phaser replaces the rAF loop, physics, and renderer but adds ~1MB for a simple 5×10 brick Breakout. CSS var color reading (Decision 4) becomes awkward (`setTint(hexInt)` vs direct `fillStyle`). Vanilla Canvas 2D is appropriate.
+**Alternative (pure canvas HUD)**: Rejected — lives/score harder to style with the design system.
 
 ### Decision 4: Canvas colors read from CSS custom properties at draw time
 **Chosen**: `getComputedStyle(document.documentElement).getPropertyValue('--brick-1')` called each frame.
