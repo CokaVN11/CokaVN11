@@ -1,3 +1,4 @@
+import { useLocation } from "@tanstack/react-router";
 import { toggleTheme } from "@/lib/theme";
 import type { Screen } from "@/lib/types";
 import { BackButton } from "./ui/back-button";
@@ -21,8 +22,9 @@ const CV_NAV = [
 
 export function TopBar({ screen }: TopBarProps) {
   const navItems = screen === "cv-list" ? CV_NAV : DEFAULT_NAV;
-  // current path
-  const path = window.location.pathname;
+  // current path using TanStack Router
+  const location = useLocation();
+  const path = location.pathname;
 
   return (
     <header className="chrome-bar border-b border-b-(--border-muted) w-full max-w-dvh">
@@ -32,7 +34,7 @@ export function TopBar({ screen }: TopBarProps) {
       {/* Left: logo */}
       <span className="text-micro whitespace-nowrap color-primary">
         <span className="text-accent">[P]</span>
-        {" PORTFOLIO OS"}
+        {" Coka Portfolio"}
       </span>
 
       {/* Center: nav links */}

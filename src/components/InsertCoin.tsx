@@ -64,7 +64,10 @@ const AttractTitle = memo(function AttractTitle({
           >
             PLAYER 1
           </span>
-          <span className="score-glow text-label" style={{ color: "var(--accent)" }}>
+          <span
+            className="score-glow text-label"
+            style={{ color: "var(--accent)" }}
+          >
             {hiScoreStr}
           </span>
         </div>
@@ -82,28 +85,41 @@ const AttractTitle = memo(function AttractTitle({
           >
             PLAYER 2
           </span>
-          <span className="score-glow text-label" style={{ color: "var(--accent)" }}>
+          <span
+            className="score-glow text-label"
+            style={{ color: "var(--accent)" }}
+          >
             {hiScoreStr}
           </span>
         </div>
       </div>
 
       {/* Stars row */}
-      <div className="flex justify-center gap-2 text-hero" style={{ color: "var(--accent)" }}>
+      <div
+        className="flex justify-center gap-2 text-hero"
+        style={{ color: "var(--accent)" }}
+      >
         {"★ ★ ★".split("").map((c, i) => (
-          <span key={i} style={{ animationDelay: `${i * 0.2}s` }} className="star-twinkle">
+          <span
+            key={i}
+            style={{ animationDelay: `${i * 0.2}s` }}
+            className="star-twinkle"
+          >
             {c}
           </span>
         ))}
       </div>
 
       <h1 className="text-flicker text-name" style={{ color: "var(--accent)" }}>
-        PORTFOLIO OS
+        Coka Portfolio
       </h1>
 
       <DotDivider />
 
-      <p className="insert-coin-blink text-name" style={{ color: "var(--accent)" }}>
+      <p
+        className="insert-coin-blink text-name"
+        style={{ color: "var(--accent)" }}
+      >
         ► INSERT COIN ◄
       </p>
 
@@ -199,7 +215,9 @@ const AttractHowTo = memo(function AttractHowTo() {
 
 // ── Root ──────────────────────────────────────────────────────────────────────
 
-export const InsertCoin = memo(function InsertCoin({ onEnter }: InsertCoinProps) {
+export const InsertCoin = memo(function InsertCoin({
+  onEnter,
+}: InsertCoinProps) {
   const [attractIndex, setAttractIndex] = useState(0);
   const [flickerNames, setFlickerNames] = useState(false);
   const onEnterRef = useRef(onEnter);
@@ -240,7 +258,9 @@ export const InsertCoin = memo(function InsertCoin({ onEnter }: InsertCoinProps)
       className="flex flex-1 cursor-pointer items-center justify-center"
       onClick={() => onEnterRef.current()}
     >
-      {attractIndex === 0 && <AttractTitle hiScore={hiScore} flickerNames={flickerNames} />}
+      {attractIndex === 0 && (
+        <AttractTitle hiScore={hiScore} flickerNames={flickerNames} />
+      )}
       {attractIndex === 1 && <AttractDemo />}
       {attractIndex === 2 && <AttractHowTo />}
     </div>
