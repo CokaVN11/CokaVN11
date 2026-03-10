@@ -1,13 +1,14 @@
 # CV List Mode — Design Spec
 
 ## Purpose
+
 Terminal-style CV viewer. Entered after a SECTION_UNLOCKED event in play mode (or via [LIST MODE] toggle). Displays portfolio content as a structured data dump — like reading a character sheet in an RPG or a technical readout on an arcade machine.
 
 ## Layout
 
 ```
 ╔═════════════════════════════════════════════════════════════════╗
-║  [P] PORTFOLIO OS    [B] BLOG  [E] EVENTS  [G] GITHUB  [C] CONSOLE  ║
+║  [P] Coka Portfolio    [B] BLOG  [E] EVENTS  [G] GITHUB  [C] CONSOLE  ║
 ╠═══════════════╦═════════════════════════════════════════════════╣
 ║               ║                                                 ║
 ║  IDENTIFIER   ║  ┌──────────┐  VER: 2024.01 // STATUS: ACTIVE  ║
@@ -83,19 +84,24 @@ IDENTIFIER      ← label, not a link (--text-muted, 8px)
 ## Content Sections
 
 ### Section Header
+
 ```
 / OVERVIEW
 ```
+
 - 14px, `--accent`
 - No border or underline — the `/` prefix is the visual anchor
 
 ### Dot Divider between sections
+
 ```
 · · · · · · · · · · · · · · · · · · · · ·
 ```
+
 - 16px margin above and below
 
 ### Experience Entry
+
 ```
 FIG.01                           ┌ 2022 — NOW ┐
 SENIOR FRONTEND ENGINEER         └────────────┘
@@ -113,15 +119,18 @@ SENIOR FRONTEND ENGINEER         └────────────┘
 - Bullet text: 9px, `--text-primary`
 
 ### Stack Section
+
 ```
 TYPESCRIPT  REACT  NEXT.JS  NODE.JS  GO  PYTHON
 POSTGRESQL  DYNAMODB  REDIS  AWS  TERRAFORM
 DOCKER  KUBERNETES  GRAPHQL  REST  WEBSOCKETS
 ```
+
 - Tags: 9px, `--text-primary`
 - Separated by 2 spaces (no tag chips/badges — plain text)
 
 ### Project Entry
+
 ```
 PROJ_01 // OPEN SOURCE
 ARCADEOS PORTFOLIO FRAMEWORK
@@ -139,39 +148,43 @@ NEXT.JS  TYPESCRIPT  TAILWIND  CANVAS API
 
 ## Typography
 
-| Element | Size | Color (dark) | Color (light) |
-|---|---|---|---|
-| Sidebar label `IDENTIFIER` | 8px | `#555555` | `#8A7060` |
-| Sidebar nav item | 9px | `#FFFFFF` active, `#555` inactive | `#1A0A00` / `#8A7060` |
-| `►` cursor | 9px | `#FF8C00` | `#C4580A` |
-| Name `COKA` | 20px | `#FF8C00` | `#C4580A` |
-| Job title | 11px | `#FFFFFF` | `#1A0A00` |
-| Contact row | 9px | `#555555` | `#8A7060` |
-| Section header `/` | 14px | `#FF8C00` | `#C4580A` |
-| `FIG.01` labels | 8px | `#555555` | `#8A7060` |
-| Job title in entry | 14px | `#FFFFFF` | `#1A0A00` |
-| Company `►` | 11px | `#FF8C00` | `#C4580A` |
-| Bullet `01` | 8px | `#555555` | `#8A7060` |
-| Bullet text | 9px | `#FFFFFF` | `#1A0A00` |
-| Date badge | 9px | `#FFFFFF` | `#1A0A00` |
+| Element                    | Size | Color (dark)                      | Color (light)         |
+| -------------------------- | ---- | --------------------------------- | --------------------- |
+| Sidebar label `IDENTIFIER` | 8px  | `#555555`                         | `#8A7060`             |
+| Sidebar nav item           | 9px  | `#FFFFFF` active, `#555` inactive | `#1A0A00` / `#8A7060` |
+| `►` cursor                 | 9px  | `#FF8C00`                         | `#C4580A`             |
+| Name `COKA`                | 20px | `#FF8C00`                         | `#C4580A`             |
+| Job title                  | 11px | `#FFFFFF`                         | `#1A0A00`             |
+| Contact row                | 9px  | `#555555`                         | `#8A7060`             |
+| Section header `/`         | 14px | `#FF8C00`                         | `#C4580A`             |
+| `FIG.01` labels            | 8px  | `#555555`                         | `#8A7060`             |
+| Job title in entry         | 14px | `#FFFFFF`                         | `#1A0A00`             |
+| Company `►`                | 11px | `#FF8C00`                         | `#C4580A`             |
+| Bullet `01`                | 8px  | `#555555`                         | `#8A7060`             |
+| Bullet text                | 9px  | `#FFFFFF`                         | `#1A0A00`             |
+| Date badge                 | 9px  | `#FFFFFF`                         | `#1A0A00`             |
 
 ## Top Bar Actions
 
 ```
 [G] GITHUB   [L] LINKEDIN   [D] DOWNLOAD CV →
 ```
+
 These replace `[B] BLOG [E] EVENTS` in CV list mode — contextual shortcuts.
 
 ## Theme Toggle
+
 - `[T]` — same CRT power cycle animation as all other screens
 - Light mode uses `▪` dividers instead of `·`
 - Light mode background: `--bg-sidebar` for sidebar, `--bg` for content
 
 ## Scroll Behavior
+
 - Sidebar: fixed, no scroll
 - Content pane: overflow-y scroll, no scrollbar (hidden, scroll via `[↑][↓]`)
 - Active nav item tracks scroll position (Intersection Observer)
 
 ## Entry Animation
+
 Scanline wipe from INSERT COIN / play mode → CV layout fades in.
 See `../animations.md` — "Screen entry".

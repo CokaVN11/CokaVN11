@@ -1,7 +1,7 @@
 schema: spec-driven
 
 context: |
-  Project: Portfolio OS — a personal portfolio presented as a retro arcade machine.
+  Project: Coka Portfolio — a personal portfolio presented as a retro arcade machine.
   The visitor is the player. The portfolio is the game.
 
   Package manager: pnpm only — never npm or yarn

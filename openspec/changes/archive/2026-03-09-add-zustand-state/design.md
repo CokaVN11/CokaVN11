@@ -9,11 +9,13 @@ Zustand's scope here is game state only.
 ## Goals / Non-Goals
 
 **Goals:**
+
 - Single source of truth for game state (screen, unlocked sections, score) across all React islands
 - Store accessible from Astro scripts (plain JS) as well as React hooks
 - Zero SSR concerns — client-only state
 
 **Non-Goals:**
+
 - Theme state management (handled by `src/lib/theme.ts`)
 - Server-side state or SSR hydration of stores
 - Persisting game state across page reloads (score resets — arcade design intent)

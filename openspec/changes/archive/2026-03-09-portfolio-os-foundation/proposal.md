@@ -1,6 +1,6 @@
 ## Why
 
-A personal portfolio that looks like every other developer portfolio is forgettable. Portfolio OS reframes the experience as a retro arcade machine — the visitor is the player, the CV is unlocked by playing a Breakout game. This is the foundational implementation: project setup through all three screens, built from scratch as a learning project.
+A personal portfolio that looks like every other developer portfolio is forgettable. Coka Portfolio reframes the experience as a retro arcade machine — the visitor is the player, the CV is unlocked by playing a Breakout game. This is the foundational implementation: project setup through all three screens, built from scratch as a learning project.
 
 ## What Changes
 

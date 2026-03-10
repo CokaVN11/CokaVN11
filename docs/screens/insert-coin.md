@@ -1,13 +1,14 @@
 # INSERT COIN Screen — Design Spec
 
 ## Purpose
-Attract mode / idle screen. The portfolio's entry point. Visitor is invited to "insert coin" (engage) to enter the portfolio OS. Cycles through 3 screens automatically when idle.
+
+Attract mode / idle screen. The portfolio's entry point. Visitor is invited to "insert coin" (engage) to enter the Coka Portfolio. Cycles through 3 screens automatically when idle.
 
 ## Layout
 
 ```
 ╔═════════════════════════════════════════════════════════════════╗
-║  [P] PORTFOLIO OS    [B] BLOG  [E] EVENTS  [G] GITHUB  [C] CONSOLE  ║
+║  [P] Coka Portfolio    [B] BLOG  [E] EVENTS  [G] GITHUB  [C] CONSOLE  ║
 ╠═════════════════════════════════════════════════════════════════╣
 ║                                                                 ║
 ║                                                                 ║
@@ -34,12 +35,14 @@ Attract mode / idle screen. The portfolio's entry point. Visitor is invited to "
 Cycles every ~4s with no input. All 3 screens share the same footer.
 
 ### Screen 1 — Title (above)
+
 Default idle state.
 
 ### Screen 2 — Demo Reel
+
 ```
 ╔═════════════════════════════════════════════════════════════════╗
-║  [P] PORTFOLIO OS    [B] BLOG  [E] EVENTS  [G] GITHUB  [C] CONSOLE  ║
+║  [P] Coka Portfolio    [B] BLOG  [E] EVENTS  [G] GITHUB  [C] CONSOLE  ║
 ╠═════════════════════════════════════════════════════════════════╣
 ║                                                                 ║
 ║                     - - D E M O - -                             ║
@@ -59,9 +62,10 @@ Default idle state.
 ```
 
 ### Screen 3 — How to Play
+
 ```
 ╔═════════════════════════════════════════════════════════════════╗
-║  [P] PORTFOLIO OS    [B] BLOG  [E] EVENTS  [G] GITHUB  [C] CONSOLE  ║
+║  [P] Coka Portfolio    [B] BLOG  [E] EVENTS  [G] GITHUB  [C] CONSOLE  ║
 ╠═════════════════════════════════════════════════════════════════╣
 ║                                                                 ║
 ║                  H O W  T O  P L A Y                            ║
@@ -82,13 +86,13 @@ Default idle state.
 
 ## Typography
 
-| Element | Size | Color (dark) | Color (light) |
-|---|---|---|---|
-| `PLAYER 1 / 2` labels | 12px | `#FF8C00` | `#C4580A` |
-| `COKA` / `CLIENT` | 16px | `#FFFFFF` | `#1A0A00` |
-| `PORTFOLIO OS` | 28px | `#FF8C00` | `#C4580A` |
-| `INSERT COIN` | 20px | `#FF8C00` | `#C4580A` |
-| Footer | 10px | `#FFFFFF` | `#1A0A00` |
+| Element               | Size | Color (dark) | Color (light) |
+| --------------------- | ---- | ------------ | ------------- |
+| `PLAYER 1 / 2` labels | 12px | `#FF8C00`    | `#C4580A`     |
+| `COKA` / `CLIENT`     | 16px | `#FFFFFF`    | `#1A0A00`     |
+| `Coka Portfolio`      | 28px | `#FF8C00`    | `#C4580A`     |
+| `INSERT COIN`         | 20px | `#FF8C00`    | `#C4580A`     |
+| Footer                | 10px | `#FFFFFF`    | `#1A0A00`     |
 
 ## Interactions
 
@@ -102,6 +106,7 @@ Default idle state.
 ## Animations
 
 See `../animations.md`:
+
 - INSERT COIN blink (600ms)
 - Dot scanner left→right
 - Hi-score tick on first load

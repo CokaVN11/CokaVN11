@@ -11,9 +11,11 @@ Game-level state (current screen, unlocked CV sections, score) needs to be share
 ## Capabilities
 
 ### New Capabilities
+
 - `game-store`: Shared game state (current screen, unlocked sections, score) for the INSERT COIN → PLAY MODE → CV LIST flow
 
 ### Modified Capabilities
+
 <!-- No existing spec-level requirements are changing — this is purely additive infrastructure -->
 
 ## Impact

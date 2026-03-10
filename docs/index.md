@@ -1,8 +1,8 @@
-# PORTFOLIO OS — Design Research
+# Coka Portfolio — Design Research
 
 ## Overview
 
-Portfolio OS is a personal portfolio presented as a retro arcade machine. The visitor is the player. The portfolio is the game.
+Coka Portfolio is a personal portfolio presented as a retro arcade machine. The visitor is the player. The portfolio is the game.
 
 ## Design Philosophy
 
@@ -15,18 +15,18 @@ Portfolio OS is a personal portfolio presented as a retro arcade machine. The vi
 
 ## Screens
 
-| Screen | File | Status |
-|---|---|---|
+| Screen                      | File                     | Status   |
+| --------------------------- | ------------------------ | -------- |
 | INSERT COIN (intro/attract) | `screens/insert-coin.md` | Designed |
-| CV List Mode | `screens/cv-list.md` | Designed |
-| Play Mode (Breakout game) | `screens/play-mode.md` | Designed |
+| CV List Mode                | `screens/cv-list.md`     | Designed |
+| Play Mode (Breakout game)   | `screens/play-mode.md`   | Designed |
 
 ## Shared Systems
 
-| System | File |
-|---|---|
+| System                                      | File               |
+| ------------------------------------------- | ------------------ |
 | Design tokens (colors, typography, spacing) | `design-system.md` |
-| Animation states | `animations.md` |
+| Animation states                            | `animations.md`    |
 
 ## Screen Flow
 
@@ -46,12 +46,12 @@ PLAY MODE  (continue)
 
 ## Keyboard Shortcuts (global)
 
-| Key | Action |
-|---|---|
-| `[B]` | Blog |
-| `[E]` | Events |
-| `[G]` | GitHub |
-| `[C]` | Console overlay |
-| `[T]` | Toggle dark/light theme |
+| Key      | Action                        |
+| -------- | ----------------------------- |
+| `[B]`    | Blog                          |
+| `[E]`    | Events                        |
+| `[G]`    | GitHub                        |
+| `[C]`    | Console overlay               |
+| `[T]`    | Toggle dark/light theme       |
 | `[←][→]` | Navigate sections (play mode) |
-| `[ESC]` | Return to previous screen |
+| `[ESC]`  | Return to previous screen     |

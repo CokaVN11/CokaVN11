@@ -5,6 +5,7 @@
 ## 1. Project Setup
 
 > **Choose your stack** — the rest of the tasks are stack-agnostic. Options:
+>
 > - **Vanilla TS + Vite**: `npm create vite@latest -- --template vanilla-ts`
 > - **Next.js**: `npx create-next-app@latest` (App Router, TypeScript, no Tailwind required)
 > - **SvelteKit / Astro / other**: any framework that lets you write TypeScript and a single `index.html` entry
@@ -18,6 +19,7 @@
 - [x] 1.5 Verify: dev server runs, TypeScript compiles with zero errors (`tsc --noEmit`).
 
 ## 2. Design System
+
 <!-- → see design.md §Decision 2: CSS custom properties are the design token layer. Framework theming (Tailwind theme, CSS-in-JS) cannot be read by Canvas at runtime — CSS vars can. -->
 
 - [x] 2.1 Open `src/styles/globals.css` — add `@import` for Press Start 2P from Google Fonts at the top. If using Tailwind, add `@tailwind base/components/utilities` after. File: `src/styles/globals.css`
@@ -30,6 +32,7 @@
 - [x] 2.8 Add utility classes: `.insert-coin-blink`, `.text-flicker`, `.cursor-blink`, `.theme-switching`, `.scale-in`, `.score-glow`, `.score-glow-pulse`, `.no-scrollbar`, `.chrome-bar`, `.dot-divider`, `.corner-accent`. Token used: `--score`, `--accent`, `--text-dim`
 
 ## 3. Types and Data
+
 <!-- → see design.md §Decision 1: Screen is a union type string enum, not a numeric enum. The app is a single page — screens swap via client-side state, not routing. -->
 
 - [x] 3.1a Create `src/game/types.ts` — export `type GameStatus = 'idle' | 'launching' | 'playing' | 'paused' | 'lost_life' | 'stage_clear' | 'section_unlocked' | 'gameover'` and physics interfaces: `Ball { x, y, dx, dy }`, `Paddle { x, width }`, `Brick { alive, cssVar, points, section, rowIndex, colIndex }`, `ScoreFloat { x, y, text, age }`, `GamePhysics { ball, paddle, bricks: Brick[][], scoreFloats: ScoreFloat[] }`. File: `src/game/types.ts`
@@ -38,6 +41,7 @@
 - [x] 3.2 Create `src/resume/content.ts` — export `RESUME: ResumeData` object with your real name, title, location, contact links, overview text, experience entries, stack, projects, and education. Import types from `src/resume/types.ts`. File: `src/resume/content.ts`
 
 ## 4. Theme Module
+
 <!-- → see design.md §Decision 5: The theme switch is a 400ms CRT power-cycle. data-theme swaps at the 160ms blackout midpoint — not immediately. The switching flag gates any UI changes during the animation. -->
 
 - [x] 4.1 Create `src/modules/theme.ts` — export `initTheme()` (reads `localStorage.getItem('theme')`, sets `data-theme` on `document.documentElement`) and a `switching` boolean flag. File: `src/modules/theme.ts`
@@ -45,7 +49,7 @@
 
 ## 5. Chrome Modules
 
-- [x] 5.1 Create `src/chrome/top-bar.ts` — renders/updates the top bar DOM element given `screen: Screen`. Left: `[P] PORTFOLIO OS` (`--accent` for `[P]`). Center: nav links — default shows `[B] BLOG`, `[E] EVENTS`, `[G] GITHUB`, `[C] CONSOLE`; CV mode shows `[G] GITHUB`, `[L] LINKEDIN`, `[D] DOWNLOAD CV`. Right: `[T]` button. All text `--text-micro`. File: `src/chrome/top-bar.ts`. Reference: `docs/design-system.md` §Top Bar
+- [x] 5.1 Create `src/chrome/top-bar.ts` — renders/updates the top bar DOM element given `screen: Screen`. Left: `[P] Coka Portfolio` (`--accent` for `[P]`). Center: nav links — default shows `[B] BLOG`, `[E] EVENTS`, `[G] GITHUB`, `[C] CONSOLE`; CV mode shows `[G] GITHUB`, `[L] LINKEDIN`, `[D] DOWNLOAD CV`. Right: `[T]` button. All text `--text-micro`. File: `src/chrome/top-bar.ts`. Reference: `docs/design-system.md` §Top Bar
 - [x] 5.2 Create `src/chrome/footer.ts` — renders/updates the footer DOM element given `screen`, `hiScore`, `onToggleMode`. Left: `© 2025 COKA · 1 CREDIT · HI-SC {score}` at `--text-micro`. Right: `[LIST MODE]` or `[PLAY MODE]` button in `--accent`. Token: `--text-primary`, `--accent`. File: `src/chrome/footer.ts`. Reference: `docs/design-system.md` §Footer Bar
 
 ## 6. Shared UI Modules
@@ -71,12 +75,13 @@
 
 - [x] 8.1 Create `src/screens/insert-coin.ts` — exports `mountInsertCoin(container, onEnter)`. Manage `attractIndex` (0/1/2) with `setInterval(4000)`. Track `hiScore` as a local variable starting at 0. File: `src/screens/insert-coin.ts`. Reference: `docs/screens/insert-coin.md`
 - [x] 8.2 Implement hi-score count-up: on mount, use `requestAnimationFrame` to animate from 0 to 9001 over 800ms with ease-out curve. After 200ms delay, add class `text-flicker` to PLAYER name elements. Token: `--score` via class `score-glow-pulse`
-- [x] 8.3 Implement attract screen 0 (Title): PLAYER 1/PLAYER 2 labels + names, star row + "PORTFOLIO OS" at `--text-hero` in `--accent`, `DotDivider`, "► INSERT COIN ◄" with class `insert-coin-blink` at `--text-name`, `DotDivider`. Token: `--accent`, `--text-primary`
+- [x] 8.3 Implement attract screen 0 (Title): PLAYER 1/PLAYER 2 labels + names, star row + "Coka Portfolio" at `--text-hero` in `--accent`, `DotDivider`, "► INSERT COIN ◄" with class `insert-coin-blink` at `--text-name`, `DotDivider`. Token: `--accent`, `--text-primary`
 - [x] 8.4 Implement attract screen 1 (Demo Reel): "- - DEMO - -" label, preview box with corner accents and three colored brick rows, caption. Token: `--brick-1`, `--brick-2`, `--brick-3`, `--border-muted`
-- [x] 8.5 Implement attract screen 2 (How to Play): "H O W  T O  P L A Y" heading, list of key/action pairs. Token: `--accent`, `--text-muted`
+- [x] 8.5 Implement attract screen 2 (How to Play): "H O W T O P L A Y" heading, list of key/action pairs. Token: `--accent`, `--text-muted`
 - [x] 8.6 Add global `keydown` listener: skip `t`, `b`, `e`, `g`, `c` keys, call `onEnter()` for all others. Add `click` listener on the container to also call `onEnter()`. Clean up listeners on screen teardown (call `unmountInsertCoin()`).
 
 ## 9. Game Module — Physics and Init
+
 <!-- → see design.md §Decision 3: Physics (ball, paddle, bricks, velocity) are plain mutable objects in engine.ts — never touch Zustand. HUD (score, lives, stage, status) lives in Zustand gameStore, written imperatively via useGameStore.getState().* on game events only (not per frame). Canvas rendering: vanilla Canvas 2D (not Phaser/PixiJS — see design.md §Decision 3). -->
 
 - [x] 9.1 Create `src/game/engine.ts` — define constants: `COLS = 10`, `BRICK_HEIGHT = 20`, `BRICK_GAP_X = 8`, `BRICK_GAP_Y = 6`, `BRICK_TOP_PAD = 24`, `CANVAS_PAD_X = 16`, `BALL_SIZE = 6`, `PADDLE_WIDTH = 80`, `PADDLE_HEIGHT = 8`, `PADDLE_BOTTOM = 30`, `BASE_SPEED = 4`. Import types from `src/game/types.ts`. File: `src/game/engine.ts`
@@ -110,7 +115,7 @@
 
 ## 12. App Assembly
 
-- [x] 12.1 In `index.html` (or your framework's root template): set `<html lang="en" data-theme="dark">`, add Google Fonts preconnect `<link>` tags in `<head>`, set `<title>PORTFOLIO OS — COKA</title>`. Import `src/styles/globals.css`.
+- [x] 12.1 In `index.html` (or your framework's root template): set `<html lang="en" data-theme="dark">`, add Google Fonts preconnect `<link>` tags in `<head>`, set `<title>Coka Portfolio — COKA</title>`. Import `src/styles/globals.css`.
 - [x] 12.2 In `src/main.ts`: call `initTheme()`. Declare `let currentScreen: Screen = 'INSERT_COIN'` and `let cvSection = 'OVERVIEW'`. Build the persistent layout shell — top bar, `<main>` (flex 1, overflow hidden), footer — and mount it once.
 - [x] 12.3 Implement `setScreen(s: Screen)`: unmount the current screen from `<main>`, mount the new one. Call `updateTopBar(s)` and `updateFooter(s)`.
 - [x] 12.4 Implement screen callbacks: `handleEnterCoin` → `setScreen('PLAY_MODE')`, `handleViewSection(section)` → `cvSection = section; setScreen('CV_LIST')`, `handleBackToPlay` → `setScreen('PLAY_MODE')`, `handleModeToggle` → toggle between PLAY_MODE and CV_LIST.
