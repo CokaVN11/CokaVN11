@@ -47,7 +47,7 @@ export const RESUME: ResumeData = {
   projects: [
     {
       id: "proj-01",
-      name: "PORTFOLIO OS",
+      name: "Coka Portfolio",
       type: "SIDE PROJECT",
       description:
         "RETRO ARCADE PORTFOLIO — A BREAKOUT GAME WHERE BREAKING BRICKS REVEALS CV SECTIONS.",
