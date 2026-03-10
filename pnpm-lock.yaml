@@ -65,6 +65,10 @@ importers:
       zustand:
         specifier: ^5.0.11
         version: 5.0.11(@types/react@19.2.14)(react@19.2.4)(use-sync-external-store@1.6.0(react@19.2.4))
+    devDependencies:
+      accessible-colors:
+        specifier: ^1.0.9
+        version: 1.0.9
 
 packages:
 
@@ -2178,6 +2182,10 @@ packages:
   accepts@2.0.0:
     resolution: {integrity: sha512-5cvg6CtKwfgdmVqY1WIiXKc3Q1bkRqGLi+2W/6ao+6Y7gu/RCwRuAhGEzh5B4KlszSuTLgZYuqFqo5bImjNKng==}
     engines: {node: '>= 0.6'}
+
+  accessible-colors@1.0.9:
+    resolution: {integrity: sha512-6cGO01GbU1xXncZHni8IK7eYQtyqKyeGU13q6pktk8PB0/NlebBR6rCbanDNisenBo4Ajco1Lkg4oPJXcJ1ezA==}
+    hasBin: true
 
   acorn-walk@8.3.2:
     resolution: {integrity: sha512-cjkyv4OtNCIeqhHrfS81QWXoCBPExR/J62oyEqepVw8WaQeSqpW2uhuLPh1m9eWhDuOo/jUXVTlifvesOWp/4A==}
@@ -6340,6 +6348,8 @@ snapshots:
     dependencies:
       mime-types: 3.0.2
       negotiator: 1.0.0
+
+  accessible-colors@1.0.9: {}
 
   acorn-walk@8.3.2: {}
 
