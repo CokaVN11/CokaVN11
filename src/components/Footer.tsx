@@ -1,34 +1,32 @@
 import { cn } from "@/lib/utils";
+import { useGameStore } from "@/stores/gameStore";
+import type { Screen } from "@/lib/types";
 
 interface FooterProps {
-  type: "PLAY" | "LIST";
+  screen: Screen;
+  onToggleMode: () => void;
   className?: string;
 }
 
-export function Footer({ type, className }: FooterProps) {
-  const scoreStr = "9999";
-  const modeLabel = type === "PLAY" ? "[PLAY MODE]" : "[LIST MODE]";
+export function Footer({ screen, onToggleMode, className }: FooterProps) {
+  const highScore = useGameStore((s) => s.highScore);
+  const hiScoreStr = String(highScore).padStart(4, "0");
+
+  const modeLabel = screen === "cv-list" ? "[PLAY MODE]" : "[LIST MODE]";
+
   return (
     <footer
-      className={cn(
-        `chrome-bar border-t border-t-(--border-muted) justify-between`,
-        className,
-      )}
+      className={cn("chrome-bar justify-between border-t border-t-(--border-muted)", className)}
     >
-      <span className="color-primary text-micro md:text-label lg:text-ui">
-        © 2026 <span className="text-accent">COKA</span>
-        {"  ·  "}1 CREDIT{"  ·  "}HI-SCORE {scoreStr}
+      <span className="text-micro color-primary">
+        © 2025 <span className="text-accent">COKA</span>
+        {"  ·  "}1 CREDIT{"  ·  "}HI-SC {hiScoreStr}
       </span>
 
       <button
-        onClick={() => {
-          const newType = type === "PLAY" ? "LIST" : "PLAY";
-          window.dispatchEvent(
-            new CustomEvent("mode-change", { detail: newType }),
-          );
-        }}
-        className="cursor-pointer border-0 bg-transparent text-accent text-micro md:text-label lg:text-ui"
-        aria-label={`Switch to ${type === "PLAY" ? "LIST" : "PLAY"} mode`}
+        onClick={onToggleMode}
+        className="cursor-pointer border-0 bg-transparent text-micro text-accent"
+        aria-label={`Switch to ${screen === "cv-list" ? "play" : "list"} mode`}
       >
         {modeLabel}
       </button>

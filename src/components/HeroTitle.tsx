@@ -7,16 +7,9 @@ interface HeroTitleProps {
   className?: string;
 }
 
-const TwinkleStar = memo(function TwinkleStar({
-  animationDelay,
-}: {
-  animationDelay: string;
-}) {
+const TwinkleStar = memo(function TwinkleStar({ animationDelay }: { animationDelay: string }) {
   return (
-    <span
-      className="text-hero star-twinkle text-accent align-middle"
-      style={{ animationDelay }}
-    >
+    <span className="star-twinkle align-middle text-hero text-accent" style={{ animationDelay }}>
       ★
     </span>
   );
@@ -33,23 +26,17 @@ const TwinkleStarsList = memo(function TwinkleStarsList({
     <div className={cn("flex gap-2 leading-none", className)}>
       {repeat(count, (i) => {
         const animationDelay = `${(i + 3) * 0.2}s`;
-        return (
-          <TwinkleStar key={animationDelay} animationDelay={animationDelay} />
-        );
+        return <TwinkleStar key={animationDelay} animationDelay={animationDelay} />;
       })}
     </div>
   );
 });
 
-export function HeroTitle({
-  title,
-  starDensity = 3,
-  className = "",
-}: HeroTitleProps) {
+export function HeroTitle({ title, starDensity = 3, className = "" }: HeroTitleProps) {
   return (
     <div className={cn("arcade-stack", className)}>
       <TwinkleStarsList count={starDensity} />
-      <span className="text-hero color-accent text-flicker uppercase align-middle text-center">
+      <span className="text-flicker text-center align-middle text-hero color-accent uppercase">
         {title}
       </span>
       <TwinkleStarsList count={starDensity} className="-mt-4!" />

@@ -9,7 +9,9 @@ export const DotDivider = memo(function DotDivider({ count = 15 }: DotDividerPro
   return (
     <div className="dot-divider">
       {repeat(count, (i) => (
-        <span key={`dot-${i}`}>·</span>
+        <span key={`dot-${i}`} style={{ animationDelay: `${i * 0.045}s` }}>
+          ·
+        </span>
       ))}
     </div>
   );
