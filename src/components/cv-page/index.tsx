@@ -1,21 +1,23 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { RESUME } from "@/lib/resume/content";
 import { NAV_SECTIONS, type NavSection } from "@/lib/resume/types";
+import { TopBar } from "../TopBar";
+import { Footer } from "../Footer";
 import { Sidebar } from "./Sidebar";
 import { IdentityHeader } from "./IdentityHeader";
-
-// Derived once at module level — RESUME is a static constant (rendering-hoist-jsx)
-const IDENTITY_CONTACTS = Object.entries(RESUME.contact).map(([key, value]) => ({
-  key,
-  href: value.startsWith("http") ? value : `mailto:${value}`,
-}));
 import { OverviewSection } from "./OverviewSection";
 import { ExperienceSection } from "./ExperienceSection";
 import { StackSection } from "./StackSection";
 import { ProjectsSection } from "./ProjectsSection";
 import { EducationSection } from "./EducationSection";
-import { TopBar } from "../TopBar";
-import { Footer } from "../Footer";
+
+// All RESUME derivations hoisted to module level — computed once, not per render
+const IDENTITY_CONTACTS = Object.entries(RESUME.contact).map(
+  ([key, value]) => ({
+    key,
+    href: value.startsWith("http") ? value : `mailto:${value}`,
+  }),
+);
 
 interface CVListProps {
   initialSection?: NavSection;
@@ -89,9 +91,7 @@ export function CVList({ initialSection = "OVERVIEW", onBack }: CVListProps) {
         />
         <main
           className="min-h-0 flex-1 overflow-y-auto bg-background px-8 py-8"
-          style={{
-            scrollbarWidth: "none",
-          }}
+          style={{ scrollbarWidth: "none" }}
         >
           <IdentityHeader
             name={RESUME.name}
@@ -99,11 +99,11 @@ export function CVList({ initialSection = "OVERVIEW", onBack }: CVListProps) {
             location={RESUME.location}
             contacts={IDENTITY_CONTACTS}
           />
-          <OverviewSection />
-          <ExperienceSection />
-          <StackSection />
-          <ProjectsSection />
-          <EducationSection />
+          <OverviewSection content={RESUME.overview} />
+          <ExperienceSection content={RESUME.experience} />
+          <StackSection content={RESUME.stack} />
+          <ProjectsSection content={RESUME.projects} />
+          <EducationSection content={RESUME.education} />
         </main>
       </div>
       <Footer screen="cv-list" onToggleMode={() => {}} />

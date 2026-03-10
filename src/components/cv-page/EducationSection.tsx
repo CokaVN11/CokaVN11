@@ -1,10 +1,14 @@
-import { RESUME } from "@/lib/resume/content";
+import type { EducationEntry } from "@/lib/resume/types";
+import { CVSection } from "./CVSection";
 
-export function EducationSection() {
+interface EducationSectionProps {
+  content: EducationEntry[];
+}
+
+export function EducationSection({ content }: EducationSectionProps) {
   return (
-    <section id="section-EDUCATION" className="mb-2">
-      <h2 className="mb-6 text-heading color-accent">/ EDUCATION</h2>
-      {RESUME.education.map((entry, idx) => (
+    <CVSection id="EDUCATION" title="EDUCATION">
+      {content.map((entry, idx) => (
         <div key={idx} className="mb-4">
           <p className="mb-1 text-heading color-primary">{entry.degree}</p>
           <p className="mb-1 text-ui color-accent">► {entry.school}</p>
@@ -14,6 +18,6 @@ export function EducationSection() {
           </p>
         </div>
       ))}
-    </section>
+    </CVSection>
   );
 }

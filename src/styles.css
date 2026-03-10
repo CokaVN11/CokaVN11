@@ -71,8 +71,8 @@
 
 :root[data-theme="dark"] {
   /* Backgrounds */
-  --bg: #000000;
-  --bg-canvas: #000000;
+  --bg: #0a0a0a;
+    --bg-canvas: #0a0a0a;
 
   /* Text */
   --text-primary: #ffffff;
@@ -95,7 +95,7 @@
 
   /* Borders */
   --border: #ff8c00;
-  --border-muted: #333333;
+  --border-muted: #5d5d5d;
 
   /* Overlays */
   --unlock-border: #39ff14;
@@ -103,28 +103,28 @@
   --vignette: rgba(0, 0, 0, 0.6);
 
   /* shadcn semantic tokens → arcade palette */
-  --background: #000000;
+  --background: #0a0a0a;
   --foreground: #ffffff;
-  --card: #000000;
+  --card: #0a0a0a;
   --card-foreground: #ffffff;
-  --popover: #000000;
+  --popover: #0a0a0a;
   --popover-foreground: #ffffff;
   --primary: #ff8c00;
-  --primary-foreground: #000000;
-  --secondary: #333333;
+  --primary-foreground: #0a0a0a;
+    --secondary: #1f1f1f;
   --secondary-foreground: #ffffff;
-  --muted: #333333;
+  --muted: #1f1f1f;
   --muted-foreground: #757575;
-  --accent-foreground: #000000;
+  --accent-foreground: #0a0a0a;
   --destructive: #ff4081;
-  --input: #333333;
+  --input: #1f1f1f;
   --ring: #ff8c00;
   --radius: 0;
-  --sidebar: #000000;
+  --sidebar: #0a0a0a;
   --sidebar-foreground: #ffffff;
   --sidebar-primary: #ff8c00;
-  --sidebar-primary-foreground: #000000;
-  --sidebar-accent: #333333;
+  --sidebar-primary-foreground: #0a0a0a;
+    --sidebar-accent: #1f1f1f;
   --sidebar-accent-foreground: #ffffff;
   --sidebar-border: #ff8c00;
   --sidebar-ring: #ff8c00;
@@ -205,6 +205,18 @@
   }
 }
 
+/* Section rule scanner — spotlight sweeps left to right */
+@keyframes ruleScan {
+  0% {
+    mask-position: -17% 0;
+    -webkit-mask-position: -17% 0;
+  }
+
+  100% {
+    mask-position: 117% 0;
+    -webkit-mask-position: 117% 0;
+  }
+}
 /* Dot scanner — staggered wave */
 @keyframes dotScan {
   0%,
@@ -461,6 +473,23 @@
 
 @utility color-border {
   color: var(--border);
+}
+@utility rule-scan {
+  mask-image: linear-gradient(90deg,
+      transparent 10%,
+      white 40%,
+      white 60%,
+      transparent 90%);
+  -webkit-mask-image: linear-gradient(90deg,
+      transparent 10%,
+      white 40%,
+      white 60%,
+      transparent 90%);
+  mask-size: 20% 100%;
+  -webkit-mask-size: 20% 100%;
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
+  animation: ruleScan 5s ease-in-out infinite alternate;
 }
 /* ── Utility Layer ───────────────────────────── */
 

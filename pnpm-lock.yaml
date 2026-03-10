@@ -93,6 +93,9 @@ importers:
       '@vitejs/plugin-react':
         specifier: ^5.1.4
         version: 5.1.4(vite@7.3.1(@types/node@22.19.15)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.21.0))
+      accessible-colors:
+        specifier: ^1.0.9
+        version: 1.0.9
       jsdom:
         specifier: ^28.1.0
         version: 28.1.0
@@ -1926,6 +1929,10 @@ packages:
 
   '@vitest/utils@3.2.4':
     resolution: {integrity: sha512-fB2V0JFrQSMsCo9HiSq3Ezpdv4iYaXRG1Sx8edX3MwxfyNn83mKiGzOcH+Fkxt4MHxr3y42fQi1oeAInqgX2QA==}
+
+  accessible-colors@1.0.9:
+    resolution: {integrity: sha512-6cGO01GbU1xXncZHni8IK7eYQtyqKyeGU13q6pktk8PB0/NlebBR6rCbanDNisenBo4Ajco1Lkg4oPJXcJ1ezA==}
+    hasBin: true
 
   acorn@8.16.0:
     resolution: {integrity: sha512-UVJyE9MttOsBQIDKw1skb9nAwQuR5wuGD3+82K6JgJlm/Y+KI92oNsMNGZCYdDsVtRHSak0pcV5Dno5+4jh9sw==}
@@ -4816,6 +4823,8 @@ snapshots:
       '@vitest/pretty-format': 3.2.4
       loupe: 3.2.1
       tinyrainbow: 2.0.0
+
+  accessible-colors@1.0.9: {}
 
   acorn@8.16.0: {}
 

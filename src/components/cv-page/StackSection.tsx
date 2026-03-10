@@ -1,29 +1,34 @@
-import { RESUME } from "@/lib/resume/content";
-import { DotDivider } from "@/components/ui/dot-divider";
+import type { StackData } from "@/lib/resume/types";
+import { CVSection } from "./CVSection";
 
-const CATEGORIES = [
-  { label: "LANGUAGES", items: RESUME.stack.languages },
-  { label: "FRONTEND", items: RESUME.stack.frontend },
-  { label: "BACKEND", items: RESUME.stack.backend },
-  { label: "DATA", items: RESUME.stack.data },
-  { label: "INFRA", items: RESUME.stack.infra },
-] as const;
+// Ordered display labels mapped to StackData keys (hoisted — static)
+const STACK_CATEGORIES: { key: keyof StackData; label: string }[] = [
+  { key: "languages", label: "LANGUAGES" },
+  { key: "frontend", label: "FRONTEND" },
+  { key: "backend", label: "BACKEND" },
+  { key: "data", label: "DATA" },
+  { key: "infra", label: "INFRA" },
+];
 
-export function StackSection() {
+interface StackSectionProps {
+  content: StackData;
+}
+
+export function StackSection({ content }: StackSectionProps) {
   return (
-    <section id="section-STACK" className="mb-2">
-      <h2 className="mb-6 text-heading color-accent">/ STACK</h2>
+    <CVSection id="STACK" title="STACK">
       <div className="flex flex-col gap-4">
-        {CATEGORIES.map(({ label, items }) => (
+        {STACK_CATEGORIES.map(({ key, label }) => (
           <div key={label} className="flex gap-4">
-            <span className="shrink-0 text-micro color-muted" style={{ width: 80 }}>
+            <span className="shrink-0 text-micro color-muted w-20">
               {label}
             </span>
-            <span className="text-ui color-primary">{items.join("  ")}</span>
+            <span className="text-ui color-primary">
+              {content[key].join("  ")}
+            </span>
           </div>
         ))}
       </div>
-      <DotDivider />
-    </section>
+    </CVSection>
   );
 }

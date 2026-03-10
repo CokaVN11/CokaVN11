@@ -3,7 +3,7 @@ import type { ResumeData } from "./types";
 export const RESUME: ResumeData = {
   name: "COKA",
   title: "SOFTWARE ENGINEER",
-  location: "EARTH",
+  location: "HO CHI MINH CITY, VN",
   contact: {
     github: "https://github.com/coka",
     linkedin: "https://linkedin.com/in/coka",
