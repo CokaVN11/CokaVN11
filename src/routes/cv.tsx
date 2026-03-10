@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router'
-import { CVList } from '../components/CVList'
 import type { NavSection } from '../lib/resume/types'
+import { CVList } from '#/components/cv-page'
 
 export const Route = createFileRoute('/cv')({
   component: CVRoute,

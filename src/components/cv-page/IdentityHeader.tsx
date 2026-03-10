@@ -4,7 +4,7 @@ import { Avatar } from "./Avatar";
 export function IdentityHeader() {
   return (
     <div className="mb-6 flex gap-6">
-      <Avatar />
+      <Avatar src={"/avatar.jpg"} />
       <div className="flex flex-col justify-center gap-1">
         <span className="text-micro color-muted">
           <span style={{ color: "#39ff14" }}>●</span> ONLINE · V2.0 · AVAILABLE

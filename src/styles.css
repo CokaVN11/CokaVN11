@@ -416,15 +416,6 @@
     font-size: var(--text-ui);
     animation: dotScan 1.2s ease-in-out infinite;
   }
-
-  /* Corner accents (border chars) */
-  .corner-accent {
-    position: absolute;
-    font-size: 8px;
-    color: var(--border);
-    font-family: monospace;
-    line-height: 1;
-  }
 }
 
 /* ── Utilities ───────────────────────────────── */
@@ -468,6 +459,9 @@
   color: var(--accent);
 }
 
+@utility color-border {
+  color: var(--border);
+}
 /* ── Utility Layer ───────────────────────────── */
 
 @layer utilities {

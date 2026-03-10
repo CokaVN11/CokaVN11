@@ -1,36 +1,62 @@
-import { useEffect, useState } from "react";
-
-export function Avatar() {
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => {
-    const t = setTimeout(() => setMounted(true), 100);
-    return () => clearTimeout(t);
-  }, []);
+import { useState } from "react";
+import { Image } from "@unpic/react";
+function CornerAccent({ direction }: { direction: "tl" | "tr" | "bl" | "br" }) {
+  const styles: Record<string, React.CSSProperties> = {
+    tl: { top: -1, left: -1 },
+    tr: { top: -1, right: -1 },
+    bl: { bottom: -1, left: -1 },
+    br: { bottom: -1, right: -1 },
+  };
 
   return (
-    <div
-      className="relative flex shrink-0 flex-col items-center justify-center"
-      style={{
-        width: 80,
-        height: 80,
-        border: "1px solid var(--border)",
-      }}
+    <span
+      className="absolute font-mono color-border leading-1 text-xs md:text-sm lg:text-base"
+      style={styles[direction]}
     >
-      <span className="corner-accent" style={{ top: -1, left: -1 }}>
-        ┌
-      </span>
-      <span className="corner-accent" style={{ top: -1, right: -1 }}>
-        ┐
-      </span>
-      <span className="corner-accent" style={{ bottom: -1, left: -1 }}>
-        └
-      </span>
-      <span className="corner-accent" style={{ bottom: -1, right: -1 }}>
-        ┘
-      </span>
+      {direction === "tl"
+        ? "┌"
+        : direction === "tr"
+          ? "┐"
+          : direction === "bl"
+            ? "└"
+            : "┘"}
+    </span>
+  );
+}
 
-      <span className={`text-heading color-accent${mounted ? " text-flicker" : ""}`}>◈</span>
-      <span className="mt-1 text-micro color-muted">PLAYER 1</span>
+function AvatarCornerAccents() {
+  return (
+    <>
+      <CornerAccent direction="tl" />
+      <CornerAccent direction="tr" />
+      <CornerAccent direction="bl" />
+      <CornerAccent direction="br" />
+    </>
+  );
+}
+
+interface AvatarProps {
+  src?: string;
+}
+
+export function Avatar({ src }: AvatarProps) {
+  const [imgError, setImgError] = useState(false);
+
+  return (
+    <div className="relative flex shrink-0 flex-col items-center justify-center size-20 md:size-24 lg:size-28 border border-solid overflow-hidden">
+      <AvatarCornerAccents />
+
+      {!imgError ? (
+        <Image
+          src={src ?? "/assets/avatar.png"}
+          layout="fullWidth"
+          alt={`Avatar ${src}`}
+          onError={() => setImgError(true)}
+          className="object-cover"
+        />
+      ) : (
+        <span className="text-heading color-accent text-flicker">◈</span>
+      )}
     </div>
   );
 }

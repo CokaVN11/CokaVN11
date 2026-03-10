@@ -6,7 +6,7 @@ import { TopBar } from "@/components/TopBar";
 import { Footer } from "@/components/Footer";
 import { InsertCoin } from "@/components/InsertCoin";
 import { PlayMode } from "@/components/PlayMode";
-import { CVList } from "@/components/CVList";
+import { CVList } from "./cv-page";
 
 export default function IndexPage() {
   const currentScreen = useGameStore((s) => s.currentScreen);
