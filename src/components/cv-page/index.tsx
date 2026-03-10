@@ -1,7 +1,14 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { RESUME } from "@/lib/resume/content";
 import { NAV_SECTIONS, type NavSection } from "@/lib/resume/types";
 import { Sidebar } from "./Sidebar";
 import { IdentityHeader } from "./IdentityHeader";
+
+// Derived once at module level — RESUME is a static constant (rendering-hoist-jsx)
+const IDENTITY_CONTACTS = Object.entries(RESUME.contact).map(([key, value]) => ({
+  key,
+  href: value.startsWith("http") ? value : `mailto:${value}`,
+}));
 import { OverviewSection } from "./OverviewSection";
 import { ExperienceSection } from "./ExperienceSection";
 import { StackSection } from "./StackSection";
@@ -86,7 +93,12 @@ export function CVList({ initialSection = "OVERVIEW", onBack }: CVListProps) {
             scrollbarWidth: "none",
           }}
         >
-          <IdentityHeader />
+          <IdentityHeader
+            name={RESUME.name}
+            title={RESUME.title}
+            location={RESUME.location}
+            contacts={IDENTITY_CONTACTS}
+          />
           <OverviewSection />
           <ExperienceSection />
           <StackSection />
