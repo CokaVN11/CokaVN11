@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
 @layer base {
   :root {
@@ -255,7 +253,7 @@ code[data-line-numbers] {
 code[data-line-numbers] > [data-line]::before {
   counter-increment: line;
   content: counter(line);
-  @apply inline-block mr-4 w-4 text-gray-500 text-right;
+  @apply inline-block w-4 mr-4 text-right text-gray-500;
 }
 
 code {

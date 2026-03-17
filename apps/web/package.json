@@ -4,19 +4,17 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "next dev",
-    "build": "npx prisma generate && next build",
-    "analyze": "ANALYZE=true next build",
-    "start": "next start",
-    "lint": "next lint",
-    "clean": "rm -rf .next out dist"
+    "dev": "vite dev",
+    "build": "npx prisma generate && vite build",
+    "analyze": "ANALYZE=true vite build",
+    "start": "node .output/server/index.mjs",
+    "lint": "eslint . --ext .ts,.tsx"
   },
   "dependencies": {
     "@formspree/react": "^3.0.0",
     "@gsap/react": "^2.1.2",
     "@hookform/resolvers": "^5.2.2",
     "@mdx-js/loader": "^3.1.1",
-    "@next/mdx": "^15.5.5",
     "@prisma/client": "6.18.0",
     "@radix-ui/react-avatar": "^1.1.10",
     "@radix-ui/react-label": "^2.1.7",
@@ -26,6 +24,8 @@
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.4.0",
     "@react-three/postprocessing": "^3.0.4",
+    "@tanstack/react-router": "^1.167.4",
+    "@tanstack/react-start": "^1.166.15",
     "@use-gesture/react": "^10.3.1",
     "@vercel/analytics": "^1.5.0",
     "@vercel/functions": "^3.1.4",
@@ -46,7 +46,6 @@
     "lucide-react": "^0.545.0",
     "mongodb": "^6.20.0",
     "motion": "^12.23.24",
-    "next": "15.0.7",
     "next-themes": "^0.4.6",
     "postprocessing": "^6.38.0",
     "react": "^18.3.1",
@@ -69,6 +68,7 @@
   "devDependencies": {
     "@next/bundle-analyzer": "^16.0.0",
     "@tailwindcss/typography": "^0.5.19",
+    "@tailwindcss/vite": "^4.2.1",
     "@types/canvas-confetti": "^1.9.0",
     "@types/howler": "^2.2.12",
     "@types/mdx": "^2.0.13",
@@ -76,14 +76,16 @@
     "@types/react": "^18.3.0",
     "@types/react-dom": "^18.3.0",
     "@types/three": "^0.181.0",
+    "@vitejs/plugin-react": "^6.0.1",
     "autoprefixer": "^10.4.16",
     "beasties": "^0.3.5",
     "cssnano": "^7.1.1",
     "eslint": "^8.56.0",
-    "eslint-config-next": "^15.0.0",
     "postcss": "^8.4.32",
     "prisma": "6.18.0",
-    "tailwindcss": "^3.4.0",
-    "typescript": "^5.3.3"
+    "tailwindcss": "^3.4.18",
+    "typescript": "^5.3.3",
+    "vite": "^8.0.0",
+    "vite-tsconfig-paths": "^6.1.1"
   }
 }

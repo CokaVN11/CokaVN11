@@ -4,7 +4,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useSearch } from '@tanstack/react-router';
 
 interface UseGuestNameResult {
   /** Guest name if found, null otherwise */
@@ -23,8 +23,8 @@ interface UseGuestNameResult {
  * - If token not found or missing: returns null (quote hidden)
  */
 export function useGuestName(): UseGuestNameResult {
-  const searchParams = useSearchParams();
-  const token = searchParams.get('token');
+  const search = useSearch({ from: '/graduation' });
+  const token = search.token as string | undefined;
 
   const [guestName, setGuestName] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);

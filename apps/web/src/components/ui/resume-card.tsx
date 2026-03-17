@@ -1,12 +1,11 @@
 'use client';
 
 import { Badge } from '@/components/ui/badge';
-import { Card, CardHeader, CardContent } from '@/components/ui/card';
+import { Card, CardHeader } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
-import { ChevronRightIcon, MapPinIcon } from 'lucide-react';
-import Image from 'next/image';
-import Link from 'next/link';
+import { ChevronRightIcon } from 'lucide-react';
+import { Link } from '@tanstack/react-router';
 import React from 'react';
 import { AvatarFallback } from './avatar';
 
@@ -32,7 +31,6 @@ export const ResumeCard = ({
   href,
   badges,
   period,
-  location,
   description,
   className,
   isExpandable = true,
@@ -63,7 +61,7 @@ export const ResumeCard = ({
       className={cn('group', className)}
     >
       <Link
-        href={href || '#'}
+        to={href || '#'}
         className="block cursor-pointer"
         onClick={handleClick}
         onKeyDown={handleKeyDown}
@@ -76,17 +74,13 @@ export const ResumeCard = ({
           {/* Logo/Avatar */}
           <div className="flex-shrink-0 m-auto border rounded-full size-12">
             {logoUrl && !imageError ? (
-              <Image
+              <img
                 src={logoUrl}
                 alt={altText}
                 width={48}
                 height={48}
-                quality={75}
                 className="bg-muted dark:bg-muted/50 rounded-full size-auto object-contain"
                 onError={() => setImageError(true)}
-                sizes="(max-width: 768px) 48px, 64px"
-                priority={false}
-                loading="lazy"
               />
             ) : (
               <AvatarFallback className="bg-muted dark:bg-muted/50 rounded-full size-12 sm:size-16">

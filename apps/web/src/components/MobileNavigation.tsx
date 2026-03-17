@@ -1,6 +1,6 @@
 'use client';
 
-import Link from 'next/link';
+import { Link } from '@tanstack/react-router';
 import { useState } from 'react';
 
 export function MobileNavigation() {
@@ -85,7 +85,7 @@ export function MobileNavigation() {
                   {navItems.map((item) => (
                     <li key={item.href}>
                       <Link
-                        href={item.href}
+                        to={item.href}
                         onClick={closeMenu}
                         className="block w-full px-4 py-3 text-lg rounded-md hover:bg-accent transition-colors text-center"
                       >

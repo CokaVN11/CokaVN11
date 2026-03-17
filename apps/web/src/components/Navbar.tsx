@@ -1,6 +1,6 @@
 'use client';
 
-import Link from 'next/link';
+import { Link } from '@tanstack/react-router';
 import { Menu } from 'lucide-react';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { Dock, DockIcon } from '@/components/ui/dock';
@@ -10,6 +10,9 @@ import { cn } from '@/lib/utils';
 import { Separator } from '@/components/ui/separator';
 import { buttonVariants } from '@/components/ui/button';
 import { Drawer } from 'vaul';
+
+// Helper to determine if a link is external
+const isExternalLink = (href: string) => href.startsWith('http') || href.startsWith('//');
 
 function MobileNavigationDrawer() {
   const secondaryNavItems = {
@@ -49,7 +52,7 @@ function MobileNavigationDrawer() {
             <div className="flex flex-col justify-end gap-2 mx-auto max-w-md">
               {secondaryNavItems.experience && (
                 <Link
-                  href={secondaryNavItems.experience.href}
+                  to={secondaryNavItems.experience.href}
                   className={cn(
                     buttonVariants({ variant: 'ghost' }),
                     'w-full justify-start gap-3 h-12 px-4 text-foreground hover:bg-accent hover:text-accent-foreground'
@@ -60,9 +63,11 @@ function MobileNavigationDrawer() {
                 </Link>
               )}
               {secondaryNavItems.social.map((social) => (
-                <Link
+                <a
                   key={social.name}
                   href={social.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className={cn(
                     buttonVariants({ variant: 'ghost' }),
                     'w-full justify-start gap-3 h-12 px-4 text-foreground hover:bg-accent hover:text-accent-foreground'
@@ -70,7 +75,7 @@ function MobileNavigationDrawer() {
                 >
                   <social.icon className="size-5" />
                   <span>{social.label}</span>
-                </Link>
+                </a>
               ))}
 
               <AnimatedThemeToggler
@@ -100,18 +105,33 @@ export default function Navbar() {
 
         <div className="bottom-[8px] z-50 relative flex justify-around items-center bg-background/70 dark:bg-background/70 shadow-lg mx-auto px-2 border border-border rounded-full h-14 min-h-full transform-gpu pointer-events-auto">
           {/* Primary Mobile Navigation */}
-          {primaryMobileNav.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={cn(
-                buttonVariants({ variant: 'ghost', size: 'icon' }),
-                'size-10 sm:size-11 rounded-full flex flex-col items-center justify-center gap-1'
-              )}
-            >
-              <item.icon className="size-4 sm:size-5" />
-            </Link>
-          ))}
+          {primaryMobileNav.map((item) =>
+            isExternalLink(item.href) ? (
+              <a
+                key={item.href}
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cn(
+                  buttonVariants({ variant: 'ghost', size: 'icon' }),
+                  'size-10 sm:size-11 rounded-full flex flex-col items-center justify-center gap-1'
+                )}
+              >
+                <item.icon className="size-4 sm:size-5" />
+              </a>
+            ) : (
+              <Link
+                key={item.href}
+                to={item.href}
+                className={cn(
+                  buttonVariants({ variant: 'ghost', size: 'icon' }),
+                  'size-10 sm:size-11 rounded-full flex flex-col items-center justify-center gap-1'
+                )}
+              >
+                <item.icon className="size-4 sm:size-5" />
+              </Link>
+            )
+          )}
 
           <MobileNavigationDrawer />
         </div>
@@ -127,12 +147,29 @@ export default function Navbar() {
             <DockIcon key={item.href}>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Link
-                    href={item.href}
-                    className={cn(buttonVariants({ variant: 'ghost', size: 'icon' }), 'size-12')}
-                  >
-                    <item.icon className="size-4" />
-                  </Link>
+                  {isExternalLink(item.href) ? (
+                    <a
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={cn(
+                        buttonVariants({ variant: 'ghost', size: 'icon' }),
+                        'size-12'
+                      )}
+                    >
+                      <item.icon className="size-4" />
+                    </a>
+                  ) : (
+                    <Link
+                      to={item.href}
+                      className={cn(
+                        buttonVariants({ variant: 'ghost', size: 'icon' }),
+                        'size-12'
+                      )}
+                    >
+                      <item.icon className="size-4" />
+                    </Link>
+                  )}
                 </TooltipTrigger>
                 <TooltipContent>
                   <p>{item.label}</p>
@@ -151,12 +188,17 @@ export default function Navbar() {
               <DockIcon key={name}>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Link
+                    <a
                       href={social.url}
-                      className={cn(buttonVariants({ variant: 'ghost', size: 'icon' }), 'size-12')}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={cn(
+                        buttonVariants({ variant: 'ghost', size: 'icon' }),
+                        'size-12'
+                      )}
                     >
                       <social.icon className="size-4" />
-                    </Link>
+                    </a>
                   </TooltipTrigger>
                   <TooltipContent>
                     <p>{social.label}</p>

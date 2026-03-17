@@ -4,7 +4,6 @@
 'use client';
 
 import { useMemo, useState, useEffect } from 'react';
-import Image from 'next/image';
 import { useReducedMotion } from '../hooks/useReducedMotion';
 
 interface ChickenProps {
@@ -78,7 +77,7 @@ export function FloatingChickens() {
             } as React.CSSProperties
           }
         >
-          <Image
+          <img
             src="/chicken_love.png"
             alt=""
             width={chicken.size}
@@ -86,7 +85,6 @@ export function FloatingChickens() {
             className="select-none"
             style={{ transform: `rotate(${chicken.rotation}deg)` }}
             loading="lazy"
-            priority={false}
           />
         </div>
       ))}

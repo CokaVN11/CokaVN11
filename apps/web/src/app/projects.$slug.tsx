@@ -1,57 +1,46 @@
-import { notFound } from 'next/navigation';
-import Link from 'next/link';
-import Image from 'next/image';
-import { getJobEntry, getJobs } from '@/lib/content';
+import { createFileRoute, Link, notFound } from '@tanstack/react-router';
+import { getProjectEntry } from '@/lib/content';
 import { MDXRenderer } from '@/lib/mdx';
 import { getImageUrl } from '@/lib/seo-utils';
 
-export const dynamic = 'force-static'; // Force static generation for all slugs
-export const revalidate = 3600; // Revalidate every hour
+export const Route = createFileRoute('/projects/$slug')({
+  component: ExpDetailPage,
+  loader: async ({ params }) => {
+    const entry = await getProjectEntry(params.slug);
+    if (!entry) {
+      throw notFound();
+    }
+    return { entry };
+  },
+  head: ({ loaderData }) => {
+    const entry = loaderData?.entry;
+    if (!entry) {
+      return {
+        meta: [{ title: 'Experience Not Found' }],
+      };
+    }
 
-export async function generateStaticParams() {
-  const entries = await getJobs();
-  return entries.map((entry) => ({
-    slug: entry.slug,
-  }));
-}
+    const coverImageUrl = getImageUrl(entry.metadata.cover);
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
-  const entry = await getJobEntry(slug);
-
-  if (!entry) {
     return {
-      title: 'Job Experience Not Found',
+      meta: [
+        {
+          title: `${entry.metadata.title} - Full-Stack Project | Khanh Nguyen Portfolio`,
+        },
+        {
+          name: 'description',
+          content:
+            entry.metadata.summary ||
+            `Full-stack development project: ${entry.metadata.title}. Built with ${entry.metadata.tech?.join(', ') || 'modern web technologies'}.`,
+        },
+        ...(coverImageUrl ? [{ property: 'og:image', content: coverImageUrl }] : []),
+      ],
     };
-  }
+  },
+});
 
-  const coverImageUrl = getImageUrl(entry.metadata.cover);
-
-  return {
-    title: `${entry.metadata.title} - Career`,
-    description: entry.metadata.summary,
-    openGraph: {
-      title: entry.metadata.title,
-      description: entry.metadata.summary,
-      images: coverImageUrl ? [{ url: coverImageUrl }] : [],
-      type: 'article',
-      url: `${process.env.NEXT_PUBLIC_SITE_URL}/job/${entry.slug}`,
-    },
-    twitter: {
-      card: 'summary_large_image',
-      images: coverImageUrl ? [coverImageUrl] : [],
-    },
-  };
-}
-
-export default async function JobDetailPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
-  const entry = await getJobEntry(slug);
-
-  if (!entry) {
-    notFound();
-  }
-
+function ExpDetailPage() {
+  const { entry } = Route.useLoaderData();
   const coverImageUrl = getImageUrl(entry.metadata.cover);
 
   const creativeWorkSchema = {
@@ -62,14 +51,44 @@ export default async function JobDetailPage({ params }: { params: Promise<{ slug
     datePublished: entry.metadata.date,
     image: coverImageUrl,
     keywords: entry.metadata.tags?.join(', '),
+    genre: 'Web Development',
     author: {
       '@type': 'Person',
-      name: 'Coka',
+      name: 'Khanh Nguyen',
+      jobTitle: 'Full-Stack Developer',
+      url: import.meta.env.VITE_SITE_URL,
+      sameAs: ['https://github.com/CokaVN11', 'https://linkedin.com/in/ngckhanh'],
     },
-    url: `${process.env.NEXT_PUBLIC_SITE_URL}/job/${entry.slug}`,
-    about: {
+    creator: {
+      '@type': 'Person',
+      name: 'Khanh Nguyen',
+    },
+    publisher: {
+      '@type': 'Person',
+      name: 'Khanh Nguyen',
+    },
+    url: `${import.meta.env.VITE_SITE_URL}/projects/${entry.slug}`,
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `${import.meta.env.VITE_SITE_URL}/projects/${entry.slug}`,
+    },
+    programmingLanguage: entry.metadata.tech,
+    about: entry.metadata.tags?.map((tag) => ({
       '@type': 'Thing',
-      name: entry.metadata.role,
+      name: tag,
+    })),
+    offers: {
+      '@type': 'Offer',
+      itemOffered: {
+        '@type': 'Service',
+        name: 'Full-Stack Web Development',
+        description: `Custom web development using ${entry.metadata.tech?.join(', ') || 'modern technologies'}`,
+      },
+      seller: {
+        '@type': 'Person',
+        name: 'Khanh Nguyen',
+        jobTitle: 'Full-Stack Developer',
+      },
     },
   };
 
@@ -86,7 +105,7 @@ export default async function JobDetailPage({ params }: { params: Promise<{ slug
           {/* Back Navigation */}
           <div className="mb-8">
             <Link
-              href="/"
+              to="/"
               className="inline-flex items-center text-muted-foreground hover:text-foreground transition-colors"
             >
               <svg className="mr-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -97,7 +116,7 @@ export default async function JobDetailPage({ params }: { params: Promise<{ slug
                   d="M10 19l-7-7m0 0l7-7m-7 7h18"
                 />
               </svg>
-              Back to Career
+              Back to Projects
             </Link>
           </div>
 
@@ -106,13 +125,10 @@ export default async function JobDetailPage({ params }: { params: Promise<{ slug
             {/* Cover Image */}
             {entry.metadata.cover && (
               <div className="relative mb-8 rounded-lg w-full h-64 md:h-96 overflow-hidden">
-                <Image
+                <img
                   src={entry.metadata.cover}
                   alt={entry.metadata.title}
-                  fill
-                  className="object-cover"
-                  priority
-                  sizes="(max-width: 768px) 100vw, 1024px"
+                  className="w-full h-full object-cover"
                 />
               </div>
             )}
@@ -122,13 +138,6 @@ export default async function JobDetailPage({ params }: { params: Promise<{ slug
               <h1 className="mb-4 font-bold text-foreground text-4xl md:text-5xl">
                 {entry.metadata.title}
               </h1>
-
-              {/* Role */}
-              {entry.metadata.role && (
-                <div className="mb-6">
-                  <h2 className="font-semibold text-primary text-2xl">{entry.metadata.role}</h2>
-                </div>
-              )}
 
               <div className="flex flex-wrap justify-center items-center gap-4 mb-6 text-muted-foreground">
                 {/* Date */}
@@ -152,6 +161,26 @@ export default async function JobDetailPage({ params }: { params: Promise<{ slug
                     day: 'numeric',
                   })}
                 </time>
+
+                {/* Role */}
+                {entry.metadata.role && (
+                  <span className="flex items-center">
+                    <svg
+                      className="mr-2 w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                      />
+                    </svg>
+                    {entry.metadata.role}
+                  </span>
+                )}
               </div>
 
               {/* Summary */}
@@ -165,7 +194,7 @@ export default async function JobDetailPage({ params }: { params: Promise<{ slug
               {entry.metadata.tech && entry.metadata.tech.length > 0 && (
                 <div className="mb-8">
                   <h3 className="mb-3 font-semibold text-muted-foreground text-sm uppercase tracking-wider">
-                    Technologies Used
+                    Technologies
                   </h3>
                   <div className="flex flex-wrap justify-center gap-2">
                     {entry.metadata.tech.map((tech) => (
@@ -184,7 +213,7 @@ export default async function JobDetailPage({ params }: { params: Promise<{ slug
               {entry.metadata.tags && entry.metadata.tags.length > 0 && (
                 <div>
                   <h3 className="mb-3 font-semibold text-muted-foreground text-sm uppercase tracking-wider">
-                    Areas of Focus
+                    Topics
                   </h3>
                   <div className="flex flex-wrap justify-center gap-2">
                     {entry.metadata.tags.map((tag) => (
@@ -203,7 +232,7 @@ export default async function JobDetailPage({ params }: { params: Promise<{ slug
               {entry.metadata.featured && (
                 <div className="mt-6">
                   <span className="bg-primary px-3 py-1 rounded-full font-medium text-primary-foreground text-sm">
-                    Key Career Role
+                    Featured Project
                   </span>
                 </div>
               )}
@@ -218,7 +247,10 @@ export default async function JobDetailPage({ params }: { params: Promise<{ slug
           {/* Footer */}
           <footer className="mt-16 pt-8 border-t border-border">
             <div className="text-center">
-              <Link href="/job" className="inline-flex items-center text-primary hover:underline">
+              <Link
+                to="/projects"
+                className="inline-flex items-center text-primary hover:underline"
+              >
                 <svg className="mr-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
                     strokeLinecap="round"
@@ -227,7 +259,7 @@ export default async function JobDetailPage({ params }: { params: Promise<{ slug
                     d="M10 19l-7-7m0 0l7-7m-7 7h18"
                   />
                 </svg>
-                Back to career journey
+                Back to all projects
               </Link>
             </div>
           </footer>

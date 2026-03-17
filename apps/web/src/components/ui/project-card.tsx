@@ -1,8 +1,7 @@
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
-import Image from 'next/image';
-import Link from 'next/link';
+import { Link } from '@tanstack/react-router';
 
 interface Props {
   title: string;
@@ -36,7 +35,7 @@ export function ProjectCard({
   isPriority = false, // Default to false
 }: Props) {
   return (
-    <Link href={href || '#'} className={cn('block cursor-pointer', className)}>
+    <Link to={href || '/'} className={cn('block cursor-pointer', className)}>
       <Card
         className={
           'flex flex-col overflow-hidden border hover:shadow-lg transition-all duration-300 ease-out h-full mx-auto'
@@ -53,19 +52,11 @@ export function ProjectCard({
           />
         )}
         {image && (
-          <Image
+          <img
             src={image}
             alt={title}
-            width={400}
-            height={240}
-            quality={75}
             className="rounded-t-lg w-full h-40 object-cover object-top overflow-hidden"
-            priority={isPriority}
             loading={isPriority ? 'eager' : 'lazy'}
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
-            style={{
-              viewTransitionName: isPriority ? 'project-image' : undefined,
-            }}
           />
         )}
 
@@ -101,12 +92,12 @@ export function ProjectCard({
           <CardFooter className="px-2 pb-2">
             <div className="flex flex-row flex-wrap items-start gap-1">
               {links?.map((link, idx) => (
-                <Link href={link?.href} key={idx} target="_blank">
+                <a href={link?.href} key={idx} target="_blank" rel="noopener noreferrer">
                   <Badge key={idx} className="flex gap-2 px-2 py-1 text-[10px]">
                     {link.icon}
                     {link.type}
                   </Badge>
-                </Link>
+                </a>
               ))}
             </div>
           </CardFooter>

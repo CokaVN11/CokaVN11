@@ -1,7 +1,6 @@
 'use client';
 import { useMotionValueEvent, useScroll, useTransform, motion } from 'motion/react';
 import React, { useEffect, useRef, useState } from 'react';
-import Image from 'next/image';
 import type { JobData } from '@/data/generateJobs';
 import {
   formatDateRange,
@@ -13,7 +12,7 @@ import { Highlighter } from '@/components/ui/highlighter';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from './separator';
-import Link from 'next/link';
+import { Link } from '@tanstack/react-router';
 
 interface ExperienceTimelineProps {
   jobs: JobData[];
@@ -90,7 +89,7 @@ export function ExperienceTimeline({ jobs }: ExperienceTimelineProps) {
               </div>
 
               {/* Job card */}
-              <Link href={job.href}>
+              <Link to={job.href}>
                 <Card className="group relative hover:shadow-lg p-2 sm:p-4 border hover:border-primary/20 border-border transition-all duration-300">
                   {/* Absolute positioned badges */}
                   {(job.featured || isPresentJob(job)) && (

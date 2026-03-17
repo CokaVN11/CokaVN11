@@ -1,5 +1,3 @@
-import type { Metadata } from 'next';
-
 interface SEOConfig {
   title?: string;
   description?: string;
@@ -17,7 +15,7 @@ interface SEOConfig {
   };
 }
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://portfolio.coka.id.vn';
+const SITE_URL = import.meta.env.VITE_SITE_URL || 'https://portfolio.coka.id.vn';
 const SITE_NAME = 'Khanh Nguyen - Full-Stack Developer Portfolio';
 const AUTHOR_NAME = 'Khanh Nguyen';
 
@@ -59,8 +57,9 @@ const DEFAULT_META = {
 
 /**
  * Generates metadata for pages with consistent SEO configuration
+ * Returns TanStack Router compatible meta array
  */
-export function generateMetadata(config: SEOConfig = {}): Metadata {
+export function generateMetadata(config: SEOConfig = {}) {
   const title = config.title || DEFAULT_META.title;
   const description = config.description || DEFAULT_META.description;
   const path = config.path || '';
@@ -69,46 +68,31 @@ export function generateMetadata(config: SEOConfig = {}): Metadata {
   const url = `${SITE_URL}${path}`;
   const fullTitle = config.title ? `${title} | ${SITE_NAME}` : DEFAULT_META.title;
 
-  const metadata: Metadata = {
-    metadataBase: new URL(SITE_URL),
-    title: fullTitle,
-    description,
-    keywords,
-    authors: [{ name: AUTHOR_NAME }],
-    creator: AUTHOR_NAME,
-    publisher: AUTHOR_NAME,
-    robots: {
-      index: !config.noIndex,
-      follow: !config.noIndex,
-      googleBot: {
-        index: !config.noIndex,
-        follow: !config.noIndex,
-        'max-video-preview': -1,
-        'max-image-preview': 'large',
-        'max-snippet': -1,
-      },
-    },
-    openGraph: {
-      title: fullTitle,
-      description,
-      url,
-      siteName: SITE_NAME,
-      locale: 'en_US',
-      type: config.openGraph?.type || 'website',
-      images: config.openGraph?.images || [],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: fullTitle,
-      description,
-      creator: '@khanhnguyen', // Add actual Twitter handle if available
-    },
-    alternates: {
-      canonical: url,
-    },
-  };
-
-  return metadata;
+  // Return TanStack Router compatible meta array
+  return [
+    { title: fullTitle },
+    { name: 'description', content: description },
+    { name: 'keywords', content: keywords.join(', ') },
+    { name: 'author', content: AUTHOR_NAME },
+    { name: 'creator', content: AUTHOR_NAME },
+    { name: 'publisher', content: AUTHOR_NAME },
+    { name: 'robots', content: config.noIndex ? 'noindex, nofollow' : 'index, follow' },
+    { property: 'og:title', content: fullTitle },
+    { property: 'og:description', content: description },
+    { property: 'og:url', content: url },
+    { property: 'og:site_name', content: SITE_NAME },
+    { property: 'og:locale', content: 'en_US' },
+    { property: 'og:type', content: config.openGraph?.type || 'website' },
+    { name: 'twitter:card', content: 'summary_large_image' },
+    { name: 'twitter:title', content: fullTitle },
+    { name: 'twitter:description', content: description },
+    { name: 'twitter:creator', content: '@khanhnguyen' },
+    { rel: 'canonical', href: url },
+    ...(config.openGraph?.images?.map((img) => ({
+      property: 'og:image',
+      content: img.url,
+    })) || []),
+  ];
 }
 
 /**

@@ -1,23 +1,41 @@
-import Link from 'next/link';
-import Image from 'next/image';
+import { createFileRoute, Link } from '@tanstack/react-router';
 import { getJobs } from '@/lib/content';
-import type { Metadata } from 'next';
 
-export const metadata: Metadata = {
-  title: 'Career Journey - Coka Portfolio',
-  description:
-    'Professional journey and work experience in software engineering, frontend development, and technology.',
-  openGraph: {
-    title: 'Career Journey - Coka Portfolio',
-    description:
-      'Professional journey and work experience in software engineering, frontend development, and technology.',
-    url: '/job',
-    type: 'website',
+export const Route = createFileRoute('/job')({
+  component: JobPage,
+  loader: async () => {
+    const entries = await getJobs();
+    return { entries };
   },
-};
+  head: () => ({
+    meta: [
+      {
+        title: 'Career Journey - Coka Portfolio',
+      },
+      {
+        name: 'description',
+        content:
+          'Professional journey and work experience in software engineering, frontend development, and technology.',
+      },
+      {
+        property: 'og:title',
+        content: 'Career Journey - Coka Portfolio',
+      },
+      {
+        property: 'og:description',
+        content:
+          'Professional journey and work experience in software engineering, frontend development, and technology.',
+      },
+      {
+        property: 'og:type',
+        content: 'website',
+      },
+    ],
+  }),
+});
 
-export default async function JobPage() {
-  const entries = await getJobs();
+function JobPage() {
+  const { entries } = Route.useLoaderData();
 
   return (
     <main className="min-h-screen bg-background">
@@ -59,7 +77,7 @@ export default async function JobPage() {
                       index % 2 === 0 ? 'md:pr-8 md:text-right' : 'md:pl-8'
                     }`}
                   >
-                    <Link href={`/job/${entry.slug}`}>
+                    <Link to="/job/$slug" params={{ slug: entry.slug }}>
                       <article className="group p-6 border rounded-lg hover:shadow-lg transition-all duration-300 border-border bg-card">
                         {/* Date Badge */}
                         <div
@@ -76,12 +94,10 @@ export default async function JobPage() {
                         {/* Cover Image */}
                         {entry.metadata.cover && (
                           <div className="relative w-full h-48 mb-4 rounded-lg overflow-hidden">
-                            <Image
+                            <img
                               src={entry.metadata.cover}
                               alt={entry.metadata.title}
-                              fill
-                              className="object-cover group-hover:scale-105 transition-transform duration-300"
-                              sizes="(max-width: 768px) 100vw, 400px"
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                             />
                           </div>
                         )}
@@ -162,7 +178,7 @@ export default async function JobPage() {
         ) : (
           <div className="text-center py-12">
             <p className="text-muted-foreground mb-4">No job entries found yet.</p>
-            <Link href="/" className="text-primary hover:underline">
+            <Link to="/" className="text-primary hover:underline">
               Return to homepage
             </Link>
           </div>

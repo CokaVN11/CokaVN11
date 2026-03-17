@@ -1,6 +1,5 @@
 import React from 'react';
 import type { JobData } from '@/data/generateJobs';
-import Image from 'next/image';
 
 export interface TimelineEntry {
   title: string;
@@ -173,7 +172,7 @@ function TimelineJobContent({ job }: { job: JobData }): React.ReactElement {
       {/* Cover Image */}
       {job.cover && (
         <div className="relative rounded-lg w-full h-48 overflow-hidden">
-          <Image
+          <img
             src={job.cover}
             alt={`${job.company} - ${job.role}`}
             className="w-full h-full object-cover"

@@ -1,3 +1,4 @@
+import { createFileRoute } from '@tanstack/react-router';
 import Navbar from '@/components/Navbar';
 import {
   HeroSection,
@@ -9,12 +10,33 @@ import {
   ContactSection,
 } from '@/components/sections';
 import { BlurFade } from '@/components/ui/blur-fade';
-import { RESUME, generatePersonSchema, generateProfessionalServiceSchema } from '@/data/resume';
+import {
+  RESUME,
+  generatePersonSchema,
+  generateProfessionalServiceSchema,
+} from '@/data/resume';
 import { Separator } from '@radix-ui/react-separator';
 
 const BLUR_FADE_DELAY = 0.04;
 
-export default async function Home() {
+export const Route = createFileRoute('/')({
+  component: Home,
+  head: () => ({
+    meta: [
+      {
+        title:
+          'Khanh Nguyen - Full-Stack Developer | React & Next.js | Ho Chi Minh City',
+      },
+      {
+        name: 'description',
+        content:
+          'Full-stack developer in Ho Chi Minh City, Vietnam. Building modern web applications with React, Next.js, Vue.js, and scalable backend systems.',
+      },
+    ],
+  }),
+});
+
+function Home() {
   const personSchema = generatePersonSchema(RESUME);
   const professionalServiceSchema = generateProfessionalServiceSchema(RESUME);
 
@@ -42,7 +64,10 @@ export default async function Home() {
             avatar: RESUME.avatar,
           }}
         />
-        <AboutSection blurFadeDelay={BLUR_FADE_DELAY} summary={RESUME.summary} />
+        <AboutSection
+          blurFadeDelay={BLUR_FADE_DELAY}
+          summary={RESUME.summary}
+        />
 
         <Separator className="bg-gradient-to-r from-transparent via-[#0070F3] to-transparent w-full h-1" />
 
@@ -68,7 +93,10 @@ export default async function Home() {
         <Separator className="bg-gradient-to-r from-transparent via-[#0070F3] to-transparent w-full h-1" />
         {/* Skills Section */}
         <BlurFade delay={BLUR_FADE_DELAY * 6} inView={true} direction="down">
-          <SkillsSection blurFadeDelay={BLUR_FADE_DELAY * 6} skills={RESUME.skills} />
+          <SkillsSection
+            blurFadeDelay={BLUR_FADE_DELAY * 6}
+            skills={RESUME.skills}
+          />
         </BlurFade>
 
         <BlurFade delay={BLUR_FADE_DELAY * 16} inView={true} direction="up">

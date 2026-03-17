@@ -1,22 +1,48 @@
 // ABOUTME: Awwwards-style graduation invitation with aurora gradient hero
 // ABOUTME: Custom cursor, loading screen, split layout (35%/65%), i18n support
 
-'use client';
-
 import { useState, useCallback } from 'react';
-import { CustomCursor } from './components/CustomCursor';
-import { LoadingScreen } from './components/LoadingScreen';
-import { HeroCanvas } from './components/HeroCanvas';
-import { FloatingName } from './components/FloatingName';
-import { InfoGrid } from './components/InfoGrid';
-import { CTASection } from './components/CTASection';
-import { ParkingNote } from './components/ParkingNote';
-import { MarqueeFooter } from './components/MarqueeFooter';
-import { FloatingChickens } from './components/FloatingChickens';
-import { useReducedMotion } from './hooks/useReducedMotion';
-import { useLocale } from './hooks/useLocale';
+import { createFileRoute } from '@tanstack/react-router';
+import { CustomCursor } from '@/app/graduation/components/CustomCursor';
+import { LoadingScreen } from '@/app/graduation/components/LoadingScreen';
+import { HeroCanvas } from '@/app/graduation/components/HeroCanvas';
+import { FloatingName } from '@/app/graduation/components/FloatingName';
+import { InfoGrid } from '@/app/graduation/components/InfoGrid';
+import { CTASection } from '@/app/graduation/components/CTASection';
+import { ParkingNote } from '@/app/graduation/components/ParkingNote';
+import { MarqueeFooter } from '@/app/graduation/components/MarqueeFooter';
+import { FloatingChickens } from '@/app/graduation/components/FloatingChickens';
+import { useReducedMotion } from '@/app/graduation/hooks/useReducedMotion';
+import { useLocale } from '@/app/graduation/hooks/useLocale';
 
-export default function GraduationPage() {
+export const Route = createFileRoute('/graduation')({
+  component: GraduationPage,
+  head: () => ({
+    meta: [
+      {
+        title: 'Lễ Tốt Nghiệp - Nguyễn Công Khanh',
+      },
+      {
+        name: 'description',
+        content: 'Thân mừng tới dự lễ tốt nghiệp của Nguyễn Công Khanh',
+      },
+      {
+        property: 'og:title',
+        content: 'Lễ Tốt Nghiệp - Nguyễn Công Khanh',
+      },
+      {
+        property: 'og:description',
+        content: 'Thân mừng tới dự lễ tốt nghiệp của Nguyễn Công Khanh',
+      },
+      {
+        property: 'og:type',
+        content: 'website',
+      },
+    ],
+  }),
+});
+
+function GraduationPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [isRevealed, setIsRevealed] = useState(false);
   const shouldReduceMotion = useReducedMotion();

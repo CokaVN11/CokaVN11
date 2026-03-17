@@ -1,37 +1,4 @@
-import Link from 'next/link';
-import type { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: 'Full-Stack Development Projects | React, Next.js, Vue.js | Khanh Nguyen',
-  description:
-    'Portfolio of full-stack web development projects including React applications, Next.js websites, Vue.js solutions, NestJS APIs, and scalable web applications. Professional freelance and personal projects.',
-  keywords: [
-    'web development projects',
-    'React projects',
-    'Next.js projects',
-    'Vue.js projects',
-    'full-stack portfolio',
-    'web application showcase',
-    'TypeScript projects',
-    'NestJS projects',
-    'Golang projects',
-    'freelance web development',
-    'personal projects',
-    'portfolio projects',
-    'software development portfolio',
-    'modern web applications',
-    'API development projects',
-    'database design projects',
-    'full-stack development showcase',
-  ],
-  openGraph: {
-    title: 'Full-Stack Development Projects | Khanh Nguyen Portfolio',
-    description:
-      'Explore a diverse portfolio of web development projects built with React, Next.js, Vue.js, NestJS, and modern technologies.',
-    url: `${process.env.NEXT_PUBLIC_SITE_URL}/projects`,
-    type: 'website',
-  },
-};
+import { createFileRoute, Link } from '@tanstack/react-router';
 
 const projects = [
   {
@@ -60,14 +27,39 @@ const projects = [
   },
 ];
 
-export default function Projects() {
+export const Route = createFileRoute('/projects')({
+  component: Projects,
+  head: () => ({
+    meta: [
+      {
+        title: 'Full-Stack Development Projects | React, Next.js, Vue.js | Khanh Nguyen',
+      },
+      {
+        name: 'description',
+        content:
+          'Portfolio of full-stack web development projects including React applications, Next.js websites, Vue.js solutions, NestJS APIs, and scalable web applications.',
+      },
+      {
+        property: 'og:title',
+        content: 'Full-Stack Development Projects | Khanh Nguyen Portfolio',
+      },
+      {
+        property: 'og:description',
+        content:
+          'Explore a diverse portfolio of web development projects built with React, Next.js, Vue.js, NestJS, and modern technologies.',
+      },
+    ],
+  }),
+});
+
+function Projects() {
   const collectionPageSchema = {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
     name: 'Full-Stack Development Projects Portfolio',
     description:
       'Portfolio of full-stack web development projects including React applications, Next.js websites, Vue.js solutions, NestJS APIs, and scalable web applications',
-    url: `${process.env.NEXT_PUBLIC_SITE_URL}/projects`,
+    url: `${import.meta.env.VITE_SITE_URL}/projects`,
     mainEntity: {
       '@type': 'ItemList',
       name: 'Web Development Projects',
@@ -89,7 +81,7 @@ export default function Projects() {
       '@type': 'Person',
       name: 'Khanh Nguyen',
       jobTitle: 'Full-Stack Developer',
-      url: process.env.NEXT_PUBLIC_SITE_URL,
+      url: import.meta.env.VITE_SITE_URL,
     },
   };
 
@@ -106,18 +98,15 @@ export default function Projects() {
         <nav className="border-b border-border">
           <div className="mx-auto px-4 py-4 container">
             <div className="flex justify-between items-center">
-              <Link href="/" className="font-bold text-2xl">
+              <Link to="/" className="font-bold text-2xl">
                 Portfolio
               </Link>
               <div className="flex gap-6">
-                <Link href="/" className="hover:text-primary transition-colors">
+                <Link to="/" className="hover:text-primary transition-colors">
                   Home
                 </Link>
-                <Link href="/projects" className="font-semibold text-primary">
+                <Link to="/projects" className="font-semibold text-primary">
                   Projects
-                </Link>
-                <Link href="/contact" className="hover:text-primary transition-colors">
-                  Contact
                 </Link>
               </div>
             </div>
@@ -128,7 +117,7 @@ export default function Projects() {
         <section className="mx-auto px-4 py-20 container">
           <h1 className="mb-4 font-bold text-4xl">Projects</h1>
           <p className="mb-12 text-muted-foreground text-xl">
-            A selection of projects I&apos;ve worked on, demonstrating technical skills and delivery
+            A selection of projects I've worked on, demonstrating technical skills and delivery
             discipline.
           </p>
 

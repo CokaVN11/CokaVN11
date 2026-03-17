@@ -1,6 +1,5 @@
 'use client';
-import Link from 'next/link';
-import Image from 'next/image';
+import { Link } from '@tanstack/react-router';
 import type { JobData } from '@/data/generateJobs';
 import { Badge } from '../ui/badge';
 import { SparklesText } from '../ui/sparkles-text';
@@ -52,7 +51,7 @@ export function ExperienceSection({ work }: ExperienceSectionProps) {
                     index % 2 === 0 ? 'md:pr-8 md:text-right' : 'md:pl-8'
                   }`}
                 >
-                  <Link href={job.href}>
+                  <Link to={job.href}>
                     <article className="group bg-card hover:shadow-lg p-6 border border-border rounded-lg transition-all duration-300">
                       {/* Date and Type Badges */}
                       <div
@@ -81,12 +80,10 @@ export function ExperienceSection({ work }: ExperienceSectionProps) {
                       {/* Cover Image */}
                       {job.cover && (
                         <div className="relative mb-4 rounded-lg w-full h-48 overflow-hidden">
-                          <Image
+                          <img
                             src={job.cover}
                             alt={`${job.company} - ${job.role}`}
-                            fill
-                            className="object-cover group-hover:scale-105 transition-transform duration-300"
-                            sizes="(max-width: 768px) 100vw, 400px"
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                           />
                         </div>
                       )}
