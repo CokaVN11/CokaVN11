@@ -34,11 +34,11 @@ function MobileNavigationDrawer() {
       </Drawer.Trigger>
       <Drawer.Portal>
         <Drawer.Overlay className="fixed inset-0 bg-black/40" />
-        <Drawer.Content className="right-0 bottom-10 left-0 z-50 fixed flex flex-col bg-background mt-24 border-t border-border rounded-t-[10px] outline-none h-fit">
+        <Drawer.Content className="right-0 bottom-10 left-0 z-50 fixed flex flex-col bg-background mt-24 border-t border-border rounded-t-[10px] outline-hidden h-fit">
           <div className="flex-1 bg-card p-4 rounded-t-[10px]">
             <div
               aria-hidden
-              className="flex-shrink-0 bg-muted mx-auto mb-4 rounded-full w-12 h-1.5"
+              className="shrink-0 bg-muted mx-auto mb-4 rounded-full w-12 h-1.5"
             />
             <div className="mx-auto max-w-md">
               <Drawer.Title className="font-medium text-foreground">Menu</Drawer.Title>

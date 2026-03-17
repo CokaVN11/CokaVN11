@@ -43,7 +43,7 @@ export function CustomCursor({ enabled = true }: CustomCursorProps) {
     <>
       {/* Inner dot - follows mouse instantly */}
       <div
-        className="pointer-events-none fixed z-[9999] rounded-full bg-white"
+        className="pointer-events-none fixed z-9999 rounded-full bg-white"
         style={{
           width: CURSOR_CONFIG.dotSize,
           height: CURSOR_CONFIG.dotSize,
@@ -58,7 +58,7 @@ export function CustomCursor({ enabled = true }: CustomCursorProps) {
 
       {/* Outer ring - follows with smooth lerp */}
       <div
-        className="pointer-events-none fixed z-[9998] rounded-full border-2 border-white"
+        className="pointer-events-none fixed z-9998 rounded-full border-2 border-white"
         style={{
           width: ringSize,
           height: ringSize,

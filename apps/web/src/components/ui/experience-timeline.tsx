@@ -98,7 +98,7 @@ export function ExperienceTimeline({ jobs }: ExperienceTimelineProps) {
                       {isPresentJob(job) && (
                         <Badge
                           variant="outline"
-                          className="bg-green-500/10 shadow-sm backdrop-blur-sm px-3 py-1.5 border-green-500/20 rounded-full font-medium text-green-600 dark:text-green-400 text-xs"
+                          className="bg-green-500/10 shadow-xs backdrop-blur-xs px-3 py-1.5 border-green-500/20 rounded-full font-medium text-green-600 dark:text-green-400 text-xs"
                         >
                           Present
                         </Badge>
@@ -199,14 +199,14 @@ export function ExperienceTimeline({ jobs }: ExperienceTimelineProps) {
           style={{
             height: height + 'px',
           }}
-          className="top-0 left-4 md:left-8 absolute bg-[linear-gradient(to_bottom,var(--tw-gradient-stops))] from-[0%] from-transparent via-[#0070F3]/20 to-[99%] to-transparent rounded-full w-[2px] overflow-hidden [mask-image:linear-gradient(to_bottom,transparent_0%,black_10%,black_90%,transparent_100%)]"
+          className="top-0 left-4 md:left-8 absolute bg-[linear-gradient(to_bottom,var(--tw-gradient-stops))] from-0% from-transparent via-[#0070F3]/20 to-99% to-transparent rounded-full w-[2px] overflow-hidden mask-[linear-gradient(to_bottom,transparent_0%,black_10%,black_90%,transparent_100%)]"
         >
           <motion.div
             style={{
               height: heightTransform,
               opacity: opacityTransform,
             }}
-            className="top-0 absolute inset-x-0 bg-gradient-to-t from-[#0070F3] from-[0%] via-[#38bdf8]/80 via-[10%] to-transparent rounded-full w-[2px]"
+            className="top-0 absolute inset-x-0 bg-linear-to-t from-[#0070F3] from-0% via-[#38bdf8]/80 via-10% to-transparent rounded-full w-[2px]"
           />
         </div>
       </div>

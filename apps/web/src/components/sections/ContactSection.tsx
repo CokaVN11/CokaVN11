@@ -63,7 +63,7 @@ export function ContactSection() {
   return (
     <section
       id="contact"
-      className="mx-auto pb-14 sm:pb-20 w-full"
+      className="w-full mx-auto pb-14 sm:pb-20"
       aria-labelledby="contact-heading"
     >
       <ContactCard
@@ -90,7 +90,7 @@ export function ContactSection() {
       >
         <form
           onSubmit={form.handleSubmit(handleContactSubmit)}
-          className="space-y-4 w-full"
+          className="w-full space-y-4"
           action="javascript:void(0)"
         >
           <Field>
@@ -138,7 +138,7 @@ export function ContactSection() {
                   {...field}
                   id="message"
                   placeholder="Tell me about your project..."
-                  className="min-h-[120px]"
+                  className="min-h-30"
                   aria-invalid={form.formState.errors.message ? 'true' : 'false'}
                 />
               )}
@@ -149,10 +149,10 @@ export function ContactSection() {
           <Button
             type="submit"
             disabled={contactStatus === 'submitting'}
-            className="bg-primary hover:bg-primary/90 shadow-lg hover:shadow-xl w-full text-primary-foreground transition-all duration-200"
+            className="w-full transition-all duration-200 shadow-lg bg-primary hover:bg-primary/90 hover:shadow-xl text-primary-foreground"
           >
             <SparklesText
-              className="font-semibold text-xl"
+              className="text-xl font-semibold"
               colors={{ first: '#0070F3', second: '#38bdf8' }}
             >
               <span>{contactStatus === 'submitting' ? 'Sending...' : 'Send Message'}</span>

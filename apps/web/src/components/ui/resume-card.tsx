@@ -74,7 +74,7 @@ export const ResumeCard = ({
       >
         <Card className="flex sm:flex-row flex-col transition-all duration-300">
           {/* Logo/Avatar */}
-          <div className="flex-shrink-0 m-auto border rounded-full size-12">
+          <div className="shrink-0 m-auto border rounded-full size-12">
             {logoUrl && !imageError ? (
               <Image
                 src={logoUrl}
@@ -95,7 +95,7 @@ export const ResumeCard = ({
             )}
           </div>
 
-          <div className="group flex-col flex-grow items-center ml-4">
+          <div className="group flex-col grow items-center ml-4">
             <CardHeader>
               <div className="flex justify-between items-center gap-x-2 text-base">
                 <h3 className="inline-flex justify-center items-center font-semibold text-xs sm:text-sm leading-none">

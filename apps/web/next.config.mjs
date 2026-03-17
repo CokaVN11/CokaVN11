@@ -5,7 +5,7 @@ import remarkGfm from 'remark-gfm';
 const nextConfig = withMDX({
   extension: /\.mdx?$/,
   options: {
-    remarkPlugins: [remarkGfm],
+    remarkPlugins: [],
   },
 })({
   reactStrictMode: true,
