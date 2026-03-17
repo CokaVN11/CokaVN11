@@ -54,7 +54,7 @@ function Home() {
           __html: JSON.stringify(professionalServiceSchema),
         }}
       />
-      <main className="space-y-10 bg-background mx-auto px-4 md:px-2 py-6 sm:py-8 lg:py-10 max-w-2xl min-h-[100dvh] container">
+      <main className="space-y-10 bg-background mx-auto px-4 md:px-2 py-6 sm:py-8 lg:py-10 max-w-2xl min-h-dvh container">
         {/* Hero Section */}
         <HeroSection
           blurFadeDelay={BLUR_FADE_DELAY}
@@ -69,28 +69,28 @@ function Home() {
           summary={RESUME.summary}
         />
 
-        <Separator className="bg-gradient-to-r from-transparent via-[#0070F3] to-transparent w-full h-1" />
+        <Separator className="bg-linear-to-r from-transparent via-[#0070F3] to-transparent w-full h-1" />
 
         {/* Projects Section */}
         <BlurFade delay={BLUR_FADE_DELAY * 7} inView={true} direction="down">
           <ProjectsSection projects={RESUME.projects} />
         </BlurFade>
 
-        <Separator className="bg-gradient-to-r from-transparent via-[#0070F3] to-transparent w-full h-1" />
+        <Separator className="bg-linear-to-r from-transparent via-[#0070F3] to-transparent w-full h-1" />
 
         {/* Experience Section */}
         <BlurFade delay={BLUR_FADE_DELAY * 8} inView={true} direction="down">
           <ExperienceSection work={RESUME.work} />
         </BlurFade>
 
-        <Separator className="bg-gradient-to-r from-transparent via-[#0070F3] to-transparent w-full h-1" />
+        <Separator className="bg-linear-to-r from-transparent via-[#0070F3] to-transparent w-full h-1" />
 
         {/* Education Section */}
         <BlurFade delay={BLUR_FADE_DELAY * 5} inView={true} direction="down">
           <EducationSection education={RESUME.education} />
         </BlurFade>
 
-        <Separator className="bg-gradient-to-r from-transparent via-[#0070F3] to-transparent w-full h-1" />
+        <Separator className="bg-linear-to-r from-transparent via-[#0070F3] to-transparent w-full h-1" />
         {/* Skills Section */}
         <BlurFade delay={BLUR_FADE_DELAY * 6} inView={true} direction="down">
           <SkillsSection

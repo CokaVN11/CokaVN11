@@ -186,7 +186,7 @@ function InfoGridInner({ isRevealed = false, className = '' }: InfoGridProps) {
             data-cursor-magnetic
             onClick={handleLocationClick}
             onKeyDown={handleKeyDown}
-            className="group flex flex-col items-center gap-1 rounded-lg border border-white/10 p-2 transition-all duration-500 animate-pulse hover:animate-none hover:border-[#D9408C]/30 hover:bg-white/[0.03] hover:shadow-[0_0_60px_-15px_rgba(217,64,140,0.25)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/50 md:gap-2 md:p-3"
+            className="group flex flex-col items-center gap-1 rounded-lg border border-white/10 p-2 transition-all duration-500 animate-pulse hover:animate-none hover:border-[#D9408C]/30 hover:bg-white/3 hover:shadow-[0_0_60px_-15px_rgba(217,64,140,0.25)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/50 md:gap-2 md:p-3"
             aria-label={t.openInMapsAriaLabel}
           >
             {/* Map Pin Icon */}

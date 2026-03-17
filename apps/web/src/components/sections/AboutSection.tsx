@@ -25,7 +25,7 @@ export function AboutSection({ blurFadeDelay, summary }: AboutSectionProps) {
 
         <BlurFade delay={blurFadeDelay * 4}>
           <div className="dark:prose-invert max-w-none font-sans text-foreground text-base sm:text-lg text-justify text-pretty leading-relaxed prose prose-lg">
-            <div className="backdrop-blur-sm">{summary}</div>
+            <div className="backdrop-blur-xs">{summary}</div>
           </div>
         </BlurFade>
       </div>

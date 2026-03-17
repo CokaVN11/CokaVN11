@@ -121,7 +121,7 @@ END:VCALENDAR`;
     <div className="relative" ref={dropdownRef}>
       <motion.button
         data-cursor-magnetic
-        className="flex items-center px-4 justify-center gap-2 w-full max-w-[320px] md:w-[200px] md:max-w-none h-12 md:h-14 rounded-28 bg-transparent border border-white/10 cursor-pointer font-body text-base font-medium text-white/80 transition-all duration-500 hover:border-white/20 hover:bg-white/[0.03] hover:shadow-[0_0_60px_-15px_rgba(217,64,140,0.25)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-white/50 focus-visible:outline-offset-2"
+        className="flex items-center px-4 justify-center gap-2 w-full max-w-[320px] md:w-[200px] md:max-w-none h-12 md:h-14 rounded-28 bg-transparent border border-white/10 cursor-pointer font-body text-base font-medium text-white/80 transition-all duration-500 hover:border-white/20 hover:bg-white/3 hover:shadow-[0_0_60px_-15px_rgba(217,64,140,0.25)] focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-white/50 focus-visible:outline-offset-2"
         onClick={() => setIsOpen(!isOpen)}
         // 60fps button press with lift
         whileHover={
@@ -156,7 +156,7 @@ END:VCALENDAR`;
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="absolute top-[calc(100%+8px)] left-1/2 -translate-x-1/2 w-full max-w-[320px] md:w-[220px] md:max-w-none bg-grad-single-bg-dropdown border border-grad-single-glass-10 rounded-2xl shadow-dropdown p-2 z-[100]"
+            className="absolute top-[calc(100%+8px)] left-1/2 -translate-x-1/2 w-full max-w-[320px] md:w-[220px] md:max-w-none bg-grad-single-bg-dropdown border border-grad-single-glass-10 rounded-2xl shadow-dropdown p-2 z-100"
             // 60fps spatial dropdown with spring physics
             initial={{ opacity: 0, scale: 0.95, y: -8 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -168,7 +168,7 @@ END:VCALENDAR`;
             {calendarOptions.map((option, index) => (
               <motion.button
                 key={option.label}
-                className="flex items-center gap-3 w-full p-3 rounded-xl bg-transparent border-none font-body text-sm font-medium text-white/80 text-left cursor-pointer transition-all duration-300 hover:bg-white/[0.05] hover:shadow-[0_0_40px_-10px_rgba(217,64,140,0.15)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-white/50 focus-visible:-outline-offset-2"
+                className="flex items-center gap-3 w-full p-3 rounded-xl bg-transparent border-none font-body text-sm font-medium text-white/80 text-left cursor-pointer transition-all duration-300 hover:bg-white/5 hover:shadow-[0_0_40px_-10px_rgba(217,64,140,0.15)] focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-white/50 focus-visible:-outline-offset-2"
                 onClick={option.action}
                 // 60fps staggered menu items with micro hover
                 initial={{ opacity: 0, x: -8 }}
@@ -193,7 +193,7 @@ END:VCALENDAR`;
                       }
                 }
               >
-                <span className="flex-shrink-0 text-white/70">{option.icon}</span>
+                <span className="shrink-0 text-white/70">{option.icon}</span>
                 <span className="flex-1">{option.label}</span>
               </motion.button>
             ))}

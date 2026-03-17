@@ -37,19 +37,19 @@ function MobileNavigationDrawer() {
       </Drawer.Trigger>
       <Drawer.Portal>
         <Drawer.Overlay className="fixed inset-0 bg-black/40" />
-        <Drawer.Content className="right-0 bottom-10 left-0 z-50 fixed flex flex-col bg-background mt-24 border-t border-border rounded-t-[10px] outline-none h-fit">
+        <Drawer.Content className="right-0 bottom-10 left-0 z-50 fixed flex flex-col bg-background mt-24 border-t border-border rounded-t-[10px] outline-hidden h-fit">
           <div className="flex-1 bg-card p-4 rounded-t-[10px]">
             <div
               aria-hidden
-              className="flex-shrink-0 bg-muted mx-auto mb-4 rounded-full w-12 h-1.5"
+              className="shrink-0 bg-muted mx-auto mb-4 rounded-full w-12 h-1.5"
             />
-            <div className="mx-auto max-w-md">
+            <div className="max-w-md mx-auto">
               <Drawer.Title className="font-medium text-foreground">Menu</Drawer.Title>
             </div>
           </div>
           <Separator />
-          <div className="bg-card mt-auto">
-            <div className="flex flex-col justify-end gap-2 mx-auto max-w-md">
+          <div className="mt-auto bg-card">
+            <div className="flex flex-col justify-end max-w-md gap-2 mx-auto">
               {secondaryNavItems.experience && (
                 <Link
                   to={secondaryNavItems.experience.href}
@@ -100,10 +100,10 @@ export default function Navbar() {
   return (
     <>
       {/* Mobile Layout */}
-      <div className="sm:hidden bottom-0 z-30 fixed inset-x-0 flex mx-auto mb-4 h-full max-h-14 origin-bottom">
-        <div className="bottom-0 fixed inset-x-0 bg-background/80 dark:bg-background/80 backdrop-blur-lg w-full h-16"></div>
+      <div className="fixed inset-x-0 bottom-0 z-30 flex h-full mx-auto mb-4 origin-bottom sm:hidden max-h-14">
+        <div className="fixed inset-x-0 bottom-0 w-full h-16 bg-background/80 dark:bg-background/80 backdrop-blur-lg"></div>
 
-        <div className="bottom-[8px] z-50 relative flex justify-around items-center bg-background/70 dark:bg-background/70 shadow-lg mx-auto px-2 border border-border rounded-full h-14 min-h-full transform-gpu pointer-events-auto">
+        <div className="relative z-50 flex items-center justify-around min-h-full px-2 mx-auto border rounded-full shadow-lg pointer-events-auto bottom-2 bg-background/70 dark:bg-background/70 border-border h-14 transform-gpu">
           {/* Primary Mobile Navigation */}
           {primaryMobileNav.map((item) =>
             isExternalLink(item.href) ? (
@@ -138,7 +138,7 @@ export default function Navbar() {
       </div>
 
       {/* Desktop Layout */}
-      <div className="hidden bottom-10 z-30 fixed inset-x-0 sm:flex mx-auto mb-4 h-full max-h-14 origin-bottom">
+      <div className="fixed inset-x-0 z-30 hidden h-full mx-auto mb-4 origin-bottom bottom-10 sm:flex max-h-14">
         <div className="bottom-0 fixed inset-x-0 bg-background dark:bg-background to-transparent backdrop-blur-lg w-full h-16 [-webkit-mask-image:linear-gradient(to_top,black,transparent)]"></div>
 
         <Dock className="z-50 relative flex items-center bg-background [box-shadow:0_0_0_1px_rgba(0,0,0,.03),0_2px_4px_rgba(0,0,0,.05),0_12px_24px_rgba(0,0,0,.05)] dark:[box-shadow:0_-20px_80px_-20px_#ffffff1f_inset] mx-auto px-1 h-full min-h-full transform-gpu pointer-events-auto dark:[border:1px_solid_rgba(255,255,255,.1)]">
@@ -179,7 +179,7 @@ export default function Navbar() {
           ))}
 
           {/* Separator */}
-          <Separator orientation="vertical" className="py-2 h-full" />
+          <Separator orientation="vertical" className="h-full py-2" />
 
           {/* Social Links */}
           {Object.entries(navigationData.social)
@@ -208,7 +208,7 @@ export default function Navbar() {
             ))}
 
           {/* Separator */}
-          <Separator orientation="vertical" className="py-2 h-full" />
+          <Separator orientation="vertical" className="h-full py-2" />
 
           {/* Theme Toggle */}
           <DockIcon>

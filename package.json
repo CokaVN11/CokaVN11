@@ -12,7 +12,8 @@
     "fmt:check": "prettier --check .",
     "lint": "pnpm --filter web lint",
     "type-check": "tsc --build",
-    "clean": "pnpm --filter web clean && pnpm --filter lambda clean"
+    "clean": "pnpm --filter web clean && pnpm --filter lambda clean",
+    "prepare": "husky"
   },
   "keywords": [
     "portfolio",
@@ -29,6 +30,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.10.0",
+    "husky": "^9.1.7",
     "prettier": "^3.1.0",
     "typescript": "^5.3.3"
   }

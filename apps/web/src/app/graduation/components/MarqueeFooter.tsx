@@ -75,7 +75,7 @@ export function MarqueeFooter({ isRevealed = false, className = '' }: MarqueeFoo
         {marqueeItems.map((item, index) => (
           <span
             key={index}
-            className={`font-display text-sm font-medium uppercase tracking-[0.1em] ${
+            className={`font-display text-sm font-medium uppercase tracking-widest ${
               item === '•' ? 'text-gray-400' : 'text-gray-900'
             }`}
           >

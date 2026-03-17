@@ -75,7 +75,7 @@ function GraduationPage() {
       {/* Skip to main content for accessibility */}
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[9999] focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:text-black"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-9999 focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:text-black"
       >
         {t.skipToMainContent}
       </a>
@@ -86,7 +86,7 @@ function GraduationPage() {
       {/* Main content */}
       <main
         id="main-content"
-        className="relative z-[1] flex h-screen w-full flex-col md:flex-row"
+        className="relative z-1 flex h-screen w-full flex-col md:flex-row"
         style={{
           opacity: showContent ? 1 : 0,
           transition: 'opacity 0.3s ease',
@@ -127,7 +127,7 @@ function GraduationPage() {
             aria-hidden="true"
           />
 
-          <div className="relative z-[1] flex w-full flex-col gap-8">
+          <div className="relative z-1 flex w-full flex-col gap-8">
             {/* Info Grid */}
             <InfoGrid isRevealed={triggerReveal} />
 

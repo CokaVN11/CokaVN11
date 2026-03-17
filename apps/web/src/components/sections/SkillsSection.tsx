@@ -91,13 +91,13 @@ const SkillCard = ({
       className={cn(
         'relative w-28 sm:w-32 cursor-pointer overflow-hidden rounded-lg border transition-all duration-200 py-2 px-3',
         // Enhanced contrast for both light and dark modes
-        'border-gray-300/50 bg-white/90 backdrop-blur-xs shadow-sm',
+        'border-gray-300/50 bg-white/90 backdrop-blur-xs shadow-xs',
         'dark:border-gray-600/60 dark:bg-gray-800/95 dark:shadow-lg',
         // Improved hover states with better contrast
         'hover:border-blue-500/50 hover:bg-blue-50/40 hover:shadow-md',
         'dark:hover:border-blue-400/60 dark:hover:bg-blue-900/40 dark:shadow-xl',
         // Focus styles for accessibility
-        'focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:ring-offset-1 focus:ring-offset-background'
+        'focus:outline-hidden focus:ring-2 focus:ring-blue-500/50 focus:ring-offset-1 focus:ring-offset-background'
       )}
       initial={{ opacity: 0, y: 15 }}
       animate={{
@@ -127,7 +127,7 @@ const SkillCard = ({
     >
       {/* Minimalist indicator line */}
       <motion.div
-        className="top-0 right-0 left-0 absolute bg-gradient-to-r from-transparent via-blue-400/50 to-transparent h-px"
+        className="top-0 right-0 left-0 absolute bg-linear-to-r from-transparent via-blue-400/50 to-transparent h-px"
         initial={{ scaleX: 0 }}
         animate={{ scaleX: isHovered ? 1 : 0 }}
         transition={{ duration: 0.2 }}
@@ -208,10 +208,10 @@ export function SkillsSection({
           </motion.div>
         </BlurFade>
 
-        <div className="relative flex flex-col justify-center items-center backdrop-blur-sm rounded-2xl w-full overflow-hidden">
+        <div className="relative flex flex-col justify-center items-center backdrop-blur-xs rounded-2xl w-full overflow-hidden">
           {/* Enhanced gradient fade edges */}
-          <div className="left-0 z-20 absolute inset-y-0 bg-gradient-to-r from-background via-background/70 to-transparent w-2 sm:w-4 pointer-events-none"></div>
-          <div className="right-0 z-20 absolute inset-y-0 bg-gradient-to-l from-background via-background/70 to-transparent w-2 sm:w-4 pointer-events-none"></div>
+          <div className="left-0 z-20 absolute inset-y-0 bg-linear-to-r from-background via-background/70 to-transparent w-2 sm:w-4 pointer-events-none"></div>
+          <div className="right-0 z-20 absolute inset-y-0 bg-linear-to-l from-background via-background/70 to-transparent w-2 sm:w-4 pointer-events-none"></div>
 
           <motion.div
             className="z-10 relative w-full"
