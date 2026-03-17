@@ -52,3 +52,6 @@ coverage/
 .parcel-cache/
 infra/*/.terraform
 **/generated
+
+**/.omc
+**/.serena
