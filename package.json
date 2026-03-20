@@ -25,7 +25,11 @@
       "puppeteer"
     ]
   },
-  "keywords": ["portfolio", "nextjs", "cloudflare"],
+  "keywords": [
+    "portfolio",
+    "nextjs",
+    "cloudflare"
+  ],
   "author": "Khanh Nguyen",
   "license": "MIT",
   "engines": {
@@ -42,6 +46,8 @@
     "@radix-ui/react-separator": "^1.1.7",
     "@radix-ui/react-slot": "^1.2.3",
     "@radix-ui/react-tooltip": "^1.2.8",
+    "@vercel/analytics": "^2.0.1",
+    "@vercel/speed-insights": "^2.0.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "critical": "^7.2.1",
