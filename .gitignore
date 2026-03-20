@@ -44,3 +44,5 @@ coverage/
 **/.omc
 **/.serena
 .gitnexus
+.vercel
+.env*.local

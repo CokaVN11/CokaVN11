@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Inter, Space_Mono, Lora } from 'next/font/google';
+import { Inter, Lora } from 'next/font/google';
 import localFont from 'next/font/local';
 import { ThemeProvider } from '@/components/theme-provider';
 import { TooltipProvider } from '@/components/ui/tooltip';

@@ -87,7 +87,7 @@ export function safeFormatDate(dateString: string | undefined): string {
  * @param metadata - Metadata object to validate
  * @returns Validation result with valid status and any errors
  */
-export function validateMetadataDates(metadata: Record<string, any>): {
+export function validateMetadataDates(metadata: Record<string, unknown>): {
   isValid: boolean;
   errors: string[];
 } {
@@ -96,19 +96,19 @@ export function validateMetadataDates(metadata: Record<string, any>): {
   // Validate primary date field
   if (!metadata.date) {
     errors.push('Missing required "date" field');
-  } else if (!isValidDateString(metadata.date)) {
+  } else if (!isValidDateString(metadata.date as string)) {
     errors.push(`Invalid date format: "${metadata.date}". Expected YYYY-MM-DD format.`);
-  } else if (!isValidDateRange(metadata.date)) {
+  } else if (!isValidDateRange(metadata.date as string)) {
     errors.push(`Date "${metadata.date}" is too far in the future.`);
   }
 
   // Validate startDate if present
-  if (metadata.startDate && !isValidDateString(metadata.startDate)) {
+  if (metadata.startDate && !isValidDateString(metadata.startDate as string)) {
     errors.push(`Invalid startDate format: "${metadata.startDate}". Expected YYYY-MM-DD format.`);
   }
 
   // Validate endDate if present
-  if (metadata.endDate && !isValidDateString(metadata.endDate)) {
+  if (metadata.endDate && !isValidDateString(metadata.endDate as string)) {
     errors.push(`Invalid endDate format: "${metadata.endDate}". Expected YYYY-MM-DD format.`);
   }
 
@@ -116,11 +116,11 @@ export function validateMetadataDates(metadata: Record<string, any>): {
   if (
     metadata.startDate &&
     metadata.endDate &&
-    isValidDateString(metadata.startDate) &&
-    isValidDateString(metadata.endDate)
+    isValidDateString(metadata.startDate as string) &&
+    isValidDateString(metadata.endDate as string)
   ) {
-    const start = new Date(metadata.startDate);
-    const end = new Date(metadata.endDate);
+    const start = new Date(metadata.startDate as string);
+    const end = new Date(metadata.endDate as string);
 
     if (start > end) {
       errors.push(

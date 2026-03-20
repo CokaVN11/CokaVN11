@@ -1,4 +1,4 @@
-import { Home, Briefcase, User, Mail, Github, Linkedin, ExternalLink } from 'lucide-react';
+import { Home, Briefcase, User, Mail, ExternalLink } from 'lucide-react';
 import { Icons } from '@/components/ui/icons';
 
 export interface NavItem {

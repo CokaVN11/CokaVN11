@@ -7,7 +7,7 @@ interface MDXRendererProps {
 }
 
 export function MDXRenderer({ content }: MDXRendererProps) {
-  const [Component, setComponent] = useState<any>(null);
+  const [Component, setComponent] = useState<unknown>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -78,7 +78,7 @@ export function MDXRenderer({ content }: MDXRendererProps) {
   return (
     <div
       className="prose prose-lg max-w-none"
-      dangerouslySetInnerHTML={{ __html: Component.html }}
+      dangerouslySetInnerHTML={{ __html: (Component as { html: string }).html }}
     />
   );
 }
