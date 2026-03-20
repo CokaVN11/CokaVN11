@@ -7,7 +7,7 @@ export const dynamic = 'force-static';
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [projectEntries, jobEntries] = await Promise.all([getProject(), getJobs()]);
 
-  const baseUrl = 'https://portfolio.coka.id.vn';
+  const baseUrl = 'https://coka.id.vn';
   const currentDate = new Date();
 
   const routes = [
