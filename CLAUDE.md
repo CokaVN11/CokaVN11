@@ -104,7 +104,7 @@ To check whether embeddings exist, inspect `.gitnexus/meta.json` — the `stats.
 
 # Project: folio-site
 
-Portfolio site for **Khanh Nguyen (Coka)** — full-stack engineer. Next.js 16 monorepo, actively being redesigned from an animated/colorful aesthetic to a restrained editorial/technical-manual look.
+Portfolio site for **Khanh Nguyen (Coka)** — full-stack engineer. Next.js 16 single-package repo, actively being redesigned from an animated/colorful aesthetic to a restrained editorial/technical-manual look.
 
 ## Stack
 
@@ -112,32 +112,57 @@ Portfolio site for **Khanh Nguyen (Coka)** — full-stack engineer. Next.js 16 m
 |-------|------|
 | Framework | Next.js 16 (App Router), React 19, TypeScript 5 |
 | Styling | Tailwind CSS 4, shadcn/ui (radix primitives) |
-| Animation | Framer Motion 12, GSAP 3 |
+| Animation | Motion 12 (formerly Framer Motion) |
 | 3D | Three.js + @react-three/fiber (graduation microsite only) |
 | Forms | React Hook Form + Zod |
-| DB/ORM | Prisma + MongoDB |
 | Email | Resend |
-| Deploy | Vercel (analytics + speed insights included) |
+| Deploy | Vercel (@vercel/analytics + @vercel/speed-insights) |
 | Linter | Oxlint (NOT ESLint) |
-| Package manager | pnpm (workspace monorepo) |
+| Package manager | pnpm |
 
 ## Architecture
 
 ```
-apps/web/src/
-├── app/               App Router pages (page.tsx, layout.tsx, projects/[slug], job/[slug], graduation/)
+src/
+├── app/                   App Router pages
+│   ├── page.tsx           Home (server component — passes RESUME data to sections)
+│   ├── layout.tsx         Root layout (fonts, providers, analytics)
+│   ├── api/contact/       Contact form endpoint
+│   ├── api/og/            Open Graph image generation
+│   ├── robots.ts, sitemap.ts
+│   ├── projects/[slug]/   Project detail page (not in scope for refactor)
+│   ├── job/[slug]/        Job detail page (not in scope for refactor)
+│   └── graduation/        3D microsite — DO NOT TOUCH
+│
 ├── components/
-│   ├── sections/      Old section components (HeroSection, AboutSection, etc.) — being phased out
-│   ├── portfolio-*.tsx  New navbar + hero components
-│   ├── feature-work-*.tsx  New featured work section/card
-│   ├── experience-*.tsx    New experience card/section
-│   ├── education-capabilities-section.tsx  New combined education+skills
-│   ├── project-grid-card.tsx  New compact grid card
-│   └── ui/            33 primitives (SectionHeader, PatternSeparator, BlurFade, etc.)
+│   ├── sections/          Page sections (flat, kebab-case, 9 files)
+│   │   ├── navbar.tsx, hero.tsx
+│   │   ├── work-section.tsx, work-card.tsx, work-grid-card.tsx
+│   │   ├── experience-section.tsx, experience-card.tsx
+│   │   ├── skills-section.tsx, contact-section.tsx
+│   ├── theme-provider.tsx
+│   └── ui/                Primitives (section-header, pattern-separator, button, card, etc.)
+│
 ├── data/
-│   └── resume.ts      ← SINGLE SOURCE OF TRUTH for all content (name, work, projects, education, contact)
-├── lib/               utils, seo-utils, email, prisma, types
-└── styles/globals.css  CSS tokens (being migrated to oklch)
+│   ├── resume.ts          ← SINGLE SOURCE OF TRUTH for all content
+│   ├── jobs.ts            JobData type + MDX job loader
+│   ├── projects.ts        ProjectData type + MDX project loader
+│   └── graduation-event.ts  (graduation microsite only)
+│
+├── lib/
+│   ├── schemas/
+│   │   └── contact.ts     Zod ContactPayloadSchema + ContactPayload type
+│   ├── utils/
+│   │   ├── cn.ts          className merger (clsx + tailwind-merge)
+│   │   ├── content.ts     MDX file reader (getProject, getJobs, etc.)
+│   │   ├── date.ts        Date validation + formatting
+│   │   ├── email.ts       Resend email sender
+│   │   ├── seo.ts         generateMetadata, JSON-LD schemas
+│   │   ├── timeline.tsx   Job → timeline data transformer + TimelineJobContent
+│   │   └── calendar.ts    Google Calendar + ICS (graduation microsite only)
+│   └── types.ts           MDX Meta + Entry types
+│
+└── styles/globals.css     CSS tokens, reset
 ```
 
 ## Active Refactor — Technical Manual Aesthetic
@@ -146,7 +171,7 @@ apps/web/src/
 
 **Goal**: Replace animated, sparkle-heavy UI with an editorial look: Space Mono + Lora, oklch color tokens, borders over shadows, 150ms transitions max.
 
-**Homepage page.tsx is currently using the NEW components** (`PortfolioNavbar`, `PortfolioHero`, `FeaturedWorkSection`, `ExperienceTrustSection`, `EducationCapabilitiesSection`). Old section imports are still present but unused/commented.
+**Homepage page.tsx uses** `Navbar`, `Hero`, `WorkSection`, `ExperienceSection`, `SkillsSection`, `ContactSection` — all from `components/sections/`. No old section components remain.
 
 ### Refactor implementation order (from spec)
 1. `styles/globals.css` — oklch tokens, font vars, remove shadow vars
@@ -170,6 +195,7 @@ apps/web/src/
 
 - **Content changes**: edit `data/resume.ts` only — all components read from `RESUME`
 - **New components**: all go into `components/sections/` (kebab-case filenames). Do NOT create subfolders inside `sections/` until it reaches ~15 files OR a single domain grows to 3+ co-located files that a new contributor cannot tell apart by name alone.
+- **Utilities**: `lib/utils/cn.ts` for className merging; `lib/utils/content.ts` for MDX reading; `lib/schemas/contact.ts` for Zod schemas. Add new utilities into `lib/utils/` and new schemas into `lib/schemas/`.
 - **Motion**: max 150–180ms, only `transition-colors` / `transition-opacity` / subtle `translateY`; no spring physics, no sparkles
 - **Borders over shadows**: `border border-border` not `shadow-lg`
 - **No glassmorphism**, no `rounded-full` pills
@@ -185,9 +211,9 @@ apps/web/src/
 
 ```bash
 pnpm dev          # dev server
-pnpm build:web    # production build (runs prisma generate first)
+pnpm build        # production build
 pnpm lint         # oxlint
-pnpm type-check   # tsc across workspace
+pnpm type-check   # tsc --noEmit
 pnpm fmt          # prettier
 pnpm analyze      # ANALYZE=true build (bundle analysis)
 ```

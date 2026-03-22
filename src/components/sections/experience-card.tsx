@@ -1,8 +1,8 @@
 import Image from 'next/image';
 
 import { Card } from '@/components/ui/card';
-import { cn } from '@/lib/utils';
-import { JobData } from '@/data/generateJobs';
+import { cn } from '@/lib/utils/cn';
+import { JobData } from '@/data/jobs';
 
 // export type ExperienceItem = {
 //   company: string;
@@ -18,7 +18,7 @@ type ExperienceCardProps = {
 };
 
 export function ExperienceCard({ item, className }: ExperienceCardProps) {
-  const { company, role, summary, cover, href } = item;
+  const { company, role, summary, cover, href, startDate, endDate, type } = item;
 
   const card = (
     <Card
@@ -40,6 +40,11 @@ export function ExperienceCard({ item, className }: ExperienceCardProps) {
       )}
 
       <div className="p-4 space-y-2">
+        {(startDate || type) && (
+          <p className="font-mono-display text-[10px] uppercase tracking-widest text-muted-foreground">
+            {[startDate, endDate ? endDate : 'Present', type].filter(Boolean).join(' · ')}
+          </p>
+        )}
         <p className="font-mono-display text-[10px] uppercase tracking-widest text-foreground">
           {company}
         </p>

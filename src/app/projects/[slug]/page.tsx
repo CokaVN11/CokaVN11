@@ -1,9 +1,9 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { getProjectEntry, getProject } from '@/lib/content';
-import { MDXRenderer } from '@/lib/mdx';
-import { getImageUrl } from '@/lib/seo-utils';
+import { getProjectEntry, getProject } from '@/lib/utils/content';
+import { MDXRenderer } from '@/components/ui/mdx';
+import { getImageUrl } from '@/lib/utils/seo';
 
 export const dynamic = 'force-static'; // Force static generation for all slugs
 export const revalidate = 3600; // Revalidate every hour

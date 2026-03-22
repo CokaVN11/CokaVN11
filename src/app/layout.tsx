@@ -4,9 +4,9 @@ import localFont from 'next/font/local';
 import { ThemeProvider } from '@/components/theme-provider';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import '@/styles/globals.css';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/cn';
 import { Toaster } from '@/components/ui/sonner';
-import { generateMetadata as generateSEOMetadata } from '@/lib/seo-utils';
+import { generateMetadata as generateSEOMetadata } from '@/lib/utils/seo';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 
@@ -40,13 +40,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className="snap-y snap-proximity scroll-smooth" suppressHydrationWarning>
       <body
         className={cn(
           inter.variable,
           departureMono.variable,
           lora.variable,
-          'font-sans antialiased'
+          'font-serif antialiased'
         )}
         suppressHydrationWarning
       >

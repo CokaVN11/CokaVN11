@@ -1,7 +1,7 @@
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/cn';
 import { PatternSeparator } from '../ui/pattern-separator';
 
-type PortfolioNavbarProps = {
+type NavbarProps = {
   links: { label: string; href: string }[];
   brand: string;
   subtitle?: string;
@@ -9,13 +9,7 @@ type PortfolioNavbarProps = {
   className?: string;
 };
 
-export function PortfolioNavbar({
-  links,
-  brand,
-  subtitle,
-  resumeHref,
-  className,
-}: PortfolioNavbarProps) {
+export function Navbar({ links, brand, subtitle, resumeHref, className }: NavbarProps) {
   return (
     <nav className={cn(className)}>
       <div className="flex items-center justify-between w-full pb-10">
@@ -28,7 +22,7 @@ export function PortfolioNavbar({
             <a
               key={link.href}
               href={link.href}
-              className="text-sm tracking-wide transition-colors font-mono-display text-foreground hover:text-primary"
+              className="text-sm tracking-wide transition-colors duration-150 font-mono-display text-foreground hover:text-primary"
             >
               {link.label}
             </a>
@@ -38,7 +32,7 @@ export function PortfolioNavbar({
               href={resumeHref}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm tracking-wide transition-colors font-mono-display text-foreground hover:text-primary"
+              className="text-sm tracking-wide transition-colors duration-150 font-mono-display text-foreground hover:text-primary"
             >
               Resume
             </a>
@@ -49,5 +43,3 @@ export function PortfolioNavbar({
     </nav>
   );
 }
-
-export default PortfolioNavbar;

@@ -95,7 +95,14 @@ export function generateMetadata(config: SEOConfig = {}): Metadata {
       siteName: SITE_NAME,
       locale: 'en_US',
       type: config.openGraph?.type || 'website',
-      images: config.openGraph?.images || [],
+      images: config.openGraph?.images || [
+        {
+          url: 'https://coka.id.vn/api/og',
+          width: 1200,
+          height: 630,
+          alt: fullTitle,
+        },
+      ],
     },
     twitter: {
       card: 'summary_large_image',

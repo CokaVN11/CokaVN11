@@ -1,5 +1,5 @@
-import { ContactPayloadSchema } from '@/schemas/contact';
-import { sendContactNotificationEmail } from '@/lib/email';
+import { ContactPayloadSchema } from '@/lib/schemas/contact';
+import { sendContactNotificationEmail } from '@/lib/utils/email';
 import { NextRequest, NextResponse } from 'next/server';
 
 function getCorsHeaders(origin?: string): Record<string, string> {

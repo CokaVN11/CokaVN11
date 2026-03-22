@@ -1,5 +1,5 @@
 import React from 'react';
-import type { JobData } from '@/data/generateJobs';
+import type { JobData } from '@/data/jobs';
 import Image from 'next/image';
 
 export interface TimelineEntry {

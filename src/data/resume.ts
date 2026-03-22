@@ -1,5 +1,5 @@
-import { generateProjects } from './generateProjects';
-import { generateJobs } from './generateJobs';
+import { generateProjects } from './projects';
+import { generateJobs } from './jobs';
 
 export const RESUME = {
   // Personal Information

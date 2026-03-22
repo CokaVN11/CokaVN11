@@ -2,13 +2,13 @@
 import { useScroll, useTransform, motion } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import type { JobData } from '@/data/generateJobs';
+import type { JobData } from '@/data/jobs';
 import {
   formatDateRange,
   formatTimelineDate,
   isPresentJob,
   isCurrentMonth,
-} from '@/lib/timeline-utils';
+} from '@/lib/utils/timeline';
 import { Highlighter } from '@/components/ui/highlighter';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';

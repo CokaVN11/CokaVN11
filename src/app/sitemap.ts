@@ -1,5 +1,5 @@
 import { MetadataRoute } from 'next';
-import { getProject, getJobs } from '@/lib/content';
+import { getProject, getJobs } from '@/lib/utils/content';
 import { safeFormatDate } from '@/lib/utils/date';
 
 export const dynamic = 'force-static';

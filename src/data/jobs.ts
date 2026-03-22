@@ -3,7 +3,7 @@
  * Syncs jobs from MDX content files to RESUME data structure
  */
 
-import { getJobs } from '@/lib/content';
+import { getJobs } from '@/lib/utils/content';
 import type { Entry } from '@/lib/types';
 
 export interface JobData {

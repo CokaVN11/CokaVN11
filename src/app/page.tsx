@@ -1,9 +1,9 @@
-import { EducationCapabilitiesSection } from '@components/sections/education-capabilities-section';
-import { ExperienceTrustSection } from '@components/sections/experience-trust-section';
-import { FeaturedWorkSection } from '@components/sections/feature-work-section';
-import { PortfolioHero } from '@components/sections/portfolio-hero';
-import PortfolioNavbar from '@components/sections/portfolio-navbar';
-import { ContactSection } from '@components/sections/contact-section';
+import { SkillsSection } from '@/components/sections/skills-section';
+import { ExperienceSection } from '@/components/sections/experience-section';
+import { WorkSection } from '@/components/sections/work-section';
+import { Hero } from '@/components/sections/hero';
+import { Navbar } from '@/components/sections/navbar';
+import { ContactSection } from '@/components/sections/contact-section';
 import { RESUME, generatePersonSchema, generateProfessionalServiceSchema } from '@/data/resume';
 
 
@@ -27,29 +27,29 @@ export default async function Home() {
       />
 
       <main className="container mx-auto max-w-(--breakpoint-2xl) bg-background p-4 pb-20 sm:p-6 md:p-10 min-h-dvh">
-        <PortfolioNavbar
+        <Navbar
           links={[
-            { href: '#about', label: 'About' },
-            { href: '#projects', label: 'Projects' },
+            { href: '#hero', label: 'About' },
+            { href: '#featured-work', label: 'Projects' },
           ]}
           brand={RESUME.name}
           subtitle="Software Engineer"
         />
 
-        <PortfolioHero
+        <Hero
           name={RESUME.name}
           tagline={RESUME.tagline}
           actions={[
-            { label: 'View Projects', href: '#projects', variant: 'default' },
+            { label: 'View Projects', href: '#featured-work', variant: 'default' },
             { label: 'Contact Me', href: '#contact', variant: 'outline' },
           ]}
           className="mt-10"
         />
 
-        <FeaturedWorkSection featured={RESUME.projects[0]} supporting={RESUME.projects.slice(1)} />
-        <ExperienceTrustSection items={RESUME.work} />
+        <WorkSection featured={RESUME.projects[0]} supporting={RESUME.projects.slice(1)} />
+        <ExperienceSection items={RESUME.work} />
 
-        <EducationCapabilitiesSection
+        <SkillsSection
           education={RESUME.education[0]}
           capabilities={[
             { title: 'Frontend', items: ['React', 'Next.js', 'TypeScript', 'Tailwind'] },

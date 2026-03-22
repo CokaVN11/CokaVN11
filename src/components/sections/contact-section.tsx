@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { toast } from 'sonner';
 
-import { ContactPayloadSchema } from '@/schemas/contact';
+import { ContactPayloadSchema } from '@/lib/schemas/contact';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -190,19 +190,21 @@ export function ContactSection({ intro, links }: ContactSectionProps) {
   return (
     <section
       id="contact"
-      className="w-full mx-auto pb-14 sm:pb-20"
+      className="w-full mx-auto min-h-dvh flex flex-col snap-start"
       aria-labelledby="contact-heading"
     >
-      <SectionHeader
-        id="contact-heading"
-        label="Contact"
-        title="Get in Touch"
-        description={intro}
-      />
+      <div className="flex-1 pb-10">
+        <SectionHeader
+          id="contact-heading"
+          label="Contact"
+          title="Get in Touch"
+          description={intro}
+        />
 
-      <div className="grid gap-6 lg:grid-cols-[0.5fr_1.2fr] items-start">
-        <ContactLinksCard links={links} />
-        <ContactFormCard />
+        <div className="grid gap-6 lg:grid-cols-[0.5fr_1.2fr] items-start">
+          <ContactLinksCard links={links} />
+          <ContactFormCard />
+        </div>
       </div>
     </section>
   );

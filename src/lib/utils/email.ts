@@ -4,7 +4,7 @@ Handles email composition and delivery via Resend API
 */
 
 import { Resend } from 'resend';
-import type { ContactPayload } from '@/schemas/contact';
+import type { ContactPayload } from '@/lib/schemas/contact';
 
 const RECIPIENT_EMAIL = process.env.RECIPIENT_EMAIL;
 const FROM_EMAIL = process.env.FROM_EMAIL;

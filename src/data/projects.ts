@@ -3,7 +3,7 @@
  * Syncs projects from MDX content files to RESUME data structure
  */
 
-import { getProject } from '@/lib/content';
+import { getProject } from '@/lib/utils/content';
 import type { Entry } from '@/lib/types';
 
 export interface ProjectData {

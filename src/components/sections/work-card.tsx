@@ -3,17 +3,17 @@ import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/cn';
 
-import type { Project } from './feature-work-section';
+import type { Project } from './work-section';
 
-type FeaturedProjectCardProps = {
+type WorkCardProps = {
   project: Project;
   index?: number;
   className?: string;
 };
 
-export function FeaturedProjectCard({ project, index = 1, className }: FeaturedProjectCardProps) {
+export function WorkCard({ project, index = 1, className }: WorkCardProps) {
   const indexLabel = String(index).padStart(2, '0');
   const { title, category, summary, image, href, tags } = project;
 
@@ -32,7 +32,7 @@ export function FeaturedProjectCard({ project, index = 1, className }: FeaturedP
               alt={title}
               fill
               sizes="(max-width: 1024px) 100vw, 60vw"
-              className="object-cover transition-transform duration-300 group-hover:scale-[1.01]"
+              className="object-cover"
               priority
             />
           </div>
@@ -43,7 +43,7 @@ export function FeaturedProjectCard({ project, index = 1, className }: FeaturedP
           {/* Header: featured label + category */}
           <div className="flex items-start justify-between">
             <p className="font-mono-display text-[10px] uppercase tracking-widest text-primary">
-              Featured · {indexLabel}
+              FIG_{indexLabel} · Featured
             </p>
             <p className="font-mono-display text-[10px] uppercase tracking-widest text-muted-foreground">
               {category}

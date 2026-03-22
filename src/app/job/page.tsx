@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { getJobs } from '@/lib/content';
+import { getJobs } from '@/lib/utils/content';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {

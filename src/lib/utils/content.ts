@@ -1,8 +1,8 @@
 import { readFile, readdir } from 'fs/promises';
 import path from 'path';
 import matter from 'gray-matter';
-import { Entry, Meta } from './types';
-import { validateMetadataDates, safeParseDate } from './utils/date';
+import { Entry, Meta } from '../types';
+import { validateMetadataDates, safeParseDate } from './date';
 
 const contentDirectory = path.join(process.cwd(), 'src', 'content');
 
