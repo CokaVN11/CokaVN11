@@ -190,7 +190,7 @@ export function ContactSection({ intro, links }: ContactSectionProps) {
   return (
     <section
       id="contact"
-      className="w-full mx-auto min-h-dvh flex flex-col snap-start"
+      className="w-full mx-auto min-h-dvh flex flex-col"
       aria-labelledby="contact-heading"
     >
       <div className="flex-1 pb-10">

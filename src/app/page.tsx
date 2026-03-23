@@ -27,7 +27,7 @@ export default async function Home() {
         }}
       />
 
-      <main className="container mx-auto max-w-(--breakpoint-2xl) bg-background p-4 pb-20 sm:p-6 md:p-10 min-h-dvh flex flex-col items-center">
+      <main className="container mx-auto max-w-(--breakpoint-2xl) bg-background p-4 pt-20 pb-20 sm:p-6 sm:pt-24 md:p-10 md:pt-28 min-h-dvh flex flex-col items-center">
         <Navbar
           brand={RESUME.name}
           subtitle="Software Engineer"

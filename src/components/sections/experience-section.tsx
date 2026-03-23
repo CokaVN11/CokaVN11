@@ -11,15 +11,11 @@ type ExperienceSectionProps = {
   linkedinHref?: string;
 };
 
-export function ExperienceSection({
-  items,
-  resumeHref,
-  linkedinHref,
-}: ExperienceSectionProps) {
+export function ExperienceSection({ items, resumeHref, linkedinHref }: ExperienceSectionProps) {
   return (
     <section
       id="experience"
-      className="w-full mx-auto min-h-dvh flex flex-col snap-start"
+      className="w-full mx-auto min-h-dvh flex flex-col"
       aria-labelledby="experience-heading"
     >
       <div className="flex-1 pb-10">

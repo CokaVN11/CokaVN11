@@ -36,7 +36,7 @@ export function WorkSection({ featured, supporting }: WorkSectionProps) {
   return (
     <section
       id="featured-work"
-      className="w-full mx-auto mt-10 min-h-dvh flex flex-col snap-start"
+      className="w-full mx-auto mt-10 min-h-dvh flex flex-col"
       aria-labelledby="featured-work-heading"
     >
       <div className="flex-1 pb-10">
