@@ -14,7 +14,7 @@ export function Hero({ name, tagline, actions, className }: HeroProps) {
     <section
       id="hero"
       className={cn(
-        'w-full mx-auto flex flex-col justify-between min-h-[calc(100dvh-5rem)] snap-start',
+        'w-full mx-auto flex flex-col justify-between min-h-[calc(100dvh-5rem)]',
         className
       )}
     >

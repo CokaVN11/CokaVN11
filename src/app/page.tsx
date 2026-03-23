@@ -2,10 +2,11 @@ import { SkillsSection } from '@/components/sections/skills-section';
 import { ExperienceSection } from '@/components/sections/experience-section';
 import { WorkSection } from '@/components/sections/work-section';
 import { Hero } from '@/components/sections/hero';
-import { Navbar } from '@/components/sections/navbar';
+import { Navbar } from '@/components/navbar';
+import { Github, Linkedin, Mail } from 'lucide-react';
+import { Icons } from '@components/ui/icons';
 import { ContactSection } from '@/components/sections/contact-section';
 import { RESUME, generatePersonSchema, generateProfessionalServiceSchema } from '@/data/resume';
-
 
 export default async function Home() {
   const personSchema = generatePersonSchema(RESUME);
@@ -26,14 +27,32 @@ export default async function Home() {
         }}
       />
 
-      <main className="container mx-auto max-w-(--breakpoint-2xl) bg-background p-4 pb-20 sm:p-6 md:p-10 min-h-dvh">
+      <main className="container mx-auto max-w-(--breakpoint-2xl) bg-background p-4 pb-20 sm:p-6 md:p-10 min-h-dvh flex flex-col items-center">
         <Navbar
-          links={[
-            { href: '#hero', label: 'About' },
-            { href: '#featured-work', label: 'Projects' },
-          ]}
           brand={RESUME.name}
           subtitle="Software Engineer"
+          navLinks={[
+            { href: '#hero', label: 'About' },
+            { href: '#featured-work', label: 'Projects' },
+            { href: '#contact', label: 'Contact' },
+          ]}
+          socialLinks={[
+            {
+              label: 'GitHub',
+              href: RESUME.contact.social.GitHub.url,
+              icon: <Icons.github className="text-lg size-4" />,
+            },
+            {
+              label: 'LinkedIn',
+              href: RESUME.contact.social.LinkedIn.url,
+              icon: <Icons.linkedin className="text-lg size-4" />,
+            },
+            {
+              label: 'Email',
+              href: `mailto:${RESUME.contact.email}`,
+              icon: <Icons.email className="text-lg size-4" />,
+            },
+          ]}
         />
 
         <Hero
