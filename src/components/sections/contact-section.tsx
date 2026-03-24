@@ -19,7 +19,7 @@ type ContactFormData = z.infer<typeof ContactPayloadSchema>;
 type ContactLink = {
   label: string;
   value: string;
-  href: string;
+  href?: string;
 };
 
 type ContactSectionProps = {
@@ -38,17 +38,21 @@ function ContactLinksCard({ links }: { links: ContactLink[] }) {
           <span className="font-mono-display text-[10px] uppercase tracking-widest text-muted-foreground">
             {link.label}
           </span>
-          <a
-            href={link.href}
-            target={link.href.startsWith('http') ? '_blank' : undefined}
-            rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-            className="group/link font-serif text-sm transition-colors duration-150 text-foreground hover:text-primary flex items-center gap-1"
-          >
-            {link.value}
-            <span className="opacity-0 group-hover/link:opacity-100 transition-opacity duration-150 text-primary">
-              →
-            </span>
-          </a>
+          {link.href ? (
+            <a
+              href={link.href}
+              target={link.href.startsWith('http') ? '_blank' : undefined}
+              rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+              className="group/link font-serif text-sm transition-colors duration-150 text-foreground hover:text-primary flex items-center gap-1"
+            >
+              {link.value}
+              <span className="opacity-0 group-hover/link:opacity-100 transition-opacity duration-150 text-primary">
+                →
+              </span>
+            </a>
+          ) : (
+            <span className="font-serif text-sm text-foreground">{link.value}</span>
+          )}
         </div>
       ))}
     </Card>
@@ -88,7 +92,7 @@ function ContactFormCard() {
   };
 
   return (
-    <Card className="p-5 border shadow-none border-border">
+    <Card className="h-full p-5 border shadow-none border-border">
       <form
         onSubmit={form.handleSubmit(handleSubmit)}
         className="flex flex-col gap-4"
@@ -160,7 +164,7 @@ function ContactFormCard() {
               <Textarea
                 {...field}
                 id="message"
-                placeholder="Tell me about your project..."
+                placeholder="I'm interested in working together. Let's chat!"
                 aria-invalid={form.formState.errors.message ? 'true' : 'false'}
                 className="rounded-none border-0 border-b border-border focus-visible:ring-0 px-0 bg-transparent resize-none min-h-30"
               />
@@ -190,10 +194,10 @@ export function ContactSection({ intro, links }: ContactSectionProps) {
   return (
     <section
       id="contact"
-      className="w-full mx-auto min-h-dvh flex flex-col"
+      className="mt-10 mx-auto min-h-[calc(100svh-5rem)] flex flex-col w-[88vw] sm:w-[70vw] sm:max-w-225"
       aria-labelledby="contact-heading"
     >
-      <div className="flex-1 pb-10">
+      <div className="flex-1 flex flex-col pb-10">
         <SectionHeader
           id="contact-heading"
           label="Contact"
@@ -201,7 +205,7 @@ export function ContactSection({ intro, links }: ContactSectionProps) {
           description={intro}
         />
 
-        <div className="grid gap-6 lg:grid-cols-[0.5fr_1.2fr] items-start">
+        <div className="grid gap-6 lg:grid-cols-[0.5fr_1.2fr] items-stretch flex-1">
           <ContactLinksCard links={links} />
           <ContactFormCard />
         </div>
