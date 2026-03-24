@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { SectionHeader } from '@/components/ui/section-header';
+import { ExperienceTimeline } from '@/components/ui/experience-timeline';
 
-import { ExperienceCard } from './experience-card';
 import { JobData } from '@/data/jobs';
 import { PatternSeparator } from '../ui/pattern-separator';
 
@@ -15,17 +15,13 @@ export function ExperienceSection({ items, resumeHref, linkedinHref }: Experienc
   return (
     <section
       id="experience"
-      className="w-[88vw] sm:w-[70vw] sm:max-w-225 mx-auto min-h-dvh flex flex-col"
+      className="mt-10 w-[88vw] sm:w-[70vw] sm:max-w-225 mx-auto flex flex-col"
       aria-labelledby="experience-heading"
     >
       <div className="flex-1 pb-10">
         <SectionHeader id="experience-heading" label="Experience" title="Work" />
 
-        <div className="grid gap-4 md:grid-cols-2">
-          {items.map((item) => (
-            <ExperienceCard key={item.company} item={item} />
-          ))}
-        </div>
+        <ExperienceTimeline jobs={items} />
 
         {(resumeHref || linkedinHref) && (
           <div className="flex gap-3 mt-8">

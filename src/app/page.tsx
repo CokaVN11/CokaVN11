@@ -70,7 +70,7 @@ export default async function Home() {
           <WorkSection featured={RESUME.projects[0]} supporting={RESUME.projects.slice(1)} />
           <ExperienceSection items={RESUME.work} />
 
-          <SkillsSection
+          {/* <SkillsSection
             education={RESUME.education[0]}
             capabilities={[
               { title: 'Frontend', items: ['React', 'Next.js', 'TypeScript', 'Tailwind'] },
@@ -79,7 +79,7 @@ export default async function Home() {
               { title: 'Tooling', items: ['Docker', 'Git', 'CI/CD', 'Vercel'] },
               { title: 'Design', items: ['Figma', 'UX/UI', 'systems thinking'] },
             ]}
-          />
+          /> */}
           <ContactSection
             intro="Open to full-stack and product engineering opportunities."
             links={[

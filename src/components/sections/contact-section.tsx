@@ -194,7 +194,7 @@ export function ContactSection({ intro, links }: ContactSectionProps) {
   return (
     <section
       id="contact"
-      className="mt-10 mx-auto min-h-[calc(100svh-5rem)] flex flex-col w-[88vw] sm:w-[70vw] sm:max-w-225"
+      className="mt-10 mx-auto flex flex-col w-[88vw] sm:w-[70vw] sm:max-w-225"
       aria-labelledby="contact-heading"
     >
       <div className="flex-1 flex flex-col pb-10">
