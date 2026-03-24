@@ -76,7 +76,10 @@ export function SkillsSection({ education, capabilities, className }: SkillsSect
   return (
     <section
       id="education-capabilities"
-      className={cn('w-full mx-auto min-h-dvh flex flex-col', className)}
+      className={cn(
+        ' mx-auto min-h-dvh flex flex-col w-[88vw] sm:w-[70vw] sm:max-w-225',
+        className
+      )}
       aria-label="Education and Capabilities"
     >
       <div className="flex-1 pb-10">

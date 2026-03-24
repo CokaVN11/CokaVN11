@@ -35,7 +35,7 @@ export function WorkGridCard({ project, index = 1, className }: WorkGridCardProp
           </div>
         )}
 
-        <div className="flex flex-col flex-1 gap-3 p-5">
+        <div className="flex flex-col flex-1 gap-2 p-4">
           <div className="flex items-center justify-between">
             <p className="font-mono-display text-[10px] uppercase tracking-widest text-muted-foreground">
               {category}

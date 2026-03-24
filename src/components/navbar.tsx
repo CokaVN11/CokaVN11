@@ -175,7 +175,7 @@ export const Navbar = memo(function Navbar({
       noBodyStyles
       preventScrollRestoration
     >
-      <nav className={cn('fixed bg-background top-0 w-full px-4 pt-6', className)}>
+      <nav className={cn('fixed z-50 top-0 w-full px-4 pt-6 backdrop-blur-md', className)}>
         {/* Mobile top bar */}
         <div className="flex items-center justify-between pb-4 md:hidden">
           <BrandBlock brand={brand} subtitle={subtitle} />
@@ -190,7 +190,7 @@ export const Navbar = memo(function Navbar({
         </div>
 
         {/* Desktop 3-column layout */}
-        <div className="hidden md:grid grid-cols-[1fr_auto_1fr] items-center pb-10 sm:w-[70vw] sm:max-w-225">
+        <div className="hidden md:grid grid-cols-[1fr_auto_1fr] items-center pb-10 sm:w-[70vw] sm:max-w-225 mx-auto">
           <BrandBlock brand={brand} subtitle={subtitle} />
 
           <div className="flex items-center gap-8">
@@ -202,8 +202,6 @@ export const Navbar = memo(function Navbar({
 
           <SocialLinks links={socialLinks} className="flex items-center justify-end gap-4" />
         </div>
-
-        <PatternSeparator />
       </nav>
 
       <Drawer.Portal>

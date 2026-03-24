@@ -36,7 +36,7 @@ export function WorkSection({ featured, supporting }: WorkSectionProps) {
   return (
     <section
       id="featured-work"
-      className="w-full mx-auto mt-10 min-h-dvh flex flex-col"
+      className="mx-auto mt-10 min-h-[calc(100svh-5rem)] flex flex-col w-[88vw] sm:w-[70vw] sm:max-w-225"
       aria-labelledby="featured-work-heading"
     >
       <div className="flex-1 pb-10">
@@ -49,7 +49,7 @@ export function WorkSection({ featured, supporting }: WorkSectionProps) {
 
         <WorkCard project={projectDataToProject(featured)} index={1} />
 
-        <div className="flex items-center gap-4 mt-10 mb-6">
+        <div className="flex items-center gap-2 mt-6 mb-2">
           <span className="font-mono-display text-[10px] uppercase tracking-widest text-muted-foreground">
             More Projects
           </span>

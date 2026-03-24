@@ -15,7 +15,7 @@ export function ExperienceSection({ items, resumeHref, linkedinHref }: Experienc
   return (
     <section
       id="experience"
-      className="w-full mx-auto min-h-dvh flex flex-col"
+      className="w-[88vw] sm:w-[70vw] sm:max-w-225 mx-auto min-h-dvh flex flex-col"
       aria-labelledby="experience-heading"
     >
       <div className="flex-1 pb-10">

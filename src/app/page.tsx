@@ -27,7 +27,7 @@ export default async function Home() {
         }}
       />
 
-      <main className="container mx-auto max-w-(--breakpoint-2xl) bg-background p-4 pt-20 pb-20 sm:p-6 sm:pt-24 md:p-10 md:pt-28 min-h-dvh flex flex-col items-center">
+      <main className="container mx-auto max-w-(--breakpoint-2xl) min-h-dvh flex flex-col items-center">
         <Navbar
           brand={RESUME.name}
           subtitle="Software Engineer"
@@ -58,42 +58,53 @@ export default async function Home() {
         <Hero
           name={RESUME.name}
           tagline={RESUME.tagline}
+          systemIdentity={RESUME.systemIdentity}
           actions={[
             { label: 'View Projects', href: '#featured-work', variant: 'default' },
             { label: 'Contact Me', href: '#contact', variant: 'outline' },
           ]}
-          className="mt-10"
+          className="mt-10 pt-20 sm:pt-24 md:pt-28"
         />
 
-        <WorkSection featured={RESUME.projects[0]} supporting={RESUME.projects.slice(1)} />
-        <ExperienceSection items={RESUME.work} />
+        <div className="relative w-full flex flex-col items-center">
+          <WorkSection featured={RESUME.projects[0]} supporting={RESUME.projects.slice(1)} />
+          <ExperienceSection items={RESUME.work} />
 
-        <SkillsSection
-          education={RESUME.education[0]}
-          capabilities={[
-            { title: 'Frontend', items: ['React', 'Next.js', 'TypeScript', 'Tailwind'] },
-            { title: 'Backend', items: ['Node.js', 'NestJS', 'Golang'] },
-            { title: 'Data', items: ['PostgreSQL', 'MongoDB', 'Prisma'] },
-            { title: 'Tooling', items: ['Docker', 'Git', 'CI/CD', 'Vercel'] },
-            { title: 'Design', items: ['Figma', 'UX/UI', 'systems thinking'] },
-          ]}
-        />
-        <ContactSection
-          intro="Open to full-stack and product engineering opportunities."
-          links={[
-            { label: 'Email', value: RESUME.contact.email, href: `mailto:${RESUME.contact.email}` },
-            {
-              label: 'GitHub',
-              value: 'github.com/CokaVN11',
-              href: RESUME.contact.social.GitHub.url,
-            },
-            {
-              label: 'LinkedIn',
-              value: 'linkedin.com/in/ngckhanh',
-              href: RESUME.contact.social.LinkedIn.url,
-            },
-          ]}
-        />
+          <SkillsSection
+            education={RESUME.education[0]}
+            capabilities={[
+              { title: 'Frontend', items: ['React', 'Next.js', 'TypeScript', 'Tailwind'] },
+              { title: 'Backend', items: ['Node.js', 'NestJS', 'Golang'] },
+              { title: 'Data', items: ['PostgreSQL', 'MongoDB', 'Prisma'] },
+              { title: 'Tooling', items: ['Docker', 'Git', 'CI/CD', 'Vercel'] },
+              { title: 'Design', items: ['Figma', 'UX/UI', 'systems thinking'] },
+            ]}
+          />
+          <ContactSection
+            intro="Open to full-stack and product engineering opportunities."
+            links={[
+              {
+                label: 'Email',
+                value: RESUME.contact.email,
+                href: `mailto:${RESUME.contact.email}`,
+              },
+              {
+                label: 'GitHub',
+                value: 'github.com/CokaVN11',
+                href: RESUME.contact.social.GitHub.url,
+              },
+              {
+                label: 'LinkedIn',
+                value: 'linkedin.com/in/ngckhanh',
+                href: RESUME.contact.social.LinkedIn.url,
+              },
+              { label: 'Location', value: RESUME.location },
+              { label: 'Timezone', value: 'UTC+7 · Indochina Time' },
+              { label: 'Status', value: 'Open to new opportunities' },
+              { label: 'Response', value: 'Within 24 hours' },
+            ]}
+          />
+        </div>
       </main>
     </>
   );

@@ -39,7 +39,7 @@ export function WorkCard({ project, index = 1, className }: WorkCardProps) {
         )}
 
         {/* Content panel — right column on lg, below image on mobile */}
-        <div className="flex flex-col justify-between gap-6 p-6">
+        <div className="flex flex-col justify-between gap-4 p-4">
           {/* Header: featured label + category */}
           <div className="flex items-start justify-between">
             <p className="font-mono-display text-[10px] uppercase tracking-widest text-primary">
@@ -51,13 +51,13 @@ export function WorkCard({ project, index = 1, className }: WorkCardProps) {
           </div>
 
           {/* Title + summary */}
-          <div className="space-y-3">
+          <div className="space-y-2">
             <h3 className="text-2xl leading-snug font-mono-display text-foreground">{title}</h3>
             <p className="font-serif text-sm leading-relaxed text-muted-foreground">{summary}</p>
           </div>
 
           {/* Footer: tags + CTA */}
-          <div className="space-y-4">
+          <div className="space-y-3">
             {tags && tags.length > 0 && (
               <div className="flex flex-wrap gap-1.5">
                 {tags.map((tag: string) => (

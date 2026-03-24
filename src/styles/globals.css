@@ -298,6 +298,14 @@
   background-size: 50px 50px;
 }
 
+/* ── Companion Strip ────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .companion-sprite {
+    background-position: 0 0 !important;
+  }
+}
+
 @utility loader-overlay {
   /* Loading screen overlay */
   position: fixed;
